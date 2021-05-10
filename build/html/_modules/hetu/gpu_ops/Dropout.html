@@ -1,0 +1,320 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>hetu.gpu_ops.Dropout &mdash; Hetu 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Hetu
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Hetu</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>hetu.gpu_ops.Dropout</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hetu.gpu_ops.Dropout</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">.Node</span> <span class="kn">import</span> <span class="n">Op</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.._base</span> <span class="kn">import</span> <span class="n">DNNL_LIB</span>
+<span class="kn">from</span> <span class="nn">..cpu_links</span> <span class="kn">import</span> <span class="n">dropout</span> <span class="k">as</span> <span class="n">cpu_dropout</span>
+<span class="kn">from</span> <span class="nn">..cpu_links</span> <span class="kn">import</span> <span class="n">dropout_gradient</span> <span class="k">as</span> <span class="n">cpu_dropout_gradient</span>
+<span class="kn">from</span> <span class="nn">..gpu_links</span> <span class="kn">import</span> <span class="n">dropout_gradient</span>
+<span class="kn">from</span> <span class="nn">..gpu_links</span> <span class="kn">import</span> <span class="n">dropout</span>
+
+
+<div class="viewcode-block" id="DropoutOp"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.DropoutOp">[docs]</a><span class="k">class</span> <span class="nc">DropoutOp</span><span class="p">(</span><span class="n">Op</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_in</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">DropoutOp</span><span class="p">,</span> <span class="p">[</span><span class="n">node_in</span><span class="p">],</span> <span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_ulonglong</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># self.reserve_size = ctypes.c_int(0)</span>
+        <span class="c1"># self.reserve_space = ctypes.c_void_p(0)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span> <span class="o">=</span> <span class="n">keep_prob</span>
+        <span class="c1"># self.flag = 1</span>
+        <span class="c1"># self.input_shape = None</span>
+
+<div class="viewcode-block" id="DropoutOp.compute"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.DropoutOp.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_vals</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">DNNL_LIB</span><span class="p">[</span><span class="s1">&#39;cpu_Dropout&#39;</span><span class="p">]:</span>
+                <span class="n">cpu_dropout</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span><span class="p">,</span> <span class="n">output_val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1">#self.mask = np.random.binomial(1, self.keep_prob, size=input_vals[0].shape)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">&gt;=</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span><span class="p">)</span>
+                <span class="n">output_val</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">dropout_np</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dropout</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">)</span></div>
+            <span class="c1"># CuDNN_Dropout(input_vals[0], self.keep_prob, output_val, self.reserve_size, self.reserve_space, self.flag, stream_handle)</span>
+            <span class="c1"># self.flag = 0</span>
+
+<div class="viewcode-block" id="DropoutOp.gradient"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.DropoutOp.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_grad</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">dropout_gradient_op</span><span class="p">(</span><span class="n">output_grad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">output_grad</span><span class="o">.</span><span class="n">ctx</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="DropoutOp.infer_shape"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.DropoutOp.infer_shape">[docs]</a>    <span class="k">def</span> <span class="nf">infer_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shapes</span><span class="p">):</span>
+        <span class="c1"># if self.input_shape != tuple(input_shapes[0]):</span>
+        <span class="c1">#     self.input_shape = tuple(input_shapes[0])</span>
+        <span class="c1">#     # self.flag = 2</span>
+        <span class="k">return</span> <span class="n">input_shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="Dropout_GradientOp"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.Dropout_GradientOp">[docs]</a><span class="k">class</span> <span class="nc">Dropout_GradientOp</span><span class="p">(</span><span class="n">Op</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_in</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">forward_node</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">Dropout_GradientOp</span><span class="p">,</span> <span class="p">[</span><span class="n">node_in</span><span class="p">],</span> <span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">forward_node</span> <span class="o">=</span> <span class="n">forward_node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span> <span class="o">=</span> <span class="n">keep_prob</span>
+
+<div class="viewcode-block" id="Dropout_GradientOp.compute"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.Dropout_GradientOp.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_vals</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">DNNL_LIB</span><span class="p">[</span><span class="s1">&#39;cpu_Dropout_Gradient&#39;</span><span class="p">]:</span>
+                <span class="n">cpu_dropout_gradient</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span><span class="p">,</span> <span class="n">output_val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">output_val</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">dropout_np_gradient</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward_node</span><span class="o">.</span><span class="n">mask</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dropout_gradient</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_prob</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">forward_node</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">)</span></div>
+            <span class="c1"># CuDNN_Dropout_gradient(input_vals[0], self.keep_prob, output_val, self.forward_node.reserve_size,</span>
+            <span class="c1">#                        self.forward_node.reserve_space, stream_handle)</span>
+
+<div class="viewcode-block" id="Dropout_GradientOp.gradient"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.Dropout_GradientOp.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_grad</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Dropout_GradientOp.infer_shape"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.Dropout_GradientOp.infer_shape">[docs]</a>    <span class="k">def</span> <span class="nf">infer_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shapes</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">input_shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="dropout_op"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.dropout_op">[docs]</a><span class="k">def</span> <span class="nf">dropout_op</span><span class="p">(</span><span class="n">node_in</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Drop elements of input variable randomly.</span>
+<span class="sd">    Make a new instance of Node DropoutOp and call the instance.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    node_in : Node</span>
+<span class="sd">        Input variable.</span>
+<span class="sd">    keep_prob : float</span>
+<span class="sd">        Probability of the results to be kept.</span>
+<span class="sd">    ctx : DLContext</span>
+<span class="sd">        The context of op.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">DropoutOp</span><span class="p">(</span><span class="n">node_in</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dropout_gradient_op"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.dropout_gradient_op">[docs]</a><span class="k">def</span> <span class="nf">dropout_gradient_op</span><span class="p">(</span><span class="n">node_in</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">forward_node</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the gradient of drop out node.</span>
+<span class="sd">    Make a new instance of Node Dropout_GradientOp and call the instance.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    node_in : Node</span>
+<span class="sd">        Input variable.</span>
+<span class="sd">    keep_prob : float</span>
+<span class="sd">        Probability of the results to be kept.</span>
+<span class="sd">    forward_node : Node</span>
+<span class="sd">        The forward node .</span>
+<span class="sd">    ctx : DLContext</span>
+<span class="sd">        The context of op.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Dropout_GradientOp</span><span class="p">(</span><span class="n">node_in</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">forward_node</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dropout_np"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.dropout_np">[docs]</a><span class="k">def</span> <span class="nf">dropout_np</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span> <span class="n">out_arr</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+    <span class="c1"># outputs = inputs</span>
+    <span class="c1"># outputs *= mask</span>
+    <span class="c1"># outputs = outputs * (1 / keep_prob)</span>
+    <span class="c1"># return outputs</span>
+    <span class="k">return</span> <span class="n">mask</span><span class="o">*</span><span class="n">inputs</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">keep_prob</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="dropout_np_gradient"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Dropout.dropout_np_gradient">[docs]</a><span class="k">def</span> <span class="nf">dropout_np_gradient</span><span class="p">(</span><span class="n">in_gradient_y</span><span class="p">,</span> <span class="n">keep_prob</span><span class="p">,</span><span class="n">mask</span><span class="p">):</span>
+    <span class="n">out_grads</span> <span class="o">=</span> <span class="n">in_gradient_y</span>
+    <span class="n">out_grads</span> <span class="o">*=</span> <span class="n">mask</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">keep_prob</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">out_grads</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, AlfredWangyj.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
