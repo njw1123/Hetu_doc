@@ -1,5 +1,5 @@
 .. Hetu documentation master file, created by
-   sphinx-quickstart on Tue Apr 27 04:37:49 2021.
+   sphinx-quickstart on Mon May 10 15:06:18 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
