@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>hetu.communicator.mpi_comm &mdash; Hetu 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Hetu
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Hetu</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>hetu.communicator.mpi_comm</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hetu.communicator.mpi_comm</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">ctypes</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">from</span> <span class="nn">hetu</span> <span class="kn">import</span> <span class="n">ndarray</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="k">def</span> <span class="nf">_load_mpi_lib</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load libary in build/lib.&quot;&quot;&quot;</span>
+    <span class="n">curr_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
+    <span class="n">lib_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">curr_path</span><span class="p">,</span> <span class="s1">&#39;../../../build/lib/&#39;</span><span class="p">)</span>
+    <span class="n">path_to_so_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lib_path</span><span class="p">,</span> <span class="s2">&quot;lib_mpi_runtime_api.so&quot;</span><span class="p">)</span>
+    <span class="n">lib</span> <span class="o">=</span> <span class="n">CDLL</span><span class="p">(</span><span class="n">path_to_so_file</span><span class="p">,</span> <span class="n">RTLD_GLOBAL</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">lib</span>
+
+<span class="n">lib_mpi</span> <span class="o">=</span> <span class="n">_load_mpi_lib</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MPIDataType_t"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPIDataType_t">[docs]</a><span class="k">class</span> <span class="nc">MPIDataType_t</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">MPI_Char</span>       <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">MPI_Int</span>        <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">MPI_Uint32</span>     <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">MPI_Int64</span>      <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">MPI_Uint64</span>     <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">MPI_Float32</span>    <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">MPI_Float64</span>    <span class="o">=</span> <span class="mi">6</span></div>
+
+<div class="viewcode-block" id="MPIOp_t"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPIOp_t">[docs]</a><span class="k">class</span> <span class="nc">MPIOp_t</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">MPI_OP_NULL</span>    <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">MPI_MAX</span>        <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">MPI_MIN</span>        <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">MPI_SUM</span>        <span class="o">=</span> <span class="mi">3</span></div>
+
+<div class="viewcode-block" id="MPI_Communicator"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPI_Communicator">[docs]</a><span class="k">class</span> <span class="nc">MPI_Communicator</span><span class="p">():</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            mpicomm: the MPI communicator, to use in MPI_Bcast, MPI_Reduce, MPI_Scatter, etc</span>
+<span class="sd">            ncclcomm: the NCCL communicator, to use in ncclAllReduce ...</span>
+<span class="sd">            nRanks: the total number of MPI threads</span>
+<span class="sd">            myRanks: the rank in all MPI threads</span>
+<span class="sd">            localRank: the rank among the MPI threads in this device</span>
+<span class="sd">            ncclId: ncclGetUniqueId should be called once when creating a communicator </span>
+<span class="sd">                    and the Id should be distributed to all ranks in the communicator before calling ncclCommInitRank.</span>
+<span class="sd">            stream: the stream for NCCL communication</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mpicomm</span> <span class="o">=</span> <span class="n">c_int64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nRanks</span> <span class="o">=</span> <span class="n">c_int32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">myRank</span> <span class="o">=</span> <span class="n">c_int32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MPI_Init</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MPI_GetComm</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MPI_Get_Comm_rank</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MPI_Get_Comm_size</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MPI_Communicator.MPI_Init"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPI_Communicator.MPI_Init">[docs]</a>    <span class="k">def</span> <span class="nf">MPI_Init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lib_mpi</span><span class="o">.</span><span class="n">MPIInit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MPI_Communicator.MPI_GetComm"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPI_Communicator.MPI_GetComm">[docs]</a>    <span class="k">def</span> <span class="nf">MPI_GetComm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lib_mpi</span><span class="o">.</span><span class="n">MPIGetComm</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mpicomm</span><span class="p">))</span></div>
+    
+<div class="viewcode-block" id="MPI_Communicator.MPI_Get_Comm_rank"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPI_Communicator.MPI_Get_Comm_rank">[docs]</a>    <span class="k">def</span> <span class="nf">MPI_Get_Comm_rank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lib_mpi</span><span class="o">.</span><span class="n">getMPICommRank</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mpicomm</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">myRank</span><span class="p">))</span></div>
+    
+<div class="viewcode-block" id="MPI_Communicator.MPI_Get_Comm_size"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPI_Communicator.MPI_Get_Comm_size">[docs]</a>    <span class="k">def</span> <span class="nf">MPI_Get_Comm_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lib_mpi</span><span class="o">.</span><span class="n">getMPICommSize</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mpicomm</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nRanks</span><span class="p">))</span></div>
+    
+<div class="viewcode-block" id="MPI_Communicator.rank"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPI_Communicator.rank">[docs]</a>    <span class="k">def</span> <span class="nf">rank</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">myRank</span></div>
+
+<div class="viewcode-block" id="MPI_Communicator.size"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPI_Communicator.size">[docs]</a>    <span class="k">def</span> <span class="nf">size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nRanks</span></div>
+    
+<div class="viewcode-block" id="MPI_Communicator.DLArrayAllReduce"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPI_Communicator.DLArrayAllReduce">[docs]</a>    <span class="k">def</span> <span class="nf">DLArrayAllReduce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dlarray</span><span class="p">,</span> <span class="n">datatype</span><span class="p">,</span> <span class="n">reduceop</span><span class="p">):</span>
+        <span class="n">lib_mpi</span><span class="o">.</span><span class="n">dlarrayAllReduce</span><span class="p">(</span><span class="n">dlarray</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">c_int</span><span class="p">(</span><span class="n">datatype</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="n">c_int</span><span class="p">(</span><span class="n">reduceop</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">byref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mpicomm</span><span class="p">))</span>   </div>
+
+<div class="viewcode-block" id="MPI_Communicator.allReduce"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPI_Communicator.allReduce">[docs]</a>    <span class="k">def</span> <span class="nf">allReduce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DLArrayAllReduce</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">MPIDataType_t</span><span class="o">.</span><span class="n">MPI_Float32</span><span class="p">,</span> <span class="n">MPIOp_t</span><span class="o">.</span><span class="n">MPI_SUM</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="MPI_Communicator.finish"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.MPI_Communicator.finish">[docs]</a>    <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">lib_mpi</span><span class="o">.</span><span class="n">MPIFinalize</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="mpi_communicator"><a class="viewcode-back" href="../../../hetu.communicator.html#hetu.communicator.mpi_comm.mpi_communicator">[docs]</a><span class="k">def</span> <span class="nf">mpi_communicator</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">MPI_Communicator</span><span class="p">()</span></div>
+
+<span class="c1"># mpirun --allow-run-as-root -np 4 python2 mpi_comm.py</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">comm</span> <span class="o">=</span> <span class="n">mpi_communicator</span><span class="p">()</span>
+    <span class="n">comm</span><span class="o">.</span><span class="n">MPI_GetComm</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;rank = </span><span class="si">%d</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">comm</span><span class="o">.</span><span class="n">rank</span><span class="p">()</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">10</span><span class="p">])</span> <span class="o">*</span> <span class="n">comm</span><span class="o">.</span><span class="n">rank</span><span class="p">()</span><span class="o">.</span><span class="n">value</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="n">comm</span><span class="o">.</span><span class="n">allReduce</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">())</span>
+    <span class="n">comm</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, AlfredWangyj.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
