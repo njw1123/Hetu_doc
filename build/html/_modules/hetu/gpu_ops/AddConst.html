@@ -183,19 +183,19 @@
     <span class="sd">&quot;&quot;&quot;Add a node with a constant.</span>
 <span class="sd">    Make a new instance of AddByConstOp and call the instance.</span>
 
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    node : Node</span>
 <span class="sd">        The Node to be added.</span>
-<span class="sd">    const_val : scalar value</span>
+<span class="sd">    const_val : float</span>
 <span class="sd">        The constant value to be added.</span>
 <span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the sum of a matrix and a constant.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">AddByConstOp</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">const_val</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>

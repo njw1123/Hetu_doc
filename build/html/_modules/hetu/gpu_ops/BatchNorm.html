@@ -332,12 +332,13 @@
 <span class="sd">        Acting on the calculation of mean and variance, the mean and variance values in historical batch are retained.</span>
 <span class="sd">    eps : float</span>
 <span class="sd">        Epsilon value for numerical stability.</span>
-<span class="sd">    ctx : DLContext</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        Return the normalization result of node.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Batch_NormalizationOp</span><span class="p">(</span><span class="n">node_in</span><span class="p">,</span> <span class="n">bn_scale</span><span class="p">,</span> <span class="n">bn_bias</span><span class="p">,</span> <span class="n">momentum</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
@@ -359,12 +360,13 @@
 <span class="sd">        The forward node.</span>
 <span class="sd">    eps : float</span>
 <span class="sd">        Epsilon value for numerical stability.</span>
-<span class="sd">    ctx : DLContext</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the gradient of batch normalization node.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Batch_Normalization_GradientOp</span><span class="p">(</span><span class="n">out_gradient</span><span class="p">,</span> <span class="n">in_node</span><span class="p">,</span> <span class="n">bn_scale</span><span class="p">,</span> <span class="n">forward_node</span><span class="p">,</span> <span class="n">eps</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
@@ -380,12 +382,13 @@
 <span class="sd">        The gradient array.</span>
 <span class="sd">    in_arr : Node</span>
 <span class="sd">        Input array of bn layer.</span>
-<span class="sd">    ctx : DLContext</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the data&#39;s gradient of batch normalization node.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Batch_Normalization_Gradient_of_DataOp</span><span class="p">(</span><span class="n">bn_gradient</span><span class="p">,</span> <span class="n">in_arr</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
@@ -401,12 +404,13 @@
 <span class="sd">        The gradient array.</span>
 <span class="sd">    in_scale :</span>
 <span class="sd">        Scaling parameter of bn layer.</span>
-<span class="sd">    ctx : DLContext</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
-
+<span class="sd">        </span>
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the scale parameter&#39;s gradient of batch normalization node.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Batch_Normalization_Gradient_of_ScaleOp</span><span class="p">(</span><span class="n">bn_gradient</span><span class="p">,</span> <span class="n">in_scale</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
@@ -422,12 +426,13 @@
 <span class="sd">        The gradient array.</span>
 <span class="sd">    in_bias :</span>
 <span class="sd">        Bias parameter of bn layer.</span>
-<span class="sd">    ctx : DLContext</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the bias parameter&#39;s gradient of batch normalization node.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Batch_Normalization_Gradient_of_BiasOp</span><span class="p">(</span><span class="n">bn_gradient</span><span class="p">,</span> <span class="n">in_bias</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>

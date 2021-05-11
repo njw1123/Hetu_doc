@@ -223,12 +223,13 @@
 <span class="sd">        The Node where elements are numerators.</span>
 <span class="sd">    node_B : Node</span>
 <span class="sd">        Another Node where elements are denominators.</span>
-<span class="sd">    ctx : DLContext</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the matrix after division.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">DivOp</span><span class="p">(</span><span class="n">node_A</span><span class="p">,</span> <span class="n">node_B</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
@@ -244,10 +245,13 @@
 <span class="sd">        The constant value to be multiplied.</span>
 <span class="sd">    node_A : Node</span>
 <span class="sd">        The Node where elements are denominators.</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
+<span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the matrix after division.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">DivConstOp</span><span class="p">(</span><span class="n">const_val</span><span class="p">,</span> <span class="n">node_A</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>

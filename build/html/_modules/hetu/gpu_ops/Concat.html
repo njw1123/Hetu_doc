@@ -222,14 +222,15 @@
 <span class="sd">        The first node to be concatenate.</span>
 <span class="sd">    node_B : Node</span>
 <span class="sd">        The second node to be concatenate.</span>
-<span class="sd">    axis : Int</span>
+<span class="sd">    axis : Int, default: 0</span>
 <span class="sd">        The axis along which two nodes are concatenate.</span>
-<span class="sd">    ctx : DLContext</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        Return a new node concatenated by input matrices.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">ConcatOp</span><span class="p">(</span><span class="n">node_A</span><span class="p">,</span> <span class="n">node_B</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
@@ -249,10 +250,13 @@
 <span class="sd">        Axis along which to be concatenated.</span>
 <span class="sd">    idx : Int</span>
 <span class="sd">        The index of concatenation.</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
+<span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the gradient of concat node.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">Concat_gradientOP</span><span class="p">(</span><span class="n">grad_node</span><span class="p">,</span> <span class="n">input_node</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>

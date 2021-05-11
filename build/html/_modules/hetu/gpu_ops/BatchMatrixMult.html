@@ -242,7 +242,7 @@
 
 
 <div class="viewcode-block" id="batch_matmul_op"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.BatchMatrixMult.batch_matmul_op">[docs]</a><span class="k">def</span> <span class="nf">batch_matmul_op</span><span class="p">(</span><span class="n">node_A</span><span class="p">,</span> <span class="n">node_B</span><span class="p">,</span> <span class="n">trans_A</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">trans_B</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Multiplies slices of two matrices in batches.</span>
+    <span class="sd">&quot;&quot;&quot;Multiply slices of two matrices in batches.</span>
 <span class="sd">    Make a new instance of Batch Matrix Multiplication and call the instance.</span>
 
 <span class="sd">    Parameters</span>
@@ -251,16 +251,17 @@
 <span class="sd">        The left operand of the matrix multiplication.</span>
 <span class="sd">    node_B : Node</span>
 <span class="sd">        The right operand of the matrix multiplication.</span>
-<span class="sd">    trans_A : Boolean </span>
+<span class="sd">    trans_A : Boolean, default: False</span>
 <span class="sd">        Whether node_A to be transposed</span>
-<span class="sd">    trans_B : Boolean </span>
+<span class="sd">    trans_B : Boolean, default: False</span>
 <span class="sd">        Whether node_B to be transposed</span>
-<span class="sd">    ctx : DLContext</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        Return the product of matrices.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">BatchMatMulOp</span><span class="p">(</span><span class="n">node_A</span><span class="p">,</span> <span class="n">node_B</span><span class="p">,</span> <span class="n">trans_A</span><span class="p">,</span> <span class="n">trans_B</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>

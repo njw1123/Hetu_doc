@@ -311,12 +311,13 @@
 <span class="sd">        The whole communicator.</span>
 <span class="sd">    comm_groups : List</span>
 <span class="sd">        The list of group communicators.</span>
-<span class="sd">    need_W : Boolean</span>
+<span class="sd">    need_W : Boolean, default: True</span>
 <span class="sd">        Whether need weight matrix, default to be True.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the result after aggregation.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">DistGCN_15dOp</span><span class="p">(</span><span class="n">node_A</span><span class="p">,</span> <span class="n">node_B</span><span class="p">,</span> <span class="n">node_C</span><span class="p">,</span> <span class="n">node_Count_Self</span><span class="p">,</span> <span class="n">node_Count_All</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">replication</span><span class="p">,</span> <span class="n">device_id</span><span class="p">,</span> <span class="n">comm</span><span class="p">,</span> <span class="n">comm_groups</span><span class="p">,</span> <span class="n">need_W</span><span class="o">=</span><span class="n">need_W</span><span class="p">)</span></div>

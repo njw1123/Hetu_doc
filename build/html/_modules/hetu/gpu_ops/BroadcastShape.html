@@ -252,15 +252,16 @@
 <span class="sd">        The Node to be broadcast.</span>
 <span class="sd">    shape : tuple</span>
 <span class="sd">        Target shape.</span>
-<span class="sd">    add_axes : tuple</span>
+<span class="sd">    add_axes : tuple, default :()</span>
 <span class="sd">        The axes to be added.</span>
-<span class="sd">    ctx : DLContext</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
 
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return node after the broadcast.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">BroadcastShapeOp</span><span class="p">(</span><span class="n">node_A</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">add_axes</span><span class="o">=</span><span class="n">add_axes</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>

@@ -209,12 +209,13 @@
 <span class="sd">        Predicted probability.</span>
 <span class="sd">    node_B : Node</span>
 <span class="sd">        Labels.</span>
-<span class="sd">    ctx : DLContext</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the cross entropy loss of nodes.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -232,12 +233,13 @@
 <span class="sd">        Labels.</span>
 <span class="sd">    node_C : Node</span>
 <span class="sd">        The gradient array.</span>
-<span class="sd">    ctx : DLContext</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
 <span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the gradient of binary cross entropy node.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 

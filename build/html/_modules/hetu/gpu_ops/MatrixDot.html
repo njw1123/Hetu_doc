@@ -178,8 +178,7 @@
 
 
 <div class="viewcode-block" id="matrix_dot_op"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.MatrixDot.matrix_dot_op">[docs]</a><span class="k">def</span> <span class="nf">matrix_dot_op</span><span class="p">(</span><span class="n">node_A</span><span class="p">,</span> <span class="n">node_B</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Compute the elementwise multiplication of two matrixs.</span>
-<span class="sd">    Make a new instance of MatrixDotOp and call the instance.</span>
+    <span class="sd">&quot;&quot;&quot;Make a new instance of matrixs elementwise multiplication and call the instance.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -187,13 +186,10 @@
 <span class="sd">        The Node to be multiplied.</span>
 <span class="sd">    node_b : Node</span>
 <span class="sd">        Another Node to be multiplied.</span>
-<span class="sd">    ctx : DLContext, optional, default: None</span>
-<span class="sd">        The context of op.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by MatrixDotOp.</span>
-<span class="sd">        Return the elementwise multiplication of two matrixs.</span>
+<span class="sd">    A new Node instance created by Op.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">MatrixDotOp</span><span class="p">(</span><span class="n">node_A</span><span class="p">,</span> <span class="n">node_B</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>

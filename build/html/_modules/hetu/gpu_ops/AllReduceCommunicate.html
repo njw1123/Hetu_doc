@@ -229,7 +229,7 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">    A new Node instance created by Op. Return the data arrays reduced by all processes.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">AllReduceCommunicateOp</span><span class="p">(</span><span class="n">node</span><span class="p">)</span></div>
@@ -248,7 +248,8 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">        A new Node instance created by Op.</span>
+<span class="sd">        A new Node instance created by Op. </span>
+<span class="sd">        Return the data arrays reduced by group processes.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">GroupAllReduceCommunicateOp</span><span class="p">(</span><span class="n">node</span><span class="p">,</span><span class="n">group_comm</span><span class="p">)</span></div>
