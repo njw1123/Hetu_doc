@@ -1,0 +1,375 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>hetu.dataloader &mdash; Hetu 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Hetu
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Hetu</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>hetu.dataloader</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hetu.dataloader</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span> <span class="k">as</span> <span class="nn">mp</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ndarray</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">gpu_links</span> <span class="k">as</span> <span class="n">gpu_op</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">gpu_ops</span> <span class="k">as</span> <span class="n">ad</span>
+<span class="kn">from</span> <span class="nn">.gpu_ops.Node</span> <span class="kn">import</span> <span class="n">Op</span>
+
+
+<span class="c1"># Multi-Process not useful now, since we don&#39;t have memory to CPU bottleneck</span>
+<div class="viewcode-block" id="Dataloader"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.Dataloader">[docs]</a><span class="k">class</span> <span class="nc">Dataloader</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_data</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span> <span class="k">if</span> <span class="n">func</span> <span class="k">else</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">raw_data</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span> <span class="o">=</span> <span class="n">drop_last</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="Dataloader.init_states"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.Dataloader.init_states">[docs]</a>    <span class="k">def</span> <span class="nf">init_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue_size</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># if use prefetch, needs 3; if only current batch, needs 2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue_size</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Batch size </span><span class="si">%d</span><span class="s1"> invalid.&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">))</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span> <span class="k">else</span> \
+            <span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arr_map</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="c1"># prefetch to fill up the queue</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">queue_size</span><span class="p">):</span>
+            <span class="n">next_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ndarray</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">seq</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span><span class="n">next_index</span><span class="p">]],</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ndarray</span><span class="o">.</span><span class="n">cpu</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">next_index</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arr_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue_size</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="c1"># in case the last batch&#39;s shape is different, pre-allocate an array</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span><span class="p">:</span>
+            <span class="n">res_num</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span>
+            <span class="k">if</span> <span class="n">res_num</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arrs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ndarray</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">tuple</span><span class="p">([</span><span class="n">res_num</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])),</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ndarray</span><span class="o">.</span><span class="n">cpu</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue_size</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_index</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_arr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batchind</span><span class="p">):</span>
+        <span class="c1"># get specific batch</span>
+        <span class="c1"># if the batch to be fetched is the newest one, replace the oldest with new batch</span>
+        <span class="k">assert</span> <span class="n">batchind</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">arr_map</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">arr_map</span><span class="p">[</span><span class="n">batchind</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">batchind</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_key</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_key</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_key</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span>
+            <span class="n">min_key</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_key</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue_size</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">next_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span>
+            <span class="k">if</span> <span class="n">next_index</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span><span class="p">:</span>
+                <span class="n">temp_ind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arr_map</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">min_key</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">temp_ind</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue_size</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span><span class="p">:</span>
+                    <span class="n">temp_ind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rest</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue_size</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arr_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">max_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_ind</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arrs</span><span class="p">[</span><span class="n">temp_ind</span><span class="p">][:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">seq</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span><span class="n">next_index</span><span class="p">]]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_last</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arrs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">seq</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">:</span><span class="n">next_index</span><span class="p">]]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arr_map</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">min_key</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">arr_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">max_key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue_size</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">next_index</span>
+        <span class="k">return</span> <span class="n">res</span>
+
+<div class="viewcode-block" id="Dataloader.get_arr"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.Dataloader.get_arr">[docs]</a>    <span class="k">def</span> <span class="nf">get_arr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># step forward in this function</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_index</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_batch_size</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_index</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples_num</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="Dataloader.get_next_arr"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.Dataloader.get_next_arr">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="Dataloader.get_cur_shape"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.Dataloader.get_cur_shape">[docs]</a>    <span class="k">def</span> <span class="nf">get_cur_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arrs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">arr_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_index</span><span class="p">]]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="GNNDataLoaderOp"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.GNNDataLoaderOp">[docs]</a><span class="k">class</span> <span class="nc">GNNDataLoaderOp</span><span class="p">(</span><span class="n">Op</span><span class="p">):</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">nxt_graph</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ndarray</span><span class="o">.</span><span class="n">cpu</span><span class="p">(</span><span class="mi">0</span><span class="p">)):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">DataloaderOp</span><span class="p">,</span> <span class="p">[],</span> <span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handler</span> <span class="o">=</span> <span class="n">handler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;GNNDataloaderOp&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<div class="viewcode-block" id="GNNDataLoaderOp.get_batch_num"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.GNNDataLoaderOp.get_batch_num">[docs]</a>    <span class="k">def</span> <span class="nf">get_batch_num</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="GNNDataLoaderOp.get_arr"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.GNNDataLoaderOp.get_arr">[docs]</a>    <span class="k">def</span> <span class="nf">get_arr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GNNDataLoaderOp.get_next_arr"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.GNNDataLoaderOp.get_next_arr">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nxt_graph</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="GNNDataLoaderOp.get_cur_shape"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.GNNDataLoaderOp.get_cur_shape">[docs]</a>    <span class="k">def</span> <span class="nf">get_cur_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span></div>
+
+<div class="viewcode-block" id="GNNDataLoaderOp.gradient"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.GNNDataLoaderOp.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_grad</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="GNNDataLoaderOp.infer_shape"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.GNNDataLoaderOp.infer_shape">[docs]</a>    <span class="k">def</span> <span class="nf">infer_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shapes</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="GNNDataLoaderOp.step"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.GNNDataLoaderOp.step">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">nxt_graph</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">nxt_graph</span> <span class="o">=</span> <span class="n">graph</span></div></div>
+
+<div class="viewcode-block" id="DataloaderOp"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.DataloaderOp">[docs]</a><span class="k">class</span> <span class="nc">DataloaderOp</span><span class="p">(</span><span class="n">Op</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataloaders</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">DataloaderOp</span><span class="p">,</span> <span class="p">[],</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">cpu</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">dl</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">dl</span> <span class="k">for</span> <span class="n">dl</span> <span class="ow">in</span> <span class="n">dataloaders</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DataloaderOp</span><span class="si">%d</span><span class="s2">(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<div class="viewcode-block" id="DataloaderOp.get_batch_num"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.DataloaderOp.get_batch_num">[docs]</a>    <span class="k">def</span> <span class="nf">get_batch_num</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">batch_num</span></div>
+
+<div class="viewcode-block" id="DataloaderOp.get_arr"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.DataloaderOp.get_arr">[docs]</a>    <span class="k">def</span> <span class="nf">get_arr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">get_arr</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DataloaderOp.get_next_arr"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.DataloaderOp.get_next_arr">[docs]</a>    <span class="k">def</span> <span class="nf">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">get_next_arr</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DataloaderOp.get_cur_shape"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.DataloaderOp.get_cur_shape">[docs]</a>    <span class="k">def</span> <span class="nf">get_cur_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">get_cur_shape</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DataloaderOp.gradient"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.DataloaderOp.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_grad</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="DataloaderOp.infer_shape"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.DataloaderOp.infer_shape">[docs]</a>    <span class="k">def</span> <span class="nf">infer_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shapes</span><span class="p">):</span>
+        <span class="c1"># actually this function can never be called</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="DataloaderOp.forward_hook"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.DataloaderOp.forward_hook">[docs]</a>    <span class="k">def</span> <span class="nf">forward_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">config</span><span class="o">.</span><span class="n">dataloader_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> \
+            <span class="s1">&#39;Executor uses </span><span class="si">%s</span><span class="s1"> dataloader, not included in (</span><span class="si">%s</span><span class="s1">).&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dataloader_name</span><span class="p">,</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="DataloaderOp.backward_hook"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.DataloaderOp.backward_hook">[docs]</a>    <span class="k">def</span> <span class="nf">backward_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataloaders</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">d</span><span class="o">.</span><span class="n">init_states</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="dataloader_op"><a class="viewcode-back" href="../../hetu.html#hetu.dataloader.dataloader_op">[docs]</a><span class="k">def</span> <span class="nf">dataloader_op</span><span class="p">(</span><span class="n">dataloaders</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    dataloaders: list of dataloaders</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">temp_dataloaders</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">dl</span> <span class="ow">in</span> <span class="n">dataloaders</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dl</span><span class="p">,</span> <span class="n">Dataloader</span><span class="p">):</span>
+            <span class="n">temp_dataloaders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dl</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dl</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">temp_dataloaders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dataloader</span><span class="p">(</span><span class="o">*</span><span class="n">dl</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dl</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">temp_dataloaders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dataloader</span><span class="p">(</span><span class="o">**</span><span class="n">dl</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;Dataloader parameter invalid.&#39;</span>
+    <span class="k">return</span> <span class="n">DataloaderOp</span><span class="p">(</span><span class="n">temp_dataloaders</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, AlfredWangyj.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

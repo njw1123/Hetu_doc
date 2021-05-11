@@ -1,0 +1,502 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>hetu.gpu_ops.ParameterServerCommunicate &mdash; Hetu 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Hetu
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Hetu</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>hetu.gpu_ops.ParameterServerCommunicate</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hetu.gpu_ops.ParameterServerCommunicate</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">.Node</span> <span class="kn">import</span> <span class="n">Op</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">ndarray</span>
+<span class="kn">from</span> <span class="nn">..gpu_links</span> <span class="kn">import</span> <span class="n">matrix_elementwise_multiply_by_const</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">stream</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+
+<div class="viewcode-block" id="ParameterServerCommunicateOp"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.ParameterServerCommunicate.ParameterServerCommunicateOp">[docs]</a><span class="k">class</span> <span class="nc">ParameterServerCommunicateOp</span><span class="p">(</span><span class="n">Op</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodeA</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ParameterServerCommunicateOp</span><span class="p">,</span> <span class="p">[</span><span class="n">nodeA</span><span class="p">],</span> <span class="n">nodeA</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span> <span class="o">=</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">is_gpu_ctx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span> <span class="o">=</span> <span class="n">parameter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span>
+        <span class="c1"># the optimizer not implemented yet! only SGD is supported, calculate on worker</span>
+        <span class="c1"># TODO: implement optimizer on Servers(already implemented, not in use) and Caches(not implemented yet)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="o">-</span><span class="n">optimizer</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="nb">int</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;DMLC_NUM_WORKER&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">psevent</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_get_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">stream_handle</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">push_val</span><span class="o">.</span><span class="n">async_d2h</span><span class="p">(</span><span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">psevent</span><span class="p">)</span>
+            <span class="n">evt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">psevent</span><span class="o">.</span><span class="n">handle</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">input_val</span><span class="o">.</span><span class="n">copyto</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">push_val</span><span class="p">)</span>
+            <span class="n">evt</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">evt</span>
+
+    <span class="k">def</span> <span class="nf">_compute_asp_prefetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_vals</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stream_handle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_push_pull</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stream_handle</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_compute_bsp_prefetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_vals</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stream_handle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_push</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stream_handle</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">BarrierWorker</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pull</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="nf">_compute_no_prefetch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_vals</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stream_handle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_event</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_push</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stream_handle</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_mult_lr_sparse_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="n">input_val</span><span class="o">.</span><span class="n">values</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">input_val</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span>
+
+    <span class="k">def</span> <span class="nf">_mult_lr_dense_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="n">input_val</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">input_val</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span>
+
+    <span class="k">def</span> <span class="nf">_mult_lr_dense_gpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="n">matrix_elementwise_multiply_by_const</span><span class="p">(</span>
+            <span class="n">input_val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_push_pull_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">embedding_push_pull</span><span class="p">(</span>
+            <span class="n">pullkeys</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">),</span> <span class="n">dest</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span><span class="p">,</span>
+            <span class="n">pushkeys</span><span class="o">=</span><span class="n">input_val</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">grads</span><span class="o">=</span><span class="n">input_val</span><span class="o">.</span><span class="n">values</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_push_pull_sparse_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">SSPushPull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="n">input_val</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">input_val</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">)</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_push_pull_halfsparse_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">SDPushPull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="n">input_val</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">input_val</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pull_val</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_push_pull_dense_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">DDPushPull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="n">input_val</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pull_val</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_push_pull_dense_gpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="n">evt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_event</span><span class="p">(</span><span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">DDPushPull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">push_val</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pull_val</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">evt</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_push_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">embedding_update</span><span class="p">(</span><span class="n">input_val</span><span class="o">.</span><span class="n">indices</span><span class="p">,</span> <span class="n">input_val</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_push_sparse_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">SparsePush</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="n">input_val</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">input_val</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_push_dense_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="n">input_val</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_push_dense_gpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">):</span>
+        <span class="n">evt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_event</span><span class="p">(</span><span class="n">input_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">push_val</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="n">evt</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_pull_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">embedding_lookup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_pull_sparse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">SparsePull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">)</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_pull_dense</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">Pull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pull_val</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_wait_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+        <span class="n">ts</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_wait_ps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">Wait</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_event_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">update_ts</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_event_ps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ts</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ParameterServerCommunicateOp.gradient"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.ParameterServerCommunicate.ParameterServerCommunicateOp.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_grad</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="ParameterServerCommunicateOp.infer_shape"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.ParameterServerCommunicate.ParameterServerCommunicateOp.infer_shape">[docs]</a>    <span class="k">def</span> <span class="nf">infer_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shapes</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ParameterServerCommunicateOp.forward_hook"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.ParameterServerCommunicate.ParameterServerCommunicateOp.forward_hook">[docs]</a>    <span class="k">def</span> <span class="nf">forward_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="c1"># disable inplace if not lazy execution</span>
+        <span class="c1"># previously we use array reshape lazy callback to do this, which is deprecated (not efficient)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ctx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span> <span class="o">=</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">is_gpu_ctx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">event</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">create_event_handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comm</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">ps_comm</span>
+        <span class="n">node_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="c1"># using cache</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">cstable_policy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">is_embed</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">node_shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+            <span class="kn">from</span> <span class="nn">hetu.cstable</span> <span class="kn">import</span> <span class="n">CacheSparseTable</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wait</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wait_cache</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_update_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_event_cache</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr_sparse_cpu</span>
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">bsp</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">prefetch</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_push</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_push_cache</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_pull</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pull_cache</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">compute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_bsp_prefetch</span>
+            <span class="k">elif</span> <span class="n">config</span><span class="o">.</span><span class="n">prefetch</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_push_pull</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_push_pull_cache</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">compute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_asp_prefetch</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_push</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_push_cache</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">compute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_no_prefetch</span>
+            <span class="n">limit</span> <span class="o">=</span> <span class="n">node_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">10</span>  <span class="c1"># TODO: need tuning</span>
+            <span class="c1"># only worker 0 will do the initialization on server,</span>
+            <span class="c1"># this function synchronously initialize meta information and do the initialization,</span>
+            <span class="c1"># ALREADY has barrier!</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">initializer</span><span class="o">.</span><span class="n">init_on_ps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">seed</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="n">CacheSparseTable</span><span class="p">(</span><span class="n">limit</span><span class="p">,</span> <span class="n">node_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">node_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">cstable_policy</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">cache_bound</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span>
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">prefetch</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataloader_name</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">local_shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_cur_shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">))</span>
+                <span class="n">local_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span> <span class="o">=</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">local_shape</span><span class="p">),</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ndarray</span><span class="o">.</span><span class="n">cpu</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">update_ts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">embedding_lookup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span><span class="p">))</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">ps_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span>
+            <span class="k">return</span>
+
+        <span class="c1"># initialize</span>
+        <span class="n">self_sparse</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">is_embed</span> <span class="ow">and</span> <span class="n">config</span><span class="o">.</span><span class="n">use_sparse_pull</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">push_val</span> <span class="o">=</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">node_shape</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ndarray</span><span class="o">.</span><span class="n">cpu</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">d2h_stream</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">psevent</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">create_event_handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="c1"># only worker 0 will do the initialization on server,</span>
+        <span class="c1"># this function synchronously initialize meta information and do the initialization,</span>
+        <span class="c1"># ALREADY has barrier!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">initializer</span><span class="o">.</span><span class="n">init_on_ps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">is_embed</span><span class="p">),</span> <span class="n">seed</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">seed</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">opt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">self_sparse</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">prefetch</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataloader_name</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">local_shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_cur_shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">))</span>
+                <span class="n">local_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span> <span class="o">=</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">local_shape</span><span class="p">),</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ndarray</span><span class="o">.</span><span class="n">cpu</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">SparsePull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">)</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">ps_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pull_val</span> <span class="o">=</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">node_shape</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ndarray</span><span class="o">.</span><span class="n">cpu</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">Pull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pull_val</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">ps_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pull_val</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">tensor_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pull_val</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="c1"># config compute function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wait</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wait_ps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_event</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_event_ps</span>
+        <span class="k">if</span> <span class="n">self_sparse</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr_sparse_cpu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_push</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_push_sparse_cpu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pull</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pull_sparse</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_push_pull</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_push_pull_sparse_cpu</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">is_embed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr_sparse_cpu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_push</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_push_sparse_cpu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pull</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pull_dense</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_push_pull</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_push_pull_halfsparse_cpu</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr_dense_cpu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_push</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_push_dense_cpu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pull</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pull_dense</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_push_pull</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_push_pull_dense_cpu</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mult_lr_dense_gpu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_push</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_push_dense_gpu</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pull</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pull_dense</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_push_pull</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_push_pull_dense_gpu</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">bsp</span> <span class="ow">and</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">prefetch</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">self_sparse</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_bsp_prefetch</span>
+        <span class="k">elif</span> <span class="n">config</span><span class="o">.</span><span class="n">prefetch</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">self_sparse</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_asp_prefetch</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">compute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_no_prefetch</span></div></div>
+
+<span class="c1"># 只在正向图插入sparse pull的op dense pull的op在init时完成</span>
+<div class="viewcode-block" id="ParameterServerSparsePullOp"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.ParameterServerCommunicate.ParameterServerSparsePullOp">[docs]</a><span class="k">class</span> <span class="nc">ParameterServerSparsePullOp</span><span class="p">(</span><span class="n">Op</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">deps_node</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">ParameterServerSparsePullOp</span><span class="p">,</span> <span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">+</span> <span class="n">deps_node</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span> <span class="o">=</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">is_gpu_ctx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">psevent</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ParameterServerSparsePullOp.compute"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.ParameterServerCommunicate.ParameterServerSparsePullOp.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_vals</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">comm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comm</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_cache_table</span><span class="p">:</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">embedding_lookup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">update_ts</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span> <span class="o">==</span> <span class="kc">True</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">NDArray</span><span class="p">)</span>
+        <span class="n">comm</span><span class="o">.</span><span class="n">SparsePull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">)</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ParameterServerSparsePullOp.gradient"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.ParameterServerCommunicate.ParameterServerSparsePullOp.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_grad</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="ParameterServerSparsePullOp.infer_shape"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.ParameterServerCommunicate.ParameterServerSparsePullOp.infer_shape">[docs]</a>    <span class="k">def</span> <span class="nf">infer_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shapes</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ParameterServerSparsePullOp.forward_hook"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.ParameterServerCommunicate.ParameterServerSparsePullOp.forward_hook">[docs]</a>    <span class="k">def</span> <span class="nf">forward_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comm</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">ps_comm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_cache_table</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">cstable_policy</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">node_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">use_sparse_pull</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_cache_table</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">is_embed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">dataloader_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">local_shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_cur_shape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">))</span>
+        <span class="n">local_shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span> <span class="o">=</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">local_shape</span><span class="p">),</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ndarray</span><span class="o">.</span><span class="n">cpu</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">ps_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_cache_table</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">cache</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+            <span class="n">ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">embedding_lookup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">update_ts</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">SparsePull</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ps_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dl_node</span><span class="o">.</span><span class="n">get_next_arr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dl_name</span><span class="p">)</span><span class="o">.</span><span class="n">handle</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sparse_pull_val</span><span class="o">.</span><span class="n">handle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parameter</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div></div>
+
+<div class="viewcode-block" id="parameterServerCommunicate_op"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.ParameterServerCommunicate.parameterServerCommunicate_op">[docs]</a><span class="k">def</span> <span class="nf">parameterServerCommunicate_op</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a node for the communication with parameter server.</span>
+<span class="sd">    Make a new instance of ParameterServerCommunicateOp and call the instance.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    node : Node</span>
+<span class="sd">        The Node to do allreduce.</span>
+<span class="sd">    parameter: Node</span>
+<span class="sd">        The parameter Node that corresponding to the gradient.</span>
+<span class="sd">    optimizer: Optimizer object</span>
+<span class="sd">        The optimizer to use.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        A new Node instance created by ParameterServerCommunicateOp.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ParameterServerCommunicateOp</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="parameterServerSparsePull_op"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.ParameterServerCommunicate.parameterServerSparsePull_op">[docs]</a><span class="k">def</span> <span class="nf">parameterServerSparsePull_op</span><span class="p">(</span><span class="n">parameter</span><span class="p">,</span> <span class="n">deps_node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a node for the Sparse Pull communication with parameter server.</span>
+<span class="sd">    Make a new instance of ParameterServerCommunicateOp and call the instance.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parameter: Node</span>
+<span class="sd">        The parameter Node that corresponding to the gradient.</span>
+<span class="sd">    deps_node : Node</span>
+<span class="sd">        The Node to do Pull data.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        A new Node instance created by ParameterServerSparsePullOp.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ParameterServerSparsePullOp</span><span class="p">(</span><span class="n">parameter</span><span class="p">,</span> <span class="n">deps_node</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, AlfredWangyj.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,470 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>hetu.initializers &mdash; Hetu 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Hetu
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Hetu</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>hetu.initializers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hetu.initializers</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">hetu</span> <span class="kn">import</span> <span class="n">gpu_ops</span> <span class="k">as</span> <span class="n">ad</span>
+<span class="kn">from</span> <span class="nn">hetu</span> <span class="kn">import</span> <span class="n">cpu_links</span> <span class="k">as</span> <span class="n">cpu_op</span>
+<span class="kn">from</span> <span class="nn">hetu</span> <span class="kn">import</span> <span class="n">gpu_links</span> <span class="k">as</span> <span class="n">gpu_op</span>
+<span class="kn">from</span> <span class="nn">hetu</span> <span class="kn">import</span> <span class="n">ndarray</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+
+
+<div class="viewcode-block" id="BaseInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.BaseInit">[docs]</a><span class="k">class</span> <span class="nc">BaseInit</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">np_rand</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">seed</span> <span class="o">+</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span> <span class="o">=</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">is_gpu_ctx</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">ctx</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">init_on_gpu</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">init_on_cpu</span><span class="p">(</span><span class="n">np_rand</span><span class="p">)</span>
+
+<div class="viewcode-block" id="BaseInit.init_on_gpu"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.BaseInit.init_on_gpu">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_gpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="BaseInit.init_on_cpu"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.BaseInit.init_on_cpu">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">np_rand</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="BaseInit.init_on_ps"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.BaseInit.init_on_ps">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_ps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comm</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">param_type</span><span class="p">,</span> <span class="n">init_type</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+        <span class="c1"># param types: Dense 0, Sparse 1, CacheSparse 2</span>
+        <span class="k">if</span> <span class="n">param_type</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+            <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">comm</span><span class="o">.</span><span class="n">InitTensor</span><span class="p">(</span><span class="n">nid</span><span class="p">,</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">param_type</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">length</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">width</span><span class="p">),</span> \
+            <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="n">init_type</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_double</span><span class="p">(</span><span class="n">arg1</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_double</span><span class="p">(</span><span class="n">arg2</span><span class="p">),</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_ulonglong</span><span class="p">(</span><span class="n">seed</span><span class="p">),</span> <span class="n">opt</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">opt</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">opt</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div></div>
+
+
+
+<div class="viewcode-block" id="ConstantInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.ConstantInit">[docs]</a><span class="k">class</span> <span class="nc">ConstantInit</span><span class="p">(</span><span class="n">BaseInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constant</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">constant</span> <span class="o">=</span> <span class="n">constant</span>
+
+<div class="viewcode-block" id="ConstantInit.init_on_gpu"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.ConstantInit.init_on_gpu">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_gpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+        <span class="n">gpu_op</span><span class="o">.</span><span class="n">array_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConstantInit.init_on_cpu"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.ConstantInit.init_on_cpu">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">np_rand</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">._base</span> <span class="kn">import</span> <span class="n">DNNL_LIB</span>
+        <span class="k">if</span> <span class="n">DNNL_LIB</span><span class="p">[</span><span class="s1">&#39;cpu_ArraySet&#39;</span><span class="p">]:</span>
+            <span class="n">cpu_op</span><span class="o">.</span><span class="n">array_set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConstantInit.init_on_ps"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.ConstantInit.init_on_ps">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_ps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comm</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">param_type</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">init_on_ps</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">param_type</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">constant</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ZerosInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.ZerosInit">[docs]</a><span class="k">class</span> <span class="nc">ZerosInit</span><span class="p">(</span><span class="n">ConstantInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OnesInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.OnesInit">[docs]</a><span class="k">class</span> <span class="nc">OnesInit</span><span class="p">(</span><span class="n">ConstantInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="UniformInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.UniformInit">[docs]</a><span class="k">class</span> <span class="nc">UniformInit</span><span class="p">(</span><span class="n">BaseInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">low</span> <span class="o">=</span> <span class="n">low</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">high</span> <span class="o">=</span> <span class="n">high</span>
+
+<div class="viewcode-block" id="UniformInit.init_on_gpu"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.UniformInit.init_on_gpu">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_gpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+        <span class="n">gpu_op</span><span class="o">.</span><span class="n">uniform_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">high</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UniformInit.init_on_cpu"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.UniformInit.init_on_cpu">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">np_rand</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">._base</span> <span class="kn">import</span> <span class="n">DNNL_LIB</span>
+        <span class="k">if</span> <span class="n">DNNL_LIB</span><span class="p">[</span><span class="s1">&#39;cpu_UniformInit&#39;</span><span class="p">]:</span>
+            <span class="n">cpu_op</span><span class="o">.</span><span class="n">uniform_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">high</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">[:]</span> <span class="o">=</span>  <span class="n">np_rand</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">high</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="UniformInit.init_on_ps"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.UniformInit.init_on_ps">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_ps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comm</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">param_type</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">init_on_ps</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">param_type</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">low</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">high</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="GeneralizedXavierUniformInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.GeneralizedXavierUniformInit">[docs]</a><span class="k">class</span> <span class="nc">GeneralizedXavierUniformInit</span><span class="p">(</span><span class="n">UniformInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gain</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;fan_in&#39;</span><span class="p">,</span> <span class="s1">&#39;fan_out&#39;</span><span class="p">,</span> <span class="s1">&#39;avg&#39;</span><span class="p">),</span> <span class="s1">&#39;Mode </span><span class="si">%s</span><span class="s1"> not valid.&#39;</span> <span class="o">%</span> <span class="n">mode</span>
+        <span class="k">assert</span> <span class="n">gain</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Gain value </span><span class="si">%s</span><span class="s1"> not valid.&#39;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">gain</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Generalized xavier requires shape to be at least 2D.&#39;</span>
+        <span class="n">hw_scale</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="n">fan_in</span> <span class="o">=</span> <span class="n">hw_scale</span> <span class="o">*</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">fan_out</span> <span class="o">=</span> <span class="n">hw_scale</span> <span class="o">*</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;fan_in&#39;</span><span class="p">:</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="n">fan_in</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;fan_out&#39;</span><span class="p">:</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="n">fan_out</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">fan_in</span> <span class="o">+</span> <span class="n">fan_out</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">limit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gain</span> <span class="o">/</span> <span class="n">factor</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">-</span><span class="n">limit</span><span class="p">,</span> <span class="n">limit</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="XavierUniformInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.XavierUniformInit">[docs]</a><span class="k">class</span> <span class="nc">XavierUniformInit</span><span class="p">(</span><span class="n">GeneralizedXavierUniformInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="s1">&#39;avg&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HeUniformInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.HeUniformInit">[docs]</a><span class="k">class</span> <span class="nc">HeUniformInit</span><span class="p">(</span><span class="n">GeneralizedXavierUniformInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mf">6.0</span><span class="p">,</span> <span class="s1">&#39;fan_in&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LecunUniformInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.LecunUniformInit">[docs]</a><span class="k">class</span> <span class="nc">LecunUniformInit</span><span class="p">(</span><span class="n">GeneralizedXavierUniformInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="s1">&#39;fan_in&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="NormalInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.NormalInit">[docs]</a><span class="k">class</span> <span class="nc">NormalInit</span><span class="p">(</span><span class="n">BaseInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">stddev</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="n">mean</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stddev</span> <span class="o">=</span> <span class="n">stddev</span>
+
+<div class="viewcode-block" id="NormalInit.init_on_gpu"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.NormalInit.init_on_gpu">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_gpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+        <span class="n">gpu_op</span><span class="o">.</span><span class="n">normal_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stddev</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NormalInit.init_on_cpu"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.NormalInit.init_on_cpu">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">np_rand</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">._base</span> <span class="kn">import</span> <span class="n">DNNL_LIB</span>
+        <span class="k">if</span> <span class="n">DNNL_LIB</span><span class="p">[</span><span class="s1">&#39;cpu_NormalInit&#39;</span><span class="p">]:</span>
+            <span class="n">cpu_op</span><span class="o">.</span><span class="n">normal_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stddev</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np_rand</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stddev</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NormalInit.init_on_ps"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.NormalInit.init_on_ps">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_ps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comm</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">param_type</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">init_on_ps</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">param_type</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stddev</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="GeneralizedXavierNormalInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.GeneralizedXavierNormalInit">[docs]</a><span class="k">class</span> <span class="nc">GeneralizedXavierNormalInit</span><span class="p">(</span><span class="n">NormalInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gain</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;fan_in&#39;</span><span class="p">,</span> <span class="s1">&#39;fan_out&#39;</span><span class="p">,</span> <span class="s1">&#39;avg&#39;</span><span class="p">),</span> <span class="s1">&#39;Mode not allowed.&#39;</span>
+        <span class="k">assert</span> <span class="n">gain</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Gain value not allowed.&#39;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Generalized xavier requires shape to be at least 2D.&#39;</span>
+        <span class="n">hw_scale</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="n">fan_in</span> <span class="o">=</span> <span class="n">hw_scale</span> <span class="o">*</span> <span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">fan_out</span> <span class="o">=</span> <span class="n">hw_scale</span> <span class="o">*</span> <span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;fan_in&#39;</span><span class="p">:</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="n">fan_in</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;fan_out&#39;</span><span class="p">:</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="n">fan_out</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="p">(</span><span class="n">fan_in</span> <span class="o">+</span> <span class="n">fan_out</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gain</span> <span class="o">/</span> <span class="n">factor</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="XavierNormalInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.XavierNormalInit">[docs]</a><span class="k">class</span> <span class="nc">XavierNormalInit</span><span class="p">(</span><span class="n">GeneralizedXavierNormalInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;avg&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="HeNormalInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.HeNormalInit">[docs]</a><span class="k">class</span> <span class="nc">HeNormalInit</span><span class="p">(</span><span class="n">GeneralizedXavierNormalInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="s1">&#39;fan_in&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LecunNormalInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.LecunNormalInit">[docs]</a><span class="k">class</span> <span class="nc">LecunNormalInit</span><span class="p">(</span><span class="n">GeneralizedXavierNormalInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="s1">&#39;fan_in&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TruncatedNormalInit"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.TruncatedNormalInit">[docs]</a><span class="k">class</span> <span class="nc">TruncatedNormalInit</span><span class="p">(</span><span class="n">BaseInit</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">stddev</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mean</span> <span class="o">=</span> <span class="n">mean</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stddev</span> <span class="o">=</span> <span class="n">stddev</span>
+
+<div class="viewcode-block" id="TruncatedNormalInit.init_on_gpu"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.TruncatedNormalInit.init_on_gpu">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_gpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+        <span class="n">gpu_op</span><span class="o">.</span><span class="n">truncated_normal_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stddev</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">stream</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TruncatedNormalInit.init_on_cpu"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.TruncatedNormalInit.init_on_cpu">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_cpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">np_rand</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">._base</span> <span class="kn">import</span> <span class="n">DNNL_LIB</span>
+        <span class="k">if</span> <span class="n">DNNL_LIB</span><span class="p">[</span><span class="s1">&#39;cpu_TruncatedNormalInit&#39;</span><span class="p">]:</span>
+            <span class="n">cpu_op</span><span class="o">.</span><span class="n">truncated_normal_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stddev</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># this function cannot use np_rand</span>
+            <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">truncnorm</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">tensor_value</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">truncnorm</span><span class="p">(</span>
+                <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stddev</span><span class="p">)</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TruncatedNormalInit.init_on_ps"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.TruncatedNormalInit.init_on_ps">[docs]</a>    <span class="k">def</span> <span class="nf">init_on_ps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comm</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">param_type</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">opt</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">init_on_ps</span><span class="p">(</span><span class="n">comm</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">param_type</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stddev</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">opt</span><span class="p">)</span></div></div>
+
+
+
+<span class="c1">### here we provide easy APIs</span>
+
+
+<div class="viewcode-block" id="zeros"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.zeros">[docs]</a><span class="k">def</span> <span class="nf">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;zeros_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">ZerosInit</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ones"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.ones">[docs]</a><span class="k">def</span> <span class="nf">ones</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;ones_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">OnesInit</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="constant"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.constant">[docs]</a><span class="k">def</span> <span class="nf">constant</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;constant_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">ConstantInit</span><span class="p">(</span><span class="n">fill_value</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="truncated_normal"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.truncated_normal">[docs]</a><span class="k">def</span> <span class="nf">truncated_normal</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;truncated_normal_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">TruncatedNormalInit</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">stddev</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="random_normal"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.random_normal">[docs]</a><span class="k">def</span> <span class="nf">random_normal</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;random_normal_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">NormalInit</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">stddev</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="random_uniform"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.random_uniform">[docs]</a><span class="k">def</span> <span class="nf">random_uniform</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">minval</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;random_uniform_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">UniformInit</span><span class="p">(</span><span class="n">minval</span><span class="p">,</span> <span class="n">maxval</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xavier_normal"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.xavier_normal">[docs]</a><span class="k">def</span> <span class="nf">xavier_normal</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;xavier_normal_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">XavierNormalInit</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="xavier_uniform"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.xavier_uniform">[docs]</a><span class="k">def</span> <span class="nf">xavier_uniform</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;xavier_uniform_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">XavierUniformInit</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="he_normal"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.he_normal">[docs]</a><span class="k">def</span> <span class="nf">he_normal</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;he_normal_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">HeNormalInit</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="he_uniform"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.he_uniform">[docs]</a><span class="k">def</span> <span class="nf">he_uniform</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;he_uniform_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">HeUniformInit</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="lecun_normal"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.lecun_normal">[docs]</a><span class="k">def</span> <span class="nf">lecun_normal</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;lecun_normal_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">LecunNormalInit</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="lecun_uniform"><a class="viewcode-back" href="../../hetu.html#hetu.initializers.lecun_uniform">[docs]</a><span class="k">def</span> <span class="nf">lecun_uniform</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;lecun_uniform_initializer&#39;</span>
+    <span class="n">init</span> <span class="o">=</span> <span class="n">LecunUniformInit</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ad</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">trainable</span><span class="o">=</span><span class="n">trainable</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, AlfredWangyj.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

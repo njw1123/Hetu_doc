@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>hetu.gpu_ops.Node &mdash; Hetu 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Hetu
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Hetu</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>hetu.gpu_ops.Node</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hetu.gpu_ops.Node</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">ndarray</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">stream</span>
+<span class="n">G_NODE_ID</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+<div class="viewcode-block" id="Op"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Node.Op">[docs]</a><span class="k">class</span> <span class="nc">Op</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Node in a computation graph.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op_type</span><span class="p">,</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Constructor</span>
+<span class="sd">            Instance variables</span>
+<span class="sd">            ------------------</span>
+<span class="sd">            self.inputs: the list of input nodes.</span>
+<span class="sd">            self.const_attr: the add or multiply constant.</span>
+<span class="sd">                e.g. self.const_attr=5 if this node is created by x+5.</span>
+<span class="sd">            self.name: node name for debugging.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span> <span class="o">=</span> <span class="n">inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span> <span class="o">=</span> <span class="n">ctx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">const_attr</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lazy_execution</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">op_type</span> <span class="o">=</span> <span class="n">op_type</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">global</span> <span class="n">G_NODE_ID</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">G_NODE_ID</span>
+        <span class="n">G_NODE_ID</span> <span class="o">=</span> <span class="n">G_NODE_ID</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">op_type</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;(&#39;</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">inp</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">inp</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">])</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adding two nodes return a new node.&quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.AddElewise</span> <span class="kn">import</span> <span class="n">add_op</span>
+        <span class="kn">from</span> <span class="nn">.AddConst</span> <span class="kn">import</span> <span class="n">addbyconst_op</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Op</span><span class="p">):</span>
+            <span class="n">new_node</span> <span class="o">=</span> <span class="n">add_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Add by a constant stores the constant in new node&#39;s const_attr</span>
+            <span class="c1"># &#39;other&#39; argument is a constant</span>
+            <span class="n">new_node</span> <span class="o">=</span> <span class="n">addbyconst_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_node</span>
+
+    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Multiplying two nodes return a new node.&quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.MultiplyElewise</span> <span class="kn">import</span> <span class="n">mul_op</span>
+        <span class="kn">from</span> <span class="nn">.MultiplyConst</span> <span class="kn">import</span> <span class="n">mul_byconst_op</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Op</span><span class="p">):</span>
+            <span class="n">new_node</span> <span class="o">=</span> <span class="n">mul_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Mul by a constant stores the constant in new node&#39;s const_attr</span>
+            <span class="c1"># &#39;other&#39; argument is a constant</span>
+            <span class="n">new_node</span> <span class="o">=</span> <span class="n">mul_byconst_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_node</span>
+
+    <span class="c1"># Allow left-hand-side add and multiply.</span>
+    <span class="fm">__radd__</span> <span class="o">=</span> <span class="fm">__add__</span>
+    <span class="fm">__rmul__</span> <span class="o">=</span> <span class="fm">__mul__</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Allow print to display node name.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<div class="viewcode-block" id="Op.compute"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Node.Op.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_vals</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given values of input nodes, compute the output value.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node: node that performs the compute.</span>
+<span class="sd">        input_vals: values of input nodes.</span>
+<span class="sd">        output_val: output value of the node, modified in-place.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Op.gradient"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Node.Op.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_grad</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given output gradient, compute partial gradient to each input node.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node: node that performs the gradient.</span>
+<span class="sd">        output_grad: output gradient summed from children nodes&#39; contributions</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        A list of gradient contributions to each input node respectively.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Op.infer_shape"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Node.Op.infer_shape">[docs]</a>    <span class="k">def</span> <span class="nf">infer_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shapes</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given shapes of input nodes, compute shape of output node.</span>
+<span class="sd">        Implementation note:</span>
+<span class="sd">        It&#39;s simpler to treat shape of constants as (1,), so that constants can</span>
+<span class="sd">        be stored as a numpy array too and you would need fewer special case</span>
+<span class="sd">        handling.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        node: node whose shape is being inferred.</span>
+<span class="sd">        input_vals: shapes of input nodes.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        A tuple representing the shape of output node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Op.add_transfer_op"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Node.Op.add_transfer_op">[docs]</a>    <span class="k">def</span> <span class="nf">add_transfer_op</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_node</span><span class="p">,</span> <span class="n">dst_ctx</span><span class="p">,</span> <span class="n">h2d_ops</span><span class="p">,</span> <span class="n">d2h_ops</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">.DataTransfer</span> <span class="kn">import</span> <span class="n">datah2d_op</span><span class="p">,</span> <span class="n">datad2h_op</span><span class="p">,</span> <span class="n">datad2h_sparse_op</span>
+        <span class="k">def</span> <span class="nf">add_h2d</span><span class="p">(</span><span class="n">prev_node</span><span class="p">,</span> <span class="n">cur_ctx</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">prev_node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">h2d_ops</span><span class="p">:</span>
+                <span class="n">h2d_ops</span><span class="p">[</span><span class="n">prev_node</span><span class="p">]</span> <span class="o">=</span> <span class="n">datah2d_op</span><span class="p">(</span><span class="n">prev_node</span><span class="p">,</span> <span class="n">cur_ctx</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">h2d_ops</span><span class="p">[</span><span class="n">prev_node</span><span class="p">]</span>
+        <span class="k">def</span> <span class="nf">add_d2h</span><span class="p">(</span><span class="n">prev_node</span><span class="p">):</span>
+            <span class="kn">from</span> <span class="nn">.EmbeddingLookUp</span> <span class="kn">import</span> <span class="n">EmbeddingLookUp_Gradient</span>
+            <span class="k">if</span> <span class="n">prev_node</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">d2h_ops</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">prev_node</span><span class="p">,</span> <span class="n">EmbeddingLookUp_Gradient</span><span class="p">):</span>
+                    <span class="n">d2h_ops</span><span class="p">[</span><span class="n">prev_node</span><span class="p">]</span> <span class="o">=</span> <span class="n">datad2h_sparse_op</span><span class="p">(</span><span class="n">prev_node</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">d2h_ops</span><span class="p">[</span><span class="n">prev_node</span><span class="p">]</span> <span class="o">=</span> <span class="n">datad2h_op</span><span class="p">(</span><span class="n">prev_node</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">prev_node</span><span class="o">.</span><span class="n">event</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># here we should ensure the computation complete before d2h</span>
+                    <span class="n">prev_node</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">create_event_handle</span><span class="p">(</span><span class="n">prev_node</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">d2h_ops</span><span class="p">[</span><span class="n">prev_node</span><span class="p">]</span>
+        <span class="c1"># Though we considered proper datatransfer op here,</span>
+        <span class="c1"># actually we don&#39;t support model parallel on multi-gpus.</span>
+        <span class="c1"># Could be implemented in future.</span>
+        <span class="n">src_ctx</span> <span class="o">=</span> <span class="n">src_node</span><span class="o">.</span><span class="n">ctx</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">src_node</span>
+        <span class="k">if</span> <span class="n">src_ctx</span> <span class="o">!=</span> <span class="n">dst_ctx</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">is_gpu_ctx</span><span class="p">(</span><span class="n">dst_ctx</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">is_gpu_ctx</span><span class="p">(</span><span class="n">src_ctx</span><span class="p">):</span>
+                    <span class="c1"># result = add_h2d(add_d2h(result), dst_ctx)</span>
+                    <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s1">&#39;Model parallel on multi-GPUs is not supported now!&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">result</span> <span class="o">=</span> <span class="n">add_h2d</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">dst_ctx</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">add_d2h</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+    
+<div class="viewcode-block" id="Op.forward_hook"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Node.Op.forward_hook">[docs]</a>    <span class="k">def</span> <span class="nf">forward_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="c1"># disable inplace if not lazy execution</span>
+        <span class="c1"># previously we use array reshape lazy callback to do this, which is deprecated (not efficient)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">lazy_execution</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+                <span class="n">node</span><span class="o">.</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># insert data transfer op if needed</span>
+        <span class="n">input_ctxs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">n</span><span class="o">.</span><span class="n">ctx</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">])</span>
+        <span class="k">assert</span> <span class="kc">None</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">input_ctxs</span><span class="p">,</span> <span class="s1">&#39;Inputs contexts should already be determined.&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">ctx_infer_mode</span> <span class="o">==</span> <span class="s1">&#39;from_prev&#39;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_ctxs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span> <span class="o">=</span> <span class="n">input_ctxs</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">context</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_transfer_op</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">h2d_ops</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">d2h_ops</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span> <span class="o">=</span> <span class="n">ndarray</span><span class="o">.</span><span class="n">is_gpu_ctx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span>
+        <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">eval_node_list</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_gpu</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">stream</span><span class="o">.</span><span class="n">create_event_handle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ctx</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="Op.backward_hook"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Node.Op.backward_hook">[docs]</a>    <span class="k">def</span> <span class="nf">backward_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="k">pass</span></div></div>
+        
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, AlfredWangyj.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

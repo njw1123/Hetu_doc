@@ -10,19 +10,27 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+sys.path.insert(0, os.path.abspath('../../python'))
+sys.path.insert(0, os.path.abspath('../../python/hetu'))
+
+
+from recommonmark.parser import CommonMarkParser
+source_parsers = {
+    '.md': CommonMarkParser,
+}
+source_suffix = ['.rst', '.md']
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'Hetu'
-copyright = '2021, Xupeng Miao'
-author = 'Xupeng Miao'
+copyright = '2021, AlfredWangyj'
+author = 'AlfredWangyj'
 
 # The full version, including alpha/beta/rc tags
-release = 'v1'
+release = '1.0.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,6 +39,16 @@ release = 'v1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.doctest',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx.ext.coverage',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.ifconfig',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages',
+    'numpydoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -47,7 +65,6 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-#html_theme = 'alabaster'
 html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,

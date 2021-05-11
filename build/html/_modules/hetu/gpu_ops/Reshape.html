@@ -1,0 +1,385 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>hetu.gpu_ops.Reshape &mdash; Hetu 1.0.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Hetu
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Hetu</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>hetu.gpu_ops.Reshape</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for hetu.gpu_ops.Reshape</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">from</span> <span class="nn">.Node</span> <span class="kn">import</span> <span class="n">Op</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">ndarray</span>
+<span class="kn">from</span> <span class="nn">.._base</span> <span class="kn">import</span> <span class="n">DNNL_LIB</span>
+<span class="kn">from</span> <span class="nn">..cpu_links</span> <span class="kn">import</span> <span class="n">reshape</span> <span class="k">as</span> <span class="n">cpu_reshape</span>
+<span class="kn">from</span> <span class="nn">..gpu_links</span> <span class="kn">import</span> <span class="n">array_reshape</span>
+
+
+<div class="viewcode-block" id="Array_ReshapeOp"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.Array_ReshapeOp">[docs]</a><span class="k">class</span> <span class="nc">Array_ReshapeOp</span><span class="p">(</span><span class="n">Op</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_A</span><span class="p">,</span> <span class="n">output_shape</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">Array_ReshapeOp</span><span class="p">,</span> <span class="p">[</span><span class="n">node_A</span><span class="p">],</span> <span class="n">ctx</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span> <span class="o">=</span> <span class="n">output_shape</span>
+
+<div class="viewcode-block" id="Array_ReshapeOp.compute"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.Array_ReshapeOp.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_vals</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">assert</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">input_vals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">input_size</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)):</span>
+            <span class="n">input_size</span> <span class="o">*=</span> <span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="c1"># check if there exists -1 in output_shape</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">output_size</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">output_shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output_shape</span><span class="p">)):</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">output_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">cnt</span> <span class="o">=</span> <span class="n">cnt</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">assert</span><span class="p">(</span><span class="n">cnt</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">output_size</span> <span class="o">*=</span> <span class="n">output_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">idx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="n">input_size</span> <span class="o">==</span> <span class="n">output_size</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output_size</span> <span class="o">=</span> <span class="n">output_size</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="p">(</span><span class="n">input_size</span> <span class="o">%</span> <span class="n">output_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">output_shape</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_size</span> <span class="o">//</span> <span class="n">output_size</span>
+        <span class="n">output_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">output_shape</span><span class="p">)</span>
+        <span class="c1"># self.output_shape = output_shape</span>
+        <span class="c1"># print &quot;reshape input_shape&quot;,self.input_shape</span>
+        <span class="c1"># print &quot;reshape output_shape &quot;, output_shape</span>
+        <span class="c1"># print input_vals[0].shape,output_val.shape</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">DNNL_LIB</span><span class="p">[</span><span class="s1">&#39;cpu_Reshape&#39;</span><span class="p">]:</span>
+                <span class="n">cpu_reshape</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">output_val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">output_val</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output_shape</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inplace</span><span class="p">:</span>
+                <span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">output_shape</span><span class="p">,</span> <span class="n">output_val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">array_reshape</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">output_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">)</span>
+            <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            arr = ndarray.DLArray()</span>
+<span class="sd">            src_handle = input_vals[0].handle</span>
+<span class="sd">            arr.data = src_handle.contents.data</span>
+<span class="sd">            arr.ctx = src_handle.contents.ctx</span>
+<span class="sd">            arr.ndim = len(output_shape)</span>
+<span class="sd">            arr.shape = (ctypes.c_int64 * len(output_shape))(*output_shape)</span>
+<span class="sd">            dst_handle = ctypes.pointer(arr)</span>
+<span class="sd">            output_val.handle = dst_handle</span>
+<span class="sd">            output_val.no_free = True</span>
+<span class="sd">            &#39;&#39;&#39;</span></div>
+            <span class="c1"># print(output_val.handle)</span>
+            <span class="c1"># print(output_val.handle.data)</span>
+            <span class="c1"># print(output_val.handle.contents)</span>
+
+<div class="viewcode-block" id="Array_ReshapeOp.gradient"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.Array_ReshapeOp.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_grad</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">array_reshape_gradient_op</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">output_grad</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">output_grad</span><span class="o">.</span><span class="n">ctx</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="Array_ReshapeOp.infer_shape"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.Array_ReshapeOp.infer_shape">[docs]</a>    <span class="k">def</span> <span class="nf">infer_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shapes</span><span class="p">):</span>
+
+        <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">input_shapes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">input_size</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">input_shape</span> <span class="o">=</span> <span class="n">input_shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">input_shape</span><span class="p">)):</span>
+            <span class="n">input_size</span> <span class="o">*=</span> <span class="n">input_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="c1"># check if there exists -1 in output_shape</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">output_size</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">output_shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">output_shape</span><span class="p">)):</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">output_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">cnt</span> <span class="o">=</span> <span class="n">cnt</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">assert</span><span class="p">(</span><span class="n">cnt</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="n">output_size</span> <span class="o">*=</span> <span class="n">output_shape</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">idx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="n">input_size</span> <span class="o">==</span> <span class="n">output_size</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">output_size</span> <span class="o">=</span> <span class="n">output_size</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="p">(</span><span class="n">input_size</span> <span class="o">%</span> <span class="n">output_size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">output_shape</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_size</span> <span class="o">//</span> <span class="n">output_size</span>
+        <span class="n">output_shape</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">output_shape</span><span class="p">)</span>
+        <span class="c1"># self.output_shape = output_shape</span>
+        <span class="c1"># print input_shapes[0]</span>
+        <span class="c1"># print output_shape</span>
+        <span class="k">return</span> <span class="n">output_shape</span></div>
+
+<div class="viewcode-block" id="Array_ReshapeOp.backward_hook"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.Array_ReshapeOp.backward_hook">[docs]</a>    <span class="k">def</span> <span class="nf">backward_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inplace</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">enable_lazy</span> <span class="ow">and</span> <span class="bp">self</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">eval_node_list</span></div></div>
+
+
+<div class="viewcode-block" id="Array_Reshape_GradientOp"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.Array_Reshape_GradientOp">[docs]</a><span class="k">class</span> <span class="nc">Array_Reshape_GradientOp</span><span class="p">(</span><span class="n">Op</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_in</span><span class="p">,</span> <span class="n">node_out</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">Array_Reshape_GradientOp</span><span class="p">,</span> <span class="p">[</span><span class="n">node_in</span><span class="p">,</span> <span class="n">node_out</span><span class="p">],</span> <span class="n">ctx</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Array_Reshape_GradientOp.compute"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.Array_Reshape_GradientOp.compute">[docs]</a>    <span class="k">def</span> <span class="nf">compute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_vals</span><span class="p">,</span> <span class="n">output_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># the size of input_array</span>
+        <span class="n">shapeIn</span> <span class="o">=</span> <span class="n">input_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="c1"># print input_vals[1].shape</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_cpu</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">DNNL_LIB</span><span class="p">[</span><span class="s1">&#39;cpu_Reshape&#39;</span><span class="p">]:</span>
+                <span class="n">cpu_reshape</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">output_val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">output_val</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">input_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">asnumpy</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shapeIn</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inplace</span><span class="p">:</span>
+                <span class="n">input_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shapeIn</span><span class="p">,</span> <span class="n">output_val</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">array_reshape</span><span class="p">(</span><span class="n">input_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">output_val</span><span class="p">,</span> <span class="n">stream_handle</span><span class="p">)</span>
+            <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">            arr = ndarray.DLArray()</span>
+<span class="sd">            src_handle = input_vals[1].handle</span>
+<span class="sd">            arr.data = src_handle.contents.data</span>
+<span class="sd">            arr.ctx = src_handle.contents.ctx</span>
+<span class="sd">            arr.ndim = len(shapeIn)</span>
+<span class="sd">            arr.shape = (ctypes.c_int64 * len(shapeIn))(*shapeIn)</span>
+<span class="sd">            dst_handle = ctypes.pointer(arr)</span>
+<span class="sd">            output_val.handle = dst_handle</span>
+<span class="sd">            output_val.no_free = True</span>
+<span class="sd">            &#39;&#39;&#39;</span></div>
+
+<div class="viewcode-block" id="Array_Reshape_GradientOp.gradient"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.Array_Reshape_GradientOp.gradient">[docs]</a>    <span class="k">def</span> <span class="nf">gradient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_grad</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Array_Reshape_GradientOp.infer_shape"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.Array_Reshape_GradientOp.infer_shape">[docs]</a>    <span class="k">def</span> <span class="nf">infer_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_shapes</span><span class="p">):</span>
+        <span class="c1"># print input_shapes[0]</span>
+        <span class="k">return</span> <span class="n">input_shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="Array_Reshape_GradientOp.backward_hook"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.Array_Reshape_GradientOp.backward_hook">[docs]</a>    <span class="k">def</span> <span class="nf">backward_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inplace</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">enable_lazy</span> <span class="ow">and</span> <span class="bp">self</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">eval_node_list</span></div></div>
+
+
+<div class="viewcode-block" id="array_reshape_op"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.array_reshape_op">[docs]</a><span class="k">def</span> <span class="nf">array_reshape_op</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">output_shape</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reshapes an input array node without copy.</span>
+<span class="sd">    Make a new instance of Array_ReshapeOp and call the instance.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    node : Node</span>
+<span class="sd">        Input variable.</span>
+<span class="sd">    output_shape: tuple(int)</span>
+<span class="sd">        Expected shape of the output array.</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
+<span class="sd">        The context of op.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        A new Node instance created by Array_ReshapeOp.</span>
+<span class="sd">        Return the reshaped array node.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Array_ReshapeOp</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">output_shape</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="array_reshape_gradient_op"><a class="viewcode-back" href="../../../hetu.gpu_ops.html#hetu.gpu_ops.Reshape.array_reshape_gradient_op">[docs]</a><span class="k">def</span> <span class="nf">array_reshape_gradient_op</span><span class="p">(</span><span class="n">node_in</span><span class="p">,</span> <span class="n">node_out</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gradient of reshape operation.</span>
+<span class="sd">    Make a new instance of Array_Reshape_GradientOp and call the instance.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    node_in : Node</span>
+<span class="sd">        Input node of reshape operation.</span>
+<span class="sd">    node_out: Node</span>
+<span class="sd">        Previous gradient node.</span>
+<span class="sd">    ctx : DLContext, optional, default: None</span>
+<span class="sd">        The context of op.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">        A new Node instance created by Array_Reshape_GradientOp.</span>
+<span class="sd">        Return the gradient of reshape operation.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Array_Reshape_GradientOp</span><span class="p">(</span><span class="n">node_in</span><span class="p">,</span> <span class="n">node_out</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">ctx</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, AlfredWangyj.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
