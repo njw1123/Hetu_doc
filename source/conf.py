@@ -27,8 +27,8 @@ source_suffix = ['.rst', '.md']
 # -- Project information -----------------------------------------------------
 
 project = 'Hetu'
-copyright = '2021, AlfredWangyj'
-author = 'AlfredWangyj'
+copyright = '2021, Peking University'
+author = 'hsword'
 
 # The full version, including alpha/beta/rc tags
 release = '1.0.0'

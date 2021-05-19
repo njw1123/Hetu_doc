@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>hetu.gpu_links package &mdash; Hetu 1.0.0 documentation</title>
@@ -14,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -30,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -83,65 +85,15 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">hetu.gpu_links package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.AddConstLink">hetu.gpu_links.AddConstLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.AddElewiseLink">hetu.gpu_links.AddElewiseLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.ArraySetLink">hetu.gpu_links.ArraySetLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.AvgPoolLink">hetu.gpu_links.AvgPoolLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.BatchMatrixMultLink">hetu.gpu_links.BatchMatrixMultLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.BinaryCrossEntropyLink">hetu.gpu_links.BinaryCrossEntropyLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.BroadcastLink">hetu.gpu_links.BroadcastLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.BroadcastShapeLink">hetu.gpu_links.BroadcastShapeLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.ConcatLink">hetu.gpu_links.ConcatLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.Conv2dBroadcastLink">hetu.gpu_links.Conv2dBroadcastLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.Conv2dLink">hetu.gpu_links.Conv2dLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.Conv2dReduceSumLink">hetu.gpu_links.Conv2dReduceSumLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.CuSparseLink">hetu.gpu_links.CuSparseLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.CudnnAvgPoolLink">hetu.gpu_links.CudnnAvgPoolLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.CudnnBnLink">hetu.gpu_links.CudnnBnLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.CudnnConv2d">hetu.gpu_links.CudnnConv2d module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.CudnnDropoutLink">hetu.gpu_links.CudnnDropoutLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.CudnnMaxPoolLink">hetu.gpu_links.CudnnMaxPoolLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.CudnnSoftmaxCrossEntropyLink">hetu.gpu_links.CudnnSoftmaxCrossEntropyLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.CudnnSoftmaxLink">hetu.gpu_links.CudnnSoftmaxLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.DotLink">hetu.gpu_links.DotLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.DropoutLink">hetu.gpu_links.DropoutLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.EmbeddingLookUpLink">hetu.gpu_links.EmbeddingLookUpLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.IndexedSliceLink">hetu.gpu_links.IndexedSliceLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.InitializersLink">hetu.gpu_links.InitializersLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.LayerNormLink">hetu.gpu_links.LayerNormLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.MatrixDivideConstLink">hetu.gpu_links.MatrixDivideConstLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.MatrixDivideLink">hetu.gpu_links.MatrixDivideLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.MatrixMultLink">hetu.gpu_links.MatrixMultLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.MatrixRsqrtLink">hetu.gpu_links.MatrixRsqrtLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.MatrixSqrtLink">hetu.gpu_links.MatrixSqrtLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.MatrixTransLink">hetu.gpu_links.MatrixTransLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.MaxPoolLink">hetu.gpu_links.MaxPoolLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.MultiplyConstLink">hetu.gpu_links.MultiplyConstLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.MultiplyElewiseLink">hetu.gpu_links.MultiplyElewiseLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.OneHotLink">hetu.gpu_links.OneHotLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.OppositeLink">hetu.gpu_links.OppositeLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.OptimizerLink">hetu.gpu_links.OptimizerLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.PadLink">hetu.gpu_links.PadLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.ReduceMeanLink">hetu.gpu_links.ReduceMeanLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.ReduceSumAxisZeroLink">hetu.gpu_links.ReduceSumAxisZeroLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.ReduceSumLink">hetu.gpu_links.ReduceSumLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.ReluLink">hetu.gpu_links.ReluLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.ReshapeLink">hetu.gpu_links.ReshapeLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.SigmoidLink">hetu.gpu_links.SigmoidLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.SliceLink">hetu.gpu_links.SliceLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.SoftmaxCrossEntropyLink">hetu.gpu_links.SoftmaxCrossEntropyLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.SoftmaxLink">hetu.gpu_links.SoftmaxLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.TanhLink">hetu.gpu_links.TanhLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links.WhereLink">hetu.gpu_links.WhereLink module</a></li>
-<li><a class="reference internal" href="#module-hetu.gpu_links">Module contents</a></li>
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to Hetu’s documentation!</a></li>
 </ul>
-</li>
+<p class="caption"><span class="caption-text">Development plan</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="plan.html">Development plan</a></li>
 </ul>
-</div>
+
             
           
         </div>
@@ -207,995 +159,165 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="hetu-gpu-links-package">
+  <div class="section" id="hetu-gpu-links-package">
 <h1>hetu.gpu_links package<a class="headerlink" href="#hetu-gpu-links-package" title="Permalink to this headline">¶</a></h1>
-<section id="submodules">
+<div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="module-hetu.gpu_links.AddConstLink">
-<span id="hetu-gpu-links-addconstlink-module"></span><h2>hetu.gpu_links.AddConstLink module<a class="headerlink" href="#module-hetu.gpu_links.AddConstLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.AddConstLink.matrix_elementwise_add_by_const">
-<code class="sig-prename descclassname">hetu.gpu_links.AddConstLink.</code><code class="sig-name descname">matrix_elementwise_add_by_const</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AddConstLink.html#matrix_elementwise_add_by_const"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.AddConstLink.matrix_elementwise_add_by_const" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.AddElewiseLink">
-<span id="hetu-gpu-links-addelewiselink-module"></span><h2>hetu.gpu_links.AddElewiseLink module<a class="headerlink" href="#module-hetu.gpu_links.AddElewiseLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.AddElewiseLink.matrix_elementwise_add">
-<code class="sig-prename descclassname">hetu.gpu_links.AddElewiseLink.</code><code class="sig-name descname">matrix_elementwise_add</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">lazy_input</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AddElewiseLink.html#matrix_elementwise_add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.AddElewiseLink.matrix_elementwise_add" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.AddElewiseLink.matrix_elementwise_add_lazy">
-<code class="sig-prename descclassname">hetu.gpu_links.AddElewiseLink.</code><code class="sig-name descname">matrix_elementwise_add_lazy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">gpu_buf</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AddElewiseLink.html#matrix_elementwise_add_lazy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.AddElewiseLink.matrix_elementwise_add_lazy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.AddElewiseLink.matrix_elementwise_add_simple">
-<code class="sig-prename descclassname">hetu.gpu_links.AddElewiseLink.</code><code class="sig-name descname">matrix_elementwise_add_simple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AddElewiseLink.html#matrix_elementwise_add_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.AddElewiseLink.matrix_elementwise_add_simple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.ArraySetLink">
-<span id="hetu-gpu-links-arraysetlink-module"></span><h2>hetu.gpu_links.ArraySetLink module<a class="headerlink" href="#module-hetu.gpu_links.ArraySetLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.ArraySetLink.array_set">
-<code class="sig-prename descclassname">hetu.gpu_links.ArraySetLink.</code><code class="sig-name descname">array_set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arr</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ArraySetLink.html#array_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.ArraySetLink.array_set" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.AvgPoolLink">
-<span id="hetu-gpu-links-avgpoollink-module"></span><h2>hetu.gpu_links.AvgPoolLink module<a class="headerlink" href="#module-hetu.gpu_links.AvgPoolLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.AvgPoolLink.average_pooling2d">
-<code class="sig-prename descclassname">hetu.gpu_links.AvgPoolLink.</code><code class="sig-name descname">average_pooling2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">pooled_layer</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AvgPoolLink.html#average_pooling2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.AvgPoolLink.average_pooling2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.AvgPoolLink.average_pooling2d_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.AvgPoolLink.</code><code class="sig-name descname">average_pooling2d_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AvgPoolLink.html#average_pooling2d_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.AvgPoolLink.average_pooling2d_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.BatchMatrixMultLink">
-<span id="hetu-gpu-links-batchmatrixmultlink-module"></span><h2>hetu.gpu_links.BatchMatrixMultLink module<a class="headerlink" href="#module-hetu.gpu_links.BatchMatrixMultLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.BatchMatrixMultLink.batch_matrix_multiply">
-<code class="sig-prename descclassname">hetu.gpu_links.BatchMatrixMultLink.</code><code class="sig-name descname">batch_matrix_multiply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">transA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">transB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BatchMatrixMultLink.html#batch_matrix_multiply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.BatchMatrixMultLink.batch_matrix_multiply" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.BinaryCrossEntropyLink">
-<span id="hetu-gpu-links-binarycrossentropylink-module"></span><h2>hetu.gpu_links.BinaryCrossEntropyLink module<a class="headerlink" href="#module-hetu.gpu_links.BinaryCrossEntropyLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.BinaryCrossEntropyLink.binary_cross_entropy">
-<code class="sig-prename descclassname">hetu.gpu_links.BinaryCrossEntropyLink.</code><code class="sig-name descname">binary_cross_entropy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_a</span></em>, <em class="sig-param"><span class="n">in_arr_b</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BinaryCrossEntropyLink.html#binary_cross_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.BinaryCrossEntropyLink.binary_cross_entropy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.BinaryCrossEntropyLink.binary_cross_entropy_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.BinaryCrossEntropyLink.</code><code class="sig-name descname">binary_cross_entropy_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_a</span></em>, <em class="sig-param"><span class="n">in_arr_b</span></em>, <em class="sig-param"><span class="n">in_arr_c</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BinaryCrossEntropyLink.html#binary_cross_entropy_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.BinaryCrossEntropyLink.binary_cross_entropy_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.BroadcastLink">
-<span id="hetu-gpu-links-broadcastlink-module"></span><h2>hetu.gpu_links.BroadcastLink module<a class="headerlink" href="#module-hetu.gpu_links.BroadcastLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.BroadcastLink.broadcast_to">
-<code class="sig-prename descclassname">hetu.gpu_links.BroadcastLink.</code><code class="sig-name descname">broadcast_to</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BroadcastLink.html#broadcast_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.BroadcastLink.broadcast_to" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.BroadcastShapeLink">
-<span id="hetu-gpu-links-broadcastshapelink-module"></span><h2>hetu.gpu_links.BroadcastShapeLink module<a class="headerlink" href="#module-hetu.gpu_links.BroadcastShapeLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.BroadcastShapeLink.broadcast_shape">
-<code class="sig-prename descclassname">hetu.gpu_links.BroadcastShapeLink.</code><code class="sig-name descname">broadcast_shape</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">add_axes</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BroadcastShapeLink.html#broadcast_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.BroadcastShapeLink.broadcast_shape" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.BroadcastShapeLink.broadcast_shape_simple">
-<code class="sig-prename descclassname">hetu.gpu_links.BroadcastShapeLink.</code><code class="sig-name descname">broadcast_shape_simple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">out_strides</span></em>, <em class="sig-param"><span class="n">in_dims</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BroadcastShapeLink.html#broadcast_shape_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.BroadcastShapeLink.broadcast_shape_simple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.ConcatLink">
-<span id="hetu-gpu-links-concatlink-module"></span><h2>hetu.gpu_links.ConcatLink module<a class="headerlink" href="#module-hetu.gpu_links.ConcatLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.ConcatLink.concat">
-<code class="sig-prename descclassname">hetu.gpu_links.ConcatLink.</code><code class="sig-name descname">concat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr1</span></em>, <em class="sig-param"><span class="n">in_arr2</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">axis</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ConcatLink.html#concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.ConcatLink.concat" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.ConcatLink.concat_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.ConcatLink.</code><code class="sig-name descname">concat_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_grad_arr</span></em>, <em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">axis</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">idx</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ConcatLink.html#concat_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.ConcatLink.concat_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.Conv2dBroadcastLink">
-<span id="hetu-gpu-links-conv2dbroadcastlink-module"></span><h2>hetu.gpu_links.Conv2dBroadcastLink module<a class="headerlink" href="#module-hetu.gpu_links.Conv2dBroadcastLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.Conv2dBroadcastLink.conv2d_broadcast_to">
-<code class="sig-prename descclassname">hetu.gpu_links.Conv2dBroadcastLink.</code><code class="sig-name descname">conv2d_broadcast_to</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/Conv2dBroadcastLink.html#conv2d_broadcast_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.Conv2dBroadcastLink.conv2d_broadcast_to" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.Conv2dLink">
-<span id="hetu-gpu-links-conv2dlink-module"></span><h2>hetu.gpu_links.Conv2dLink module<a class="headerlink" href="#module-hetu.gpu_links.Conv2dLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.Conv2dLink.conv2d">
-<code class="sig-prename descclassname">hetu.gpu_links.Conv2dLink.</code><code class="sig-name descname">conv2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">in_arr_f</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">workspace_arr</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/Conv2dLink.html#conv2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.Conv2dLink.conv2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.Conv2dLink.conv2d_gradient_of_data">
-<code class="sig-prename descclassname">hetu.gpu_links.Conv2dLink.</code><code class="sig-name descname">conv2d_gradient_of_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_f</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">workspace_im2col</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/Conv2dLink.html#conv2d_gradient_of_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.Conv2dLink.conv2d_gradient_of_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.Conv2dLink.conv2d_gradient_of_filter">
-<code class="sig-prename descclassname">hetu.gpu_links.Conv2dLink.</code><code class="sig-name descname">conv2d_gradient_of_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">out_gradient_f</span></em>, <em class="sig-param"><span class="n">workspace_im2col</span></em>, <em class="sig-param"><span class="n">workspace_batch_filter</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/Conv2dLink.html#conv2d_gradient_of_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.Conv2dLink.conv2d_gradient_of_filter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.Conv2dReduceSumLink">
-<span id="hetu-gpu-links-conv2dreducesumlink-module"></span><h2>hetu.gpu_links.Conv2dReduceSumLink module<a class="headerlink" href="#module-hetu.gpu_links.Conv2dReduceSumLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.Conv2dReduceSumLink.conv2d_reduce_sum">
-<code class="sig-prename descclassname">hetu.gpu_links.Conv2dReduceSumLink.</code><code class="sig-name descname">conv2d_reduce_sum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/Conv2dReduceSumLink.html#conv2d_reduce_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.Conv2dReduceSumLink.conv2d_reduce_sum" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.CuSparseLink">
-<span id="hetu-gpu-links-cusparselink-module"></span><h2>hetu.gpu_links.CuSparseLink module<a class="headerlink" href="#module-hetu.gpu_links.CuSparseLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.CuSparseLink.CuSparse_Csrmm">
-<code class="sig-prename descclassname">hetu.gpu_links.CuSparseLink.</code><code class="sig-name descname">CuSparse_Csrmm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">transA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">transB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">start_pos</span><span class="o">=</span><span class="default_value">- 1</span></em>, <em class="sig-param"><span class="n">end_pos</span><span class="o">=</span><span class="default_value">- 1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CuSparseLink.html#CuSparse_Csrmm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuSparseLink.CuSparse_Csrmm" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuSparseLink.CuSparse_Csrmv">
-<code class="sig-prename descclassname">hetu.gpu_links.CuSparseLink.</code><code class="sig-name descname">CuSparse_Csrmv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span></em>, <em class="sig-param"><span class="n">trans</span></em>, <em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CuSparseLink.html#CuSparse_Csrmv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuSparseLink.CuSparse_Csrmv" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.CudnnAvgPoolLink">
-<span id="hetu-gpu-links-cudnnavgpoollink-module"></span><h2>hetu.gpu_links.CudnnAvgPoolLink module<a class="headerlink" href="#module-hetu.gpu_links.CudnnAvgPoolLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnAvgPoolLink.CuDNN_average_pooling2d">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnAvgPoolLink.</code><code class="sig-name descname">CuDNN_average_pooling2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">pooled_layer</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnAvgPoolLink.html#CuDNN_average_pooling2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnAvgPoolLink.CuDNN_average_pooling2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnAvgPoolLink.CuDNN_average_pooling2d_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnAvgPoolLink.</code><code class="sig-name descname">CuDNN_average_pooling2d_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_y</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnAvgPoolLink.html#CuDNN_average_pooling2d_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnAvgPoolLink.CuDNN_average_pooling2d_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.CudnnBnLink">
-<span id="hetu-gpu-links-cudnnbnlink-module"></span><h2>hetu.gpu_links.CudnnBnLink module<a class="headerlink" href="#module-hetu.gpu_links.CudnnBnLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnBnLink.CuDNN_Batch_Normalization">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnBnLink.</code><code class="sig-name descname">CuDNN_Batch_Normalization</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">bn_scale_arr</span></em>, <em class="sig-param"><span class="n">bn_bias_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">save_mean</span></em>, <em class="sig-param"><span class="n">save_var</span></em>, <em class="sig-param"><span class="n">momentum</span><span class="o">=</span><span class="default_value">0.99</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnBnLink.html#CuDNN_Batch_Normalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnBnLink.CuDNN_Batch_Normalization" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnBnLink.CuDNN_Batch_Normalization_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnBnLink.</code><code class="sig-name descname">CuDNN_Batch_Normalization_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">in_bn_scale</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">out_gradient_bn_scale</span></em>, <em class="sig-param"><span class="n">out_gradient_bn_bias</span></em>, <em class="sig-param"><span class="n">saved_mean</span></em>, <em class="sig-param"><span class="n">saved_var</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnBnLink.html#CuDNN_Batch_Normalization_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnBnLink.CuDNN_Batch_Normalization_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.CudnnConv2d">
-<span id="hetu-gpu-links-cudnnconv2d-module"></span><h2>hetu.gpu_links.CudnnConv2d module<a class="headerlink" href="#module-hetu.gpu_links.CudnnConv2d" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnConv2d.CuDNN_conv2d">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnConv2d.</code><code class="sig-name descname">CuDNN_conv2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">in_arr_f</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnConv2d.html#CuDNN_conv2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnConv2d.CuDNN_conv2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnConv2d.CuDNN_conv2d_gradient_of_data">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnConv2d.</code><code class="sig-name descname">CuDNN_conv2d_gradient_of_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_f</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnConv2d.html#CuDNN_conv2d_gradient_of_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnConv2d.CuDNN_conv2d_gradient_of_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnConv2d.CuDNN_conv2d_gradient_of_filter">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnConv2d.</code><code class="sig-name descname">CuDNN_conv2d_gradient_of_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">out_gradient_f</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnConv2d.html#CuDNN_conv2d_gradient_of_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnConv2d.CuDNN_conv2d_gradient_of_filter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.CudnnDropoutLink">
-<span id="hetu-gpu-links-cudnndropoutlink-module"></span><h2>hetu.gpu_links.CudnnDropoutLink module<a class="headerlink" href="#module-hetu.gpu_links.CudnnDropoutLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnDropoutLink.CuDNN_Dropout">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnDropoutLink.</code><code class="sig-name descname">CuDNN_Dropout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">dropout</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">reserve_size</span></em>, <em class="sig-param"><span class="n">reserve_space</span></em>, <em class="sig-param"><span class="n">firstTime</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnDropoutLink.html#CuDNN_Dropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnDropoutLink.CuDNN_Dropout" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnDropoutLink.CuDNN_Dropout_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnDropoutLink.</code><code class="sig-name descname">CuDNN_Dropout_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">dropout</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">reserve_size</span></em>, <em class="sig-param"><span class="n">reserve_space</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnDropoutLink.html#CuDNN_Dropout_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnDropoutLink.CuDNN_Dropout_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.CudnnMaxPoolLink">
-<span id="hetu-gpu-links-cudnnmaxpoollink-module"></span><h2>hetu.gpu_links.CudnnMaxPoolLink module<a class="headerlink" href="#module-hetu.gpu_links.CudnnMaxPoolLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnMaxPoolLink.CuDNN_max_pooling2d">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnMaxPoolLink.</code><code class="sig-name descname">CuDNN_max_pooling2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">pooled_layer</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnMaxPoolLink.html#CuDNN_max_pooling2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnMaxPoolLink.CuDNN_max_pooling2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnMaxPoolLink.CuDNN_max_pooling2d_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnMaxPoolLink.</code><code class="sig-name descname">CuDNN_max_pooling2d_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_y</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnMaxPoolLink.html#CuDNN_max_pooling2d_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnMaxPoolLink.CuDNN_max_pooling2d_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.CudnnSoftmaxCrossEntropyLink">
-<span id="hetu-gpu-links-cudnnsoftmaxcrossentropylink-module"></span><h2>hetu.gpu_links.CudnnSoftmaxCrossEntropyLink module<a class="headerlink" href="#module-hetu.gpu_links.CudnnSoftmaxCrossEntropyLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnSoftmaxCrossEntropyLink.CuDNN_softmax_cross_entropy">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnSoftmaxCrossEntropyLink.</code><code class="sig-name descname">CuDNN_softmax_cross_entropy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">y_</span></em>, <em class="sig-param"><span class="n">out</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnSoftmaxCrossEntropyLink.html#CuDNN_softmax_cross_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnSoftmaxCrossEntropyLink.CuDNN_softmax_cross_entropy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnSoftmaxCrossEntropyLink.CuDNN_softmax_cross_entropy_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnSoftmaxCrossEntropyLink.</code><code class="sig-name descname">CuDNN_softmax_cross_entropy_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grad_arr</span></em>, <em class="sig-param"><span class="n">y_arr</span></em>, <em class="sig-param"><span class="n">label</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnSoftmaxCrossEntropyLink.html#CuDNN_softmax_cross_entropy_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnSoftmaxCrossEntropyLink.CuDNN_softmax_cross_entropy_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.CudnnSoftmaxLink">
-<span id="hetu-gpu-links-cudnnsoftmaxlink-module"></span><h2>hetu.gpu_links.CudnnSoftmaxLink module<a class="headerlink" href="#module-hetu.gpu_links.CudnnSoftmaxLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnSoftmaxLink.CuDNN_softmax">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnSoftmaxLink.</code><code class="sig-name descname">CuDNN_softmax</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnSoftmaxLink.html#CuDNN_softmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnSoftmaxLink.CuDNN_softmax" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CudnnSoftmaxLink.CuDNN_softmax_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.CudnnSoftmaxLink.</code><code class="sig-name descname">CuDNN_softmax_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_arr</span></em>, <em class="sig-param"><span class="n">grad_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnSoftmaxLink.html#CuDNN_softmax_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CudnnSoftmaxLink.CuDNN_softmax_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.DotLink">
-<span id="hetu-gpu-links-dotlink-module"></span><h2>hetu.gpu_links.DotLink module<a class="headerlink" href="#module-hetu.gpu_links.DotLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.DotLink.matrix_dot">
-<code class="sig-prename descclassname">hetu.gpu_links.DotLink.</code><code class="sig-name descname">matrix_dot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/DotLink.html#matrix_dot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.DotLink.matrix_dot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.DropoutLink">
-<span id="hetu-gpu-links-dropoutlink-module"></span><h2>hetu.gpu_links.DropoutLink module<a class="headerlink" href="#module-hetu.gpu_links.DropoutLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.DropoutLink.dropout">
-<code class="sig-prename descclassname">hetu.gpu_links.DropoutLink.</code><code class="sig-name descname">dropout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">dropout_rate</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">seed</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/DropoutLink.html#dropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.DropoutLink.dropout" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.DropoutLink.dropout_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.DropoutLink.</code><code class="sig-name descname">dropout_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grad_arr</span></em>, <em class="sig-param"><span class="n">dropout_rate</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">seed</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/DropoutLink.html#dropout_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.DropoutLink.dropout_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.EmbeddingLookUpLink">
-<span id="hetu-gpu-links-embeddinglookuplink-module"></span><h2>hetu.gpu_links.EmbeddingLookUpLink module<a class="headerlink" href="#module-hetu.gpu_links.EmbeddingLookUpLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.EmbeddingLookUpLink.embedding_lookup">
-<code class="sig-prename descclassname">hetu.gpu_links.EmbeddingLookUpLink.</code><code class="sig-name descname">embedding_lookup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">ids</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/EmbeddingLookUpLink.html#embedding_lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.EmbeddingLookUpLink.embedding_lookup" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.EmbeddingLookUpLink.embedding_lookup_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.EmbeddingLookUpLink.</code><code class="sig-name descname">embedding_lookup_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grad_out</span></em>, <em class="sig-param"><span class="n">ids</span></em>, <em class="sig-param"><span class="n">grad_in</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/EmbeddingLookUpLink.html#embedding_lookup_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.EmbeddingLookUpLink.embedding_lookup_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.IndexedSliceLink">
-<span id="hetu-gpu-links-indexedslicelink-module"></span><h2>hetu.gpu_links.IndexedSliceLink module<a class="headerlink" href="#module-hetu.gpu_links.IndexedSliceLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.IndexedSliceLink.indexedslice_oneside_add">
-<code class="sig-prename descclassname">hetu.gpu_links.IndexedSliceLink.</code><code class="sig-name descname">indexedslice_oneside_add</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">indslice</span></em>, <em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/IndexedSliceLink.html#indexedslice_oneside_add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.IndexedSliceLink.indexedslice_oneside_add" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.InitializersLink">
-<span id="hetu-gpu-links-initializerslink-module"></span><h2>hetu.gpu_links.InitializersLink module<a class="headerlink" href="#module-hetu.gpu_links.InitializersLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.InitializersLink.normal_init">
-<code class="sig-prename descclassname">hetu.gpu_links.InitializersLink.</code><code class="sig-name descname">normal_init</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arr</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">stddev</span></em>, <em class="sig-param"><span class="n">seed</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/InitializersLink.html#normal_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.InitializersLink.normal_init" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.InitializersLink.truncated_normal_init">
-<code class="sig-prename descclassname">hetu.gpu_links.InitializersLink.</code><code class="sig-name descname">truncated_normal_init</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arr</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">stddev</span></em>, <em class="sig-param"><span class="n">seed</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/InitializersLink.html#truncated_normal_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.InitializersLink.truncated_normal_init" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.InitializersLink.uniform_init">
-<code class="sig-prename descclassname">hetu.gpu_links.InitializersLink.</code><code class="sig-name descname">uniform_init</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arr</span></em>, <em class="sig-param"><span class="n">lb</span></em>, <em class="sig-param"><span class="n">ub</span></em>, <em class="sig-param"><span class="n">seed</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/InitializersLink.html#uniform_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.InitializersLink.uniform_init" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.LayerNormLink">
-<span id="hetu-gpu-links-layernormlink-module"></span><h2>hetu.gpu_links.LayerNormLink module<a class="headerlink" href="#module-hetu.gpu_links.LayerNormLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.LayerNormLink.layer_normalization">
-<code class="sig-prename descclassname">hetu.gpu_links.LayerNormLink.</code><code class="sig-name descname">layer_normalization</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">ln_scale</span></em>, <em class="sig-param"><span class="n">ln_bias</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">var</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">eps</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/LayerNormLink.html#layer_normalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.LayerNormLink.layer_normalization" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.LayerNormLink.layer_normalization_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.LayerNormLink.</code><code class="sig-name descname">layer_normalization_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_grads</span></em>, <em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">ln_scale</span></em>, <em class="sig-param"><span class="n">grad_arr</span></em>, <em class="sig-param"><span class="n">grad_scale</span></em>, <em class="sig-param"><span class="n">grad_bias</span></em>, <em class="sig-param"><span class="n">mean_arr</span></em>, <em class="sig-param"><span class="n">var_arr</span></em>, <em class="sig-param"><span class="n">eps</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/LayerNormLink.html#layer_normalization_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.LayerNormLink.layer_normalization_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.MatrixDivideConstLink">
-<span id="hetu-gpu-links-matrixdivideconstlink-module"></span><h2>hetu.gpu_links.MatrixDivideConstLink module<a class="headerlink" href="#module-hetu.gpu_links.MatrixDivideConstLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.MatrixDivideConstLink.matrix_elementwise_divide_const">
-<code class="sig-prename descclassname">hetu.gpu_links.MatrixDivideConstLink.</code><code class="sig-name descname">matrix_elementwise_divide_const</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixDivideConstLink.html#matrix_elementwise_divide_const"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.MatrixDivideConstLink.matrix_elementwise_divide_const" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.MatrixDivideLink">
-<span id="hetu-gpu-links-matrixdividelink-module"></span><h2>hetu.gpu_links.MatrixDivideLink module<a class="headerlink" href="#module-hetu.gpu_links.MatrixDivideLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.MatrixDivideLink.matrix_elementwise_divide">
-<code class="sig-prename descclassname">hetu.gpu_links.MatrixDivideLink.</code><code class="sig-name descname">matrix_elementwise_divide</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixDivideLink.html#matrix_elementwise_divide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.MatrixDivideLink.matrix_elementwise_divide" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.MatrixMultLink">
-<span id="hetu-gpu-links-matrixmultlink-module"></span><h2>hetu.gpu_links.MatrixMultLink module<a class="headerlink" href="#module-hetu.gpu_links.MatrixMultLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.MatrixMultLink.matrix_multiply">
-<code class="sig-prename descclassname">hetu.gpu_links.MatrixMultLink.</code><code class="sig-name descname">matrix_multiply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">transA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">transB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixMultLink.html#matrix_multiply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.MatrixMultLink.matrix_multiply" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.MatrixRsqrtLink">
-<span id="hetu-gpu-links-matrixrsqrtlink-module"></span><h2>hetu.gpu_links.MatrixRsqrtLink module<a class="headerlink" href="#module-hetu.gpu_links.MatrixRsqrtLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.MatrixRsqrtLink.matrix_rsqrt">
-<code class="sig-prename descclassname">hetu.gpu_links.MatrixRsqrtLink.</code><code class="sig-name descname">matrix_rsqrt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixRsqrtLink.html#matrix_rsqrt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.MatrixRsqrtLink.matrix_rsqrt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.MatrixSqrtLink">
-<span id="hetu-gpu-links-matrixsqrtlink-module"></span><h2>hetu.gpu_links.MatrixSqrtLink module<a class="headerlink" href="#module-hetu.gpu_links.MatrixSqrtLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.MatrixSqrtLink.matrix_sqrt">
-<code class="sig-prename descclassname">hetu.gpu_links.MatrixSqrtLink.</code><code class="sig-name descname">matrix_sqrt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixSqrtLink.html#matrix_sqrt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.MatrixSqrtLink.matrix_sqrt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.MatrixTransLink">
-<span id="hetu-gpu-links-matrixtranslink-module"></span><h2>hetu.gpu_links.MatrixTransLink module<a class="headerlink" href="#module-hetu.gpu_links.MatrixTransLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.MatrixTransLink.matrix_transpose">
-<code class="sig-prename descclassname">hetu.gpu_links.MatrixTransLink.</code><code class="sig-name descname">matrix_transpose</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">perm</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixTransLink.html#matrix_transpose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.MatrixTransLink.matrix_transpose" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.MatrixTransLink.matrix_transpose_simple">
-<code class="sig-prename descclassname">hetu.gpu_links.MatrixTransLink.</code><code class="sig-name descname">matrix_transpose_simple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">gpu_buf</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixTransLink.html#matrix_transpose_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.MatrixTransLink.matrix_transpose_simple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.MaxPoolLink">
-<span id="hetu-gpu-links-maxpoollink-module"></span><h2>hetu.gpu_links.MaxPoolLink module<a class="headerlink" href="#module-hetu.gpu_links.MaxPoolLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.MaxPoolLink.max_pooling2d">
-<code class="sig-prename descclassname">hetu.gpu_links.MaxPoolLink.</code><code class="sig-name descname">max_pooling2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">pooled_layer</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MaxPoolLink.html#max_pooling2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.MaxPoolLink.max_pooling2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.MaxPoolLink.max_pooling2d_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.MaxPoolLink.</code><code class="sig-name descname">max_pooling2d_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">in_grad_arr</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">out_grad_arr</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MaxPoolLink.html#max_pooling2d_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.MaxPoolLink.max_pooling2d_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.MultiplyConstLink">
-<span id="hetu-gpu-links-multiplyconstlink-module"></span><h2>hetu.gpu_links.MultiplyConstLink module<a class="headerlink" href="#module-hetu.gpu_links.MultiplyConstLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.MultiplyConstLink.matrix_elementwise_multiply_by_const">
-<code class="sig-prename descclassname">hetu.gpu_links.MultiplyConstLink.</code><code class="sig-name descname">matrix_elementwise_multiply_by_const</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MultiplyConstLink.html#matrix_elementwise_multiply_by_const"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.MultiplyConstLink.matrix_elementwise_multiply_by_const" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.MultiplyElewiseLink">
-<span id="hetu-gpu-links-multiplyelewiselink-module"></span><h2>hetu.gpu_links.MultiplyElewiseLink module<a class="headerlink" href="#module-hetu.gpu_links.MultiplyElewiseLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.MultiplyElewiseLink.matrix_elementwise_multiply">
-<code class="sig-prename descclassname">hetu.gpu_links.MultiplyElewiseLink.</code><code class="sig-name descname">matrix_elementwise_multiply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MultiplyElewiseLink.html#matrix_elementwise_multiply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.MultiplyElewiseLink.matrix_elementwise_multiply" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.OneHotLink">
-<span id="hetu-gpu-links-onehotlink-module"></span><h2>hetu.gpu_links.OneHotLink module<a class="headerlink" href="#module-hetu.gpu_links.OneHotLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.OneHotLink.one_hot">
-<code class="sig-prename descclassname">hetu.gpu_links.OneHotLink.</code><code class="sig-name descname">one_hot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OneHotLink.html#one_hot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.OneHotLink.one_hot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.OppositeLink">
-<span id="hetu-gpu-links-oppositelink-module"></span><h2>hetu.gpu_links.OppositeLink module<a class="headerlink" href="#module-hetu.gpu_links.OppositeLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.OppositeLink.matrix_opposite">
-<code class="sig-prename descclassname">hetu.gpu_links.OppositeLink.</code><code class="sig-name descname">matrix_opposite</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OppositeLink.html#matrix_opposite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.OppositeLink.matrix_opposite" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.OptimizerLink">
-<span id="hetu-gpu-links-optimizerlink-module"></span><h2>hetu.gpu_links.OptimizerLink module<a class="headerlink" href="#module-hetu.gpu_links.OptimizerLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.OptimizerLink.adagrad_update">
-<code class="sig-prename descclassname">hetu.gpu_links.OptimizerLink.</code><code class="sig-name descname">adagrad_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">accumulation</span></em>, <em class="sig-param"><span class="n">lr</span></em>, <em class="sig-param"><span class="n">eps</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OptimizerLink.html#adagrad_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.OptimizerLink.adagrad_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.OptimizerLink.adam_update">
-<code class="sig-prename descclassname">hetu.gpu_links.OptimizerLink.</code><code class="sig-name descname">adam_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">expavg</span></em>, <em class="sig-param"><span class="n">expavgsq</span></em>, <em class="sig-param"><span class="n">lr</span></em>, <em class="sig-param"><span class="n">beta1</span></em>, <em class="sig-param"><span class="n">beta2</span></em>, <em class="sig-param"><span class="n">beta1t</span></em>, <em class="sig-param"><span class="n">beta2t</span></em>, <em class="sig-param"><span class="n">eps</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OptimizerLink.html#adam_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.OptimizerLink.adam_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.OptimizerLink.momentum_update">
-<code class="sig-prename descclassname">hetu.gpu_links.OptimizerLink.</code><code class="sig-name descname">momentum_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">velocity</span></em>, <em class="sig-param"><span class="n">lr</span></em>, <em class="sig-param"><span class="n">momentum</span></em>, <em class="sig-param"><span class="n">nesterov</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OptimizerLink.html#momentum_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.OptimizerLink.momentum_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.OptimizerLink.sgd_update">
-<code class="sig-prename descclassname">hetu.gpu_links.OptimizerLink.</code><code class="sig-name descname">sgd_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">lr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OptimizerLink.html#sgd_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.OptimizerLink.sgd_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.PadLink">
-<span id="hetu-gpu-links-padlink-module"></span><h2>hetu.gpu_links.PadLink module<a class="headerlink" href="#module-hetu.gpu_links.PadLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.PadLink.pad">
-<code class="sig-prename descclassname">hetu.gpu_links.PadLink.</code><code class="sig-name descname">pad</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">paddings</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'CONSTANT'</span></em>, <em class="sig-param"><span class="n">constant_values</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/PadLink.html#pad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.PadLink.pad" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.PadLink.pad_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.PadLink.</code><code class="sig-name descname">pad_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_grad_arr</span></em>, <em class="sig-param"><span class="n">in_grad_arr</span></em>, <em class="sig-param"><span class="n">paddings</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'CONSTANT'</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/PadLink.html#pad_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.PadLink.pad_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.ReduceMeanLink">
-<span id="hetu-gpu-links-reducemeanlink-module"></span><h2>hetu.gpu_links.ReduceMeanLink module<a class="headerlink" href="#module-hetu.gpu_links.ReduceMeanLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.ReduceMeanLink.reduce_mean">
-<code class="sig-prename descclassname">hetu.gpu_links.ReduceMeanLink.</code><code class="sig-name descname">reduce_mean</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">axes</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReduceMeanLink.html#reduce_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.ReduceMeanLink.reduce_mean" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.ReduceSumAxisZeroLink">
-<span id="hetu-gpu-links-reducesumaxiszerolink-module"></span><h2>hetu.gpu_links.ReduceSumAxisZeroLink module<a class="headerlink" href="#module-hetu.gpu_links.ReduceSumAxisZeroLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.ReduceSumAxisZeroLink.reduce_sum_axis_zero">
-<code class="sig-prename descclassname">hetu.gpu_links.ReduceSumAxisZeroLink.</code><code class="sig-name descname">reduce_sum_axis_zero</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">workspace_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReduceSumAxisZeroLink.html#reduce_sum_axis_zero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.ReduceSumAxisZeroLink.reduce_sum_axis_zero" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.ReduceSumLink">
-<span id="hetu-gpu-links-reducesumlink-module"></span><h2>hetu.gpu_links.ReduceSumLink module<a class="headerlink" href="#module-hetu.gpu_links.ReduceSumLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.ReduceSumLink.reduce_sum">
-<code class="sig-prename descclassname">hetu.gpu_links.ReduceSumLink.</code><code class="sig-name descname">reduce_sum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">axes</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReduceSumLink.html#reduce_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.ReduceSumLink.reduce_sum" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.ReluLink">
-<span id="hetu-gpu-links-relulink-module"></span><h2>hetu.gpu_links.ReluLink module<a class="headerlink" href="#module-hetu.gpu_links.ReluLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.ReluLink.relu">
-<code class="sig-prename descclassname">hetu.gpu_links.ReluLink.</code><code class="sig-name descname">relu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReluLink.html#relu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.ReluLink.relu" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.ReluLink.relu_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.ReluLink.</code><code class="sig-name descname">relu_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">in_grad_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReluLink.html#relu_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.ReluLink.relu_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.ReshapeLink">
-<span id="hetu-gpu-links-reshapelink-module"></span><h2>hetu.gpu_links.ReshapeLink module<a class="headerlink" href="#module-hetu.gpu_links.ReshapeLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.ReshapeLink.array_reshape">
-<code class="sig-prename descclassname">hetu.gpu_links.ReshapeLink.</code><code class="sig-name descname">array_reshape</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReshapeLink.html#array_reshape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.ReshapeLink.array_reshape" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.SigmoidLink">
-<span id="hetu-gpu-links-sigmoidlink-module"></span><h2>hetu.gpu_links.SigmoidLink module<a class="headerlink" href="#module-hetu.gpu_links.SigmoidLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.SigmoidLink.sigmoid">
-<code class="sig-prename descclassname">hetu.gpu_links.SigmoidLink.</code><code class="sig-name descname">sigmoid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SigmoidLink.html#sigmoid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.SigmoidLink.sigmoid" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.SliceLink">
-<span id="hetu-gpu-links-slicelink-module"></span><h2>hetu.gpu_links.SliceLink module<a class="headerlink" href="#module-hetu.gpu_links.SliceLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.SliceLink.matrix_slice">
-<code class="sig-prename descclassname">hetu.gpu_links.SliceLink.</code><code class="sig-name descname">matrix_slice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">begin_pos</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SliceLink.html#matrix_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.SliceLink.matrix_slice" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.SliceLink.matrix_slice_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.SliceLink.</code><code class="sig-name descname">matrix_slice_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">begin_pos</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SliceLink.html#matrix_slice_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.SliceLink.matrix_slice_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.SliceLink.matrix_slice_gradient_simple">
-<code class="sig-prename descclassname">hetu.gpu_links.SliceLink.</code><code class="sig-name descname">matrix_slice_gradient_simple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">gpu_buf</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SliceLink.html#matrix_slice_gradient_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.SliceLink.matrix_slice_gradient_simple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.SliceLink.matrix_slice_simple">
-<code class="sig-prename descclassname">hetu.gpu_links.SliceLink.</code><code class="sig-name descname">matrix_slice_simple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">gpu_buf</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SliceLink.html#matrix_slice_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.SliceLink.matrix_slice_simple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.SoftmaxCrossEntropyLink">
-<span id="hetu-gpu-links-softmaxcrossentropylink-module"></span><h2>hetu.gpu_links.SoftmaxCrossEntropyLink module<a class="headerlink" href="#module-hetu.gpu_links.SoftmaxCrossEntropyLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.SoftmaxCrossEntropyLink.softmax_cross_entropy">
-<code class="sig-prename descclassname">hetu.gpu_links.SoftmaxCrossEntropyLink.</code><code class="sig-name descname">softmax_cross_entropy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_a</span></em>, <em class="sig-param"><span class="n">in_arr_b</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SoftmaxCrossEntropyLink.html#softmax_cross_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.SoftmaxCrossEntropyLink.softmax_cross_entropy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.SoftmaxCrossEntropyLink.softmax_cross_entropy_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.SoftmaxCrossEntropyLink.</code><code class="sig-name descname">softmax_cross_entropy_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_a</span></em>, <em class="sig-param"><span class="n">in_arr_b</span></em>, <em class="sig-param"><span class="n">in_arr_c</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SoftmaxCrossEntropyLink.html#softmax_cross_entropy_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.SoftmaxCrossEntropyLink.softmax_cross_entropy_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.SoftmaxLink">
-<span id="hetu-gpu-links-softmaxlink-module"></span><h2>hetu.gpu_links.SoftmaxLink module<a class="headerlink" href="#module-hetu.gpu_links.SoftmaxLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.SoftmaxLink.softmax">
-<code class="sig-prename descclassname">hetu.gpu_links.SoftmaxLink.</code><code class="sig-name descname">softmax</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SoftmaxLink.html#softmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.SoftmaxLink.softmax" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.TanhLink">
-<span id="hetu-gpu-links-tanhlink-module"></span><h2>hetu.gpu_links.TanhLink module<a class="headerlink" href="#module-hetu.gpu_links.TanhLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.TanhLink.tanh">
-<code class="sig-prename descclassname">hetu.gpu_links.TanhLink.</code><code class="sig-name descname">tanh</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/TanhLink.html#tanh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.TanhLink.tanh" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links.WhereLink">
-<span id="hetu-gpu-links-wherelink-module"></span><h2>hetu.gpu_links.WhereLink module<a class="headerlink" href="#module-hetu.gpu_links.WhereLink" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.WhereLink.where">
-<code class="sig-prename descclassname">hetu.gpu_links.WhereLink.</code><code class="sig-name descname">where</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cond</span></em>, <em class="sig-param"><span class="n">arr1</span></em>, <em class="sig-param"><span class="n">arr2</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/WhereLink.html#where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.WhereLink.where" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.gpu_links">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-hetu.gpu_links" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_Batch_Normalization">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_Batch_Normalization</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">bn_scale_arr</span></em>, <em class="sig-param"><span class="n">bn_bias_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">save_mean</span></em>, <em class="sig-param"><span class="n">save_var</span></em>, <em class="sig-param"><span class="n">momentum</span><span class="o">=</span><span class="default_value">0.99</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnBnLink.html#CuDNN_Batch_Normalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_Batch_Normalization" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_Batch_Normalization_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_Batch_Normalization_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">in_bn_scale</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">out_gradient_bn_scale</span></em>, <em class="sig-param"><span class="n">out_gradient_bn_bias</span></em>, <em class="sig-param"><span class="n">saved_mean</span></em>, <em class="sig-param"><span class="n">saved_var</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnBnLink.html#CuDNN_Batch_Normalization_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_Batch_Normalization_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_Dropout">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_Dropout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">dropout</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">reserve_size</span></em>, <em class="sig-param"><span class="n">reserve_space</span></em>, <em class="sig-param"><span class="n">firstTime</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnDropoutLink.html#CuDNN_Dropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_Dropout" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_Dropout_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_Dropout_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">dropout</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">reserve_size</span></em>, <em class="sig-param"><span class="n">reserve_space</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnDropoutLink.html#CuDNN_Dropout_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_Dropout_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_average_pooling2d">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_average_pooling2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">pooled_layer</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnAvgPoolLink.html#CuDNN_average_pooling2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_average_pooling2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_average_pooling2d_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_average_pooling2d_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_y</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnAvgPoolLink.html#CuDNN_average_pooling2d_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_average_pooling2d_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_conv2d">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_conv2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">in_arr_f</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnConv2d.html#CuDNN_conv2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_conv2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_conv2d_gradient_of_data">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_conv2d_gradient_of_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_f</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnConv2d.html#CuDNN_conv2d_gradient_of_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_conv2d_gradient_of_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_conv2d_gradient_of_filter">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_conv2d_gradient_of_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">out_gradient_f</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnConv2d.html#CuDNN_conv2d_gradient_of_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_conv2d_gradient_of_filter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_max_pooling2d">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_max_pooling2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">pooled_layer</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnMaxPoolLink.html#CuDNN_max_pooling2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_max_pooling2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_max_pooling2d_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_max_pooling2d_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_y</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnMaxPoolLink.html#CuDNN_max_pooling2d_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_max_pooling2d_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_softmax">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_softmax</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnSoftmaxLink.html#CuDNN_softmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_softmax" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_softmax_cross_entropy">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_softmax_cross_entropy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">y_</span></em>, <em class="sig-param"><span class="n">out</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnSoftmaxCrossEntropyLink.html#CuDNN_softmax_cross_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_softmax_cross_entropy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_softmax_cross_entropy_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_softmax_cross_entropy_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grad_arr</span></em>, <em class="sig-param"><span class="n">y_arr</span></em>, <em class="sig-param"><span class="n">label</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnSoftmaxCrossEntropyLink.html#CuDNN_softmax_cross_entropy_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_softmax_cross_entropy_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuDNN_softmax_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuDNN_softmax_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_arr</span></em>, <em class="sig-param"><span class="n">grad_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CudnnSoftmaxLink.html#CuDNN_softmax_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuDNN_softmax_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuSparse_Csrmm">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuSparse_Csrmm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">transA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">transB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">start_pos</span><span class="o">=</span><span class="default_value">- 1</span></em>, <em class="sig-param"><span class="n">end_pos</span><span class="o">=</span><span class="default_value">- 1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CuSparseLink.html#CuSparse_Csrmm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuSparse_Csrmm" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.CuSparse_Csrmv">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">CuSparse_Csrmv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span></em>, <em class="sig-param"><span class="n">trans</span></em>, <em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/CuSparseLink.html#CuSparse_Csrmv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.CuSparse_Csrmv" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.adagrad_update">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">adagrad_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">accumulation</span></em>, <em class="sig-param"><span class="n">lr</span></em>, <em class="sig-param"><span class="n">eps</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OptimizerLink.html#adagrad_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.adagrad_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.adam_update">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">adam_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">expavg</span></em>, <em class="sig-param"><span class="n">expavgsq</span></em>, <em class="sig-param"><span class="n">lr</span></em>, <em class="sig-param"><span class="n">beta1</span></em>, <em class="sig-param"><span class="n">beta2</span></em>, <em class="sig-param"><span class="n">beta1t</span></em>, <em class="sig-param"><span class="n">beta2t</span></em>, <em class="sig-param"><span class="n">eps</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OptimizerLink.html#adam_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.adam_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.array_reshape">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">array_reshape</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReshapeLink.html#array_reshape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.array_reshape" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.array_set">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">array_set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arr</span></em>, <em class="sig-param"><span class="n">value</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ArraySetLink.html#array_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.array_set" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.average_pooling2d">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">average_pooling2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">pooled_layer</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AvgPoolLink.html#average_pooling2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.average_pooling2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.average_pooling2d_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">average_pooling2d_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AvgPoolLink.html#average_pooling2d_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.average_pooling2d_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.batch_matrix_multiply">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">batch_matrix_multiply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">transA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">transB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BatchMatrixMultLink.html#batch_matrix_multiply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.batch_matrix_multiply" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.binary_cross_entropy">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">binary_cross_entropy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_a</span></em>, <em class="sig-param"><span class="n">in_arr_b</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BinaryCrossEntropyLink.html#binary_cross_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.binary_cross_entropy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.binary_cross_entropy_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">binary_cross_entropy_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_a</span></em>, <em class="sig-param"><span class="n">in_arr_b</span></em>, <em class="sig-param"><span class="n">in_arr_c</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BinaryCrossEntropyLink.html#binary_cross_entropy_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.binary_cross_entropy_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.broadcast_shape">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">broadcast_shape</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">add_axes</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BroadcastShapeLink.html#broadcast_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.broadcast_shape" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.broadcast_shape_simple">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">broadcast_shape_simple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">out_strides</span></em>, <em class="sig-param"><span class="n">in_dims</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BroadcastShapeLink.html#broadcast_shape_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.broadcast_shape_simple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.broadcast_to">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">broadcast_to</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/BroadcastLink.html#broadcast_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.broadcast_to" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.concat">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">concat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr1</span></em>, <em class="sig-param"><span class="n">in_arr2</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">axis</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ConcatLink.html#concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.concat" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.concat_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">concat_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_grad_arr</span></em>, <em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">axis</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">idx</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ConcatLink.html#concat_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.concat_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.conv2d">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">conv2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">in_arr_f</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">workspace_arr</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/Conv2dLink.html#conv2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.conv2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.conv2d_broadcast_to">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">conv2d_broadcast_to</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/Conv2dBroadcastLink.html#conv2d_broadcast_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.conv2d_broadcast_to" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.conv2d_gradient_of_data">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">conv2d_gradient_of_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_f</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em>, <em class="sig-param"><span class="n">workspace_im2col</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/Conv2dLink.html#conv2d_gradient_of_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.conv2d_gradient_of_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.conv2d_gradient_of_filter">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">conv2d_gradient_of_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_x</span></em>, <em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">out_gradient_f</span></em>, <em class="sig-param"><span class="n">workspace_im2col</span></em>, <em class="sig-param"><span class="n">workspace_batch_filter</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/Conv2dLink.html#conv2d_gradient_of_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.conv2d_gradient_of_filter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.conv2d_reduce_sum">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">conv2d_reduce_sum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/Conv2dReduceSumLink.html#conv2d_reduce_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.conv2d_reduce_sum" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.dropout">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">dropout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">dropout_rate</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">seed</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/DropoutLink.html#dropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.dropout" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.dropout_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">dropout_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grad_arr</span></em>, <em class="sig-param"><span class="n">dropout_rate</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">seed</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/DropoutLink.html#dropout_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.dropout_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.embedding_lookup">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">embedding_lookup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">ids</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/EmbeddingLookUpLink.html#embedding_lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.embedding_lookup" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.embedding_lookup_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">embedding_lookup_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grad_out</span></em>, <em class="sig-param"><span class="n">ids</span></em>, <em class="sig-param"><span class="n">grad_in</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/EmbeddingLookUpLink.html#embedding_lookup_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.embedding_lookup_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.indexedslice_oneside_add">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">indexedslice_oneside_add</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">indslice</span></em>, <em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/IndexedSliceLink.html#indexedslice_oneside_add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.indexedslice_oneside_add" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.layer_normalization">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">layer_normalization</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">ln_scale</span></em>, <em class="sig-param"><span class="n">ln_bias</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">var</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">eps</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/LayerNormLink.html#layer_normalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.layer_normalization" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.layer_normalization_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">layer_normalization_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_grads</span></em>, <em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">ln_scale</span></em>, <em class="sig-param"><span class="n">grad_arr</span></em>, <em class="sig-param"><span class="n">grad_scale</span></em>, <em class="sig-param"><span class="n">grad_bias</span></em>, <em class="sig-param"><span class="n">mean_arr</span></em>, <em class="sig-param"><span class="n">var_arr</span></em>, <em class="sig-param"><span class="n">eps</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/LayerNormLink.html#layer_normalization_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.layer_normalization_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_dot">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_dot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/DotLink.html#matrix_dot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_dot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_elementwise_add">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_elementwise_add</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">lazy_input</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AddElewiseLink.html#matrix_elementwise_add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_elementwise_add" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_elementwise_add_by_const">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_elementwise_add_by_const</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AddConstLink.html#matrix_elementwise_add_by_const"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_elementwise_add_by_const" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_elementwise_add_lazy">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_elementwise_add_lazy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">gpu_buf</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AddElewiseLink.html#matrix_elementwise_add_lazy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_elementwise_add_lazy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_elementwise_add_simple">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_elementwise_add_simple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/AddElewiseLink.html#matrix_elementwise_add_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_elementwise_add_simple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_elementwise_divide">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_elementwise_divide</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixDivideLink.html#matrix_elementwise_divide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_elementwise_divide" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_elementwise_divide_const">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_elementwise_divide_const</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixDivideConstLink.html#matrix_elementwise_divide_const"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_elementwise_divide_const" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_elementwise_multiply">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_elementwise_multiply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MultiplyElewiseLink.html#matrix_elementwise_multiply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_elementwise_multiply" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_elementwise_multiply_by_const">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_elementwise_multiply_by_const</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MultiplyConstLink.html#matrix_elementwise_multiply_by_const"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_elementwise_multiply_by_const" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_multiply">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_multiply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">transA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">transB</span></em>, <em class="sig-param"><span class="n">matC</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixMultLink.html#matrix_multiply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_multiply" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_opposite">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_opposite</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OppositeLink.html#matrix_opposite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_opposite" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_rsqrt">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_rsqrt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixRsqrtLink.html#matrix_rsqrt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_rsqrt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_slice">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_slice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">begin_pos</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SliceLink.html#matrix_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_slice" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_slice_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_slice_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">begin_pos</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SliceLink.html#matrix_slice_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_slice_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_slice_gradient_simple">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_slice_gradient_simple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">gpu_buf</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SliceLink.html#matrix_slice_gradient_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_slice_gradient_simple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_slice_simple">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_slice_simple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">gpu_buf</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SliceLink.html#matrix_slice_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_slice_simple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_sqrt">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_sqrt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixSqrtLink.html#matrix_sqrt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_sqrt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_transpose">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_transpose</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">perm</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixTransLink.html#matrix_transpose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_transpose" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.matrix_transpose_simple">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">matrix_transpose_simple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">out_mat</span></em>, <em class="sig-param"><span class="n">gpu_buf</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MatrixTransLink.html#matrix_transpose_simple"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.matrix_transpose_simple" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.max_pooling2d">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">max_pooling2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">pooled_layer</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MaxPoolLink.html#max_pooling2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.max_pooling2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.max_pooling2d_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">max_pooling2d_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">in_grad_arr</span></em>, <em class="sig-param"><span class="n">kernel_H</span></em>, <em class="sig-param"><span class="n">kernel_W</span></em>, <em class="sig-param"><span class="n">out_grad_arr</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/MaxPoolLink.html#max_pooling2d_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.max_pooling2d_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.momentum_update">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">momentum_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">velocity</span></em>, <em class="sig-param"><span class="n">lr</span></em>, <em class="sig-param"><span class="n">momentum</span></em>, <em class="sig-param"><span class="n">nesterov</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OptimizerLink.html#momentum_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.momentum_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.normal_init">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">normal_init</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arr</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">stddev</span></em>, <em class="sig-param"><span class="n">seed</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/InitializersLink.html#normal_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.normal_init" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.one_hot">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">one_hot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OneHotLink.html#one_hot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.one_hot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.pad">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">pad</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">paddings</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'CONSTANT'</span></em>, <em class="sig-param"><span class="n">constant_values</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/PadLink.html#pad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.pad" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.pad_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">pad_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_grad_arr</span></em>, <em class="sig-param"><span class="n">in_grad_arr</span></em>, <em class="sig-param"><span class="n">paddings</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'CONSTANT'</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/PadLink.html#pad_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.pad_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.reduce_mean">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">reduce_mean</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">axes</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReduceMeanLink.html#reduce_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.reduce_mean" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.reduce_sum">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">reduce_sum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">axes</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReduceSumLink.html#reduce_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.reduce_sum" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.reduce_sum_axis_zero">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">reduce_sum_axis_zero</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">workspace_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReduceSumAxisZeroLink.html#reduce_sum_axis_zero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.reduce_sum_axis_zero" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.relu">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">relu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReluLink.html#relu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.relu" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.relu_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">relu_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">in_grad_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/ReluLink.html#relu_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.relu_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.sgd_update">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">sgd_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">lr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/OptimizerLink.html#sgd_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.sgd_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.sigmoid">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">sigmoid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SigmoidLink.html#sigmoid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.sigmoid" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.softmax">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">softmax</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SoftmaxLink.html#softmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.softmax" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.softmax_cross_entropy">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">softmax_cross_entropy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_a</span></em>, <em class="sig-param"><span class="n">in_arr_b</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SoftmaxCrossEntropyLink.html#softmax_cross_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.softmax_cross_entropy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.softmax_cross_entropy_gradient">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">softmax_cross_entropy_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr_a</span></em>, <em class="sig-param"><span class="n">in_arr_b</span></em>, <em class="sig-param"><span class="n">in_arr_c</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/SoftmaxCrossEntropyLink.html#softmax_cross_entropy_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.softmax_cross_entropy_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.tanh">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">tanh</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/TanhLink.html#tanh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.tanh" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.truncated_normal_init">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">truncated_normal_init</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arr</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">stddev</span></em>, <em class="sig-param"><span class="n">seed</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/InitializersLink.html#truncated_normal_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.truncated_normal_init" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.uniform_init">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">uniform_init</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">arr</span></em>, <em class="sig-param"><span class="n">lb</span></em>, <em class="sig-param"><span class="n">ub</span></em>, <em class="sig-param"><span class="n">seed</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/InitializersLink.html#uniform_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.uniform_init" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.gpu_links.where">
-<code class="sig-prename descclassname">hetu.gpu_links.</code><code class="sig-name descname">where</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cond</span></em>, <em class="sig-param"><span class="n">arr1</span></em>, <em class="sig-param"><span class="n">arr2</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">stream</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/gpu_links/WhereLink.html#where"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.gpu_links.where" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-</section>
+</div>
+<div class="section" id="hetu-gpu-links-addconstlink-module">
+<h2>hetu.gpu_links.AddConstLink module<a class="headerlink" href="#hetu-gpu-links-addconstlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-addelewiselink-module">
+<h2>hetu.gpu_links.AddElewiseLink module<a class="headerlink" href="#hetu-gpu-links-addelewiselink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-arraysetlink-module">
+<h2>hetu.gpu_links.ArraySetLink module<a class="headerlink" href="#hetu-gpu-links-arraysetlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-avgpoollink-module">
+<h2>hetu.gpu_links.AvgPoolLink module<a class="headerlink" href="#hetu-gpu-links-avgpoollink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-batchmatrixmultlink-module">
+<h2>hetu.gpu_links.BatchMatrixMultLink module<a class="headerlink" href="#hetu-gpu-links-batchmatrixmultlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-binarycrossentropylink-module">
+<h2>hetu.gpu_links.BinaryCrossEntropyLink module<a class="headerlink" href="#hetu-gpu-links-binarycrossentropylink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-broadcastlink-module">
+<h2>hetu.gpu_links.BroadcastLink module<a class="headerlink" href="#hetu-gpu-links-broadcastlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-broadcastshapelink-module">
+<h2>hetu.gpu_links.BroadcastShapeLink module<a class="headerlink" href="#hetu-gpu-links-broadcastshapelink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-concatlink-module">
+<h2>hetu.gpu_links.ConcatLink module<a class="headerlink" href="#hetu-gpu-links-concatlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-conv2dbroadcastlink-module">
+<h2>hetu.gpu_links.Conv2dBroadcastLink module<a class="headerlink" href="#hetu-gpu-links-conv2dbroadcastlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-conv2dlink-module">
+<h2>hetu.gpu_links.Conv2dLink module<a class="headerlink" href="#hetu-gpu-links-conv2dlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-conv2dreducesumlink-module">
+<h2>hetu.gpu_links.Conv2dReduceSumLink module<a class="headerlink" href="#hetu-gpu-links-conv2dreducesumlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-cusparselink-module">
+<h2>hetu.gpu_links.CuSparseLink module<a class="headerlink" href="#hetu-gpu-links-cusparselink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-cudnnavgpoollink-module">
+<h2>hetu.gpu_links.CudnnAvgPoolLink module<a class="headerlink" href="#hetu-gpu-links-cudnnavgpoollink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-cudnnbnlink-module">
+<h2>hetu.gpu_links.CudnnBnLink module<a class="headerlink" href="#hetu-gpu-links-cudnnbnlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-cudnnconv2d-module">
+<h2>hetu.gpu_links.CudnnConv2d module<a class="headerlink" href="#hetu-gpu-links-cudnnconv2d-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-cudnndropoutlink-module">
+<h2>hetu.gpu_links.CudnnDropoutLink module<a class="headerlink" href="#hetu-gpu-links-cudnndropoutlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-cudnnmaxpoollink-module">
+<h2>hetu.gpu_links.CudnnMaxPoolLink module<a class="headerlink" href="#hetu-gpu-links-cudnnmaxpoollink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-cudnnsoftmaxcrossentropylink-module">
+<h2>hetu.gpu_links.CudnnSoftmaxCrossEntropyLink module<a class="headerlink" href="#hetu-gpu-links-cudnnsoftmaxcrossentropylink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-cudnnsoftmaxlink-module">
+<h2>hetu.gpu_links.CudnnSoftmaxLink module<a class="headerlink" href="#hetu-gpu-links-cudnnsoftmaxlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-dotlink-module">
+<h2>hetu.gpu_links.DotLink module<a class="headerlink" href="#hetu-gpu-links-dotlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-dropoutlink-module">
+<h2>hetu.gpu_links.DropoutLink module<a class="headerlink" href="#hetu-gpu-links-dropoutlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-embeddinglookuplink-module">
+<h2>hetu.gpu_links.EmbeddingLookUpLink module<a class="headerlink" href="#hetu-gpu-links-embeddinglookuplink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-indexedslicelink-module">
+<h2>hetu.gpu_links.IndexedSliceLink module<a class="headerlink" href="#hetu-gpu-links-indexedslicelink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-initializerslink-module">
+<h2>hetu.gpu_links.InitializersLink module<a class="headerlink" href="#hetu-gpu-links-initializerslink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-layernormlink-module">
+<h2>hetu.gpu_links.LayerNormLink module<a class="headerlink" href="#hetu-gpu-links-layernormlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-matrixdivideconstlink-module">
+<h2>hetu.gpu_links.MatrixDivideConstLink module<a class="headerlink" href="#hetu-gpu-links-matrixdivideconstlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-matrixdividelink-module">
+<h2>hetu.gpu_links.MatrixDivideLink module<a class="headerlink" href="#hetu-gpu-links-matrixdividelink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-matrixmultlink-module">
+<h2>hetu.gpu_links.MatrixMultLink module<a class="headerlink" href="#hetu-gpu-links-matrixmultlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-matrixrsqrtlink-module">
+<h2>hetu.gpu_links.MatrixRsqrtLink module<a class="headerlink" href="#hetu-gpu-links-matrixrsqrtlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-matrixsqrtlink-module">
+<h2>hetu.gpu_links.MatrixSqrtLink module<a class="headerlink" href="#hetu-gpu-links-matrixsqrtlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-matrixtranslink-module">
+<h2>hetu.gpu_links.MatrixTransLink module<a class="headerlink" href="#hetu-gpu-links-matrixtranslink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-maxpoollink-module">
+<h2>hetu.gpu_links.MaxPoolLink module<a class="headerlink" href="#hetu-gpu-links-maxpoollink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-multiplyconstlink-module">
+<h2>hetu.gpu_links.MultiplyConstLink module<a class="headerlink" href="#hetu-gpu-links-multiplyconstlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-multiplyelewiselink-module">
+<h2>hetu.gpu_links.MultiplyElewiseLink module<a class="headerlink" href="#hetu-gpu-links-multiplyelewiselink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-onehotlink-module">
+<h2>hetu.gpu_links.OneHotLink module<a class="headerlink" href="#hetu-gpu-links-onehotlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-oppositelink-module">
+<h2>hetu.gpu_links.OppositeLink module<a class="headerlink" href="#hetu-gpu-links-oppositelink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-optimizerlink-module">
+<h2>hetu.gpu_links.OptimizerLink module<a class="headerlink" href="#hetu-gpu-links-optimizerlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-padlink-module">
+<h2>hetu.gpu_links.PadLink module<a class="headerlink" href="#hetu-gpu-links-padlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-reducemeanlink-module">
+<h2>hetu.gpu_links.ReduceMeanLink module<a class="headerlink" href="#hetu-gpu-links-reducemeanlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-reducesumaxiszerolink-module">
+<h2>hetu.gpu_links.ReduceSumAxisZeroLink module<a class="headerlink" href="#hetu-gpu-links-reducesumaxiszerolink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-reducesumlink-module">
+<h2>hetu.gpu_links.ReduceSumLink module<a class="headerlink" href="#hetu-gpu-links-reducesumlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-relulink-module">
+<h2>hetu.gpu_links.ReluLink module<a class="headerlink" href="#hetu-gpu-links-relulink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-reshapelink-module">
+<h2>hetu.gpu_links.ReshapeLink module<a class="headerlink" href="#hetu-gpu-links-reshapelink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-sigmoidlink-module">
+<h2>hetu.gpu_links.SigmoidLink module<a class="headerlink" href="#hetu-gpu-links-sigmoidlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-slicelink-module">
+<h2>hetu.gpu_links.SliceLink module<a class="headerlink" href="#hetu-gpu-links-slicelink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-softmaxcrossentropylink-module">
+<h2>hetu.gpu_links.SoftmaxCrossEntropyLink module<a class="headerlink" href="#hetu-gpu-links-softmaxcrossentropylink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-softmaxlink-module">
+<h2>hetu.gpu_links.SoftmaxLink module<a class="headerlink" href="#hetu-gpu-links-softmaxlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-tanhlink-module">
+<h2>hetu.gpu_links.TanhLink module<a class="headerlink" href="#hetu-gpu-links-tanhlink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="hetu-gpu-links-wherelink-module">
+<h2>hetu.gpu_links.WhereLink module<a class="headerlink" href="#hetu-gpu-links-wherelink-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
 
 
            </div>
@@ -1207,7 +329,7 @@
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2021, AlfredWangyj.
+        &#169; Copyright 2021, Peking University.
 
     </p>
   </div>

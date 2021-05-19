@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>hetu.onnx.onnx_opset package &mdash; Hetu 1.0.0 documentation</title>
@@ -14,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -30,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -83,39 +85,15 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">hetu.onnx.onnx_opset package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-addconst-module">hetu.onnx.onnx_opset.AddConst module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-addelewise-module">hetu.onnx.onnx_opset.AddElewise module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-batchnorm-module">hetu.onnx.onnx_opset.BatchNorm module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-concat-module">hetu.onnx.onnx_opset.Concat module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-conv2d-module">hetu.onnx.onnx_opset.Conv2d module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-division-module">hetu.onnx.onnx_opset.Division module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-dropout-module">hetu.onnx.onnx_opset.Dropout module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-identity-module">hetu.onnx.onnx_opset.Identity module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-matrixmult-module">hetu.onnx.onnx_opset.MatrixMult module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-multiplyconst-module">hetu.onnx.onnx_opset.MultiplyConst module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-onehot-module">hetu.onnx.onnx_opset.OneHot module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-opposite-module">hetu.onnx.onnx_opset.Opposite module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-pad-module">hetu.onnx.onnx_opset.Pad module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-pool-module">hetu.onnx.onnx_opset.Pool module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-reduces-module">hetu.onnx.onnx_opset.Reduces module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-relu-module">hetu.onnx.onnx_opset.Relu module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-reshape-module">hetu.onnx.onnx_opset.Reshape module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-softmax-module">hetu.onnx.onnx_opset.Softmax module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-sqrt-module">hetu.onnx.onnx_opset.Sqrt module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-tanh-module">hetu.onnx.onnx_opset.Tanh module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-transpose-module">hetu.onnx.onnx_opset.Transpose module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-variable-module">hetu.onnx.onnx_opset.Variable module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-where-module">hetu.onnx.onnx_opset.Where module</a></li>
-<li><a class="reference internal" href="#hetu-onnx-onnx-opset-general-module">hetu.onnx.onnx_opset.general module</a></li>
-<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to Hetu’s documentation!</a></li>
 </ul>
-</li>
+<p class="caption"><span class="caption-text">Development plan</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="plan.html">Development plan</a></li>
 </ul>
-</div>
+
             
           
         </div>
@@ -181,87 +159,87 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="hetu-onnx-onnx-opset-package">
+  <div class="section" id="hetu-onnx-onnx-opset-package">
 <h1>hetu.onnx.onnx_opset package<a class="headerlink" href="#hetu-onnx-onnx-opset-package" title="Permalink to this headline">¶</a></h1>
-<section id="submodules">
+<div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-addconst-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-addconst-module">
 <h2>hetu.onnx.onnx_opset.AddConst module<a class="headerlink" href="#hetu-onnx-onnx-opset-addconst-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-addelewise-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-addelewise-module">
 <h2>hetu.onnx.onnx_opset.AddElewise module<a class="headerlink" href="#hetu-onnx-onnx-opset-addelewise-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-batchnorm-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-batchnorm-module">
 <h2>hetu.onnx.onnx_opset.BatchNorm module<a class="headerlink" href="#hetu-onnx-onnx-opset-batchnorm-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-concat-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-concat-module">
 <h2>hetu.onnx.onnx_opset.Concat module<a class="headerlink" href="#hetu-onnx-onnx-opset-concat-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-conv2d-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-conv2d-module">
 <h2>hetu.onnx.onnx_opset.Conv2d module<a class="headerlink" href="#hetu-onnx-onnx-opset-conv2d-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-division-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-division-module">
 <h2>hetu.onnx.onnx_opset.Division module<a class="headerlink" href="#hetu-onnx-onnx-opset-division-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-dropout-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-dropout-module">
 <h2>hetu.onnx.onnx_opset.Dropout module<a class="headerlink" href="#hetu-onnx-onnx-opset-dropout-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-identity-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-identity-module">
 <h2>hetu.onnx.onnx_opset.Identity module<a class="headerlink" href="#hetu-onnx-onnx-opset-identity-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-matrixmult-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-matrixmult-module">
 <h2>hetu.onnx.onnx_opset.MatrixMult module<a class="headerlink" href="#hetu-onnx-onnx-opset-matrixmult-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-multiplyconst-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-multiplyconst-module">
 <h2>hetu.onnx.onnx_opset.MultiplyConst module<a class="headerlink" href="#hetu-onnx-onnx-opset-multiplyconst-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-onehot-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-onehot-module">
 <h2>hetu.onnx.onnx_opset.OneHot module<a class="headerlink" href="#hetu-onnx-onnx-opset-onehot-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-opposite-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-opposite-module">
 <h2>hetu.onnx.onnx_opset.Opposite module<a class="headerlink" href="#hetu-onnx-onnx-opset-opposite-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-pad-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-pad-module">
 <h2>hetu.onnx.onnx_opset.Pad module<a class="headerlink" href="#hetu-onnx-onnx-opset-pad-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-pool-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-pool-module">
 <h2>hetu.onnx.onnx_opset.Pool module<a class="headerlink" href="#hetu-onnx-onnx-opset-pool-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-reduces-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-reduces-module">
 <h2>hetu.onnx.onnx_opset.Reduces module<a class="headerlink" href="#hetu-onnx-onnx-opset-reduces-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-relu-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-relu-module">
 <h2>hetu.onnx.onnx_opset.Relu module<a class="headerlink" href="#hetu-onnx-onnx-opset-relu-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-reshape-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-reshape-module">
 <h2>hetu.onnx.onnx_opset.Reshape module<a class="headerlink" href="#hetu-onnx-onnx-opset-reshape-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-softmax-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-softmax-module">
 <h2>hetu.onnx.onnx_opset.Softmax module<a class="headerlink" href="#hetu-onnx-onnx-opset-softmax-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-sqrt-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-sqrt-module">
 <h2>hetu.onnx.onnx_opset.Sqrt module<a class="headerlink" href="#hetu-onnx-onnx-opset-sqrt-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-tanh-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-tanh-module">
 <h2>hetu.onnx.onnx_opset.Tanh module<a class="headerlink" href="#hetu-onnx-onnx-opset-tanh-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-transpose-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-transpose-module">
 <h2>hetu.onnx.onnx_opset.Transpose module<a class="headerlink" href="#hetu-onnx-onnx-opset-transpose-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-variable-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-variable-module">
 <h2>hetu.onnx.onnx_opset.Variable module<a class="headerlink" href="#hetu-onnx-onnx-opset-variable-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-where-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-where-module">
 <h2>hetu.onnx.onnx_opset.Where module<a class="headerlink" href="#hetu-onnx-onnx-opset-where-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="hetu-onnx-onnx-opset-general-module">
+</div>
+<div class="section" id="hetu-onnx-onnx-opset-general-module">
 <h2>hetu.onnx.onnx_opset.general module<a class="headerlink" href="#hetu-onnx-onnx-opset-general-module" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="module-contents">
+</div>
+<div class="section" id="module-contents">
 <h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
@@ -273,7 +251,7 @@
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2021, AlfredWangyj.
+        &#169; Copyright 2021, Peking University.
 
     </p>
   </div>

@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>hetu.cpu_links package &mdash; Hetu 1.0.0 documentation</title>
@@ -14,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -30,6 +31,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -83,16 +85,15 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">hetu.cpu_links package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-hetu.cpu_links.dnnl_op">hetu.cpu_links.dnnl_op module</a></li>
-<li><a class="reference internal" href="#module-hetu.cpu_links">Module contents</a></li>
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Welcome to Hetu’s documentation!</a></li>
 </ul>
-</li>
+<p class="caption"><span class="caption-text">Development plan</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="plan.html">Development plan</a></li>
 </ul>
-</div>
+
             
           
         </div>
@@ -158,243 +159,18 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="hetu-cpu-links-package">
+  <div class="section" id="hetu-cpu-links-package">
 <h1>hetu.cpu_links package<a class="headerlink" href="#hetu-cpu-links-package" title="Permalink to this headline">¶</a></h1>
-<section id="submodules">
+<div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</section>
-<section id="module-hetu.cpu_links.dnnl_op">
-<span id="hetu-cpu-links-dnnl-op-module"></span><h2>hetu.cpu_links.dnnl_op module<a class="headerlink" href="#module-hetu.cpu_links.dnnl_op" title="Permalink to this headline">¶</a></h2>
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.adagrad_update">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">adagrad_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">accumulation</span></em>, <em class="sig-param"><span class="n">lr</span></em>, <em class="sig-param"><span class="n">eps</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#adagrad_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.adagrad_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.adam_update">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">adam_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">expavg</span></em>, <em class="sig-param"><span class="n">expavgsq</span></em>, <em class="sig-param"><span class="n">lr</span></em>, <em class="sig-param"><span class="n">beta1</span></em>, <em class="sig-param"><span class="n">beta2</span></em>, <em class="sig-param"><span class="n">beta1t</span></em>, <em class="sig-param"><span class="n">beta2t</span></em>, <em class="sig-param"><span class="n">eps</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#adam_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.adam_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.array_set">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">array_set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#array_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.array_set" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.avg_pool">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">avg_pool</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">H</span></em>, <em class="sig-param"><span class="n">W</span></em>, <em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#avg_pool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.avg_pool" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.avg_pool_gradient">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">avg_pool_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gradient_Y</span></em>, <em class="sig-param"><span class="n">H</span></em>, <em class="sig-param"><span class="n">W</span></em>, <em class="sig-param"><span class="n">gradient_X</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#avg_pool_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.avg_pool_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.batch_norm">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">batch_norm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">bn_scale</span></em>, <em class="sig-param"><span class="n">bn_bias</span></em>, <em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">var</span></em>, <em class="sig-param"><span class="n">momentum</span><span class="o">=</span><span class="default_value">0.99</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">0.01</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#batch_norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.batch_norm" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.batch_norm_gradient">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">batch_norm_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">gradient_Y</span></em>, <em class="sig-param"><span class="n">input_X</span></em>, <em class="sig-param"><span class="n">bn_scale</span></em>, <em class="sig-param"><span class="n">bn_bias</span></em>, <em class="sig-param"><span class="n">gradient_X</span></em>, <em class="sig-param"><span class="n">gradient_bn_scale</span></em>, <em class="sig-param"><span class="n">gradient_bn_bias</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">var</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">0.01</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#batch_norm_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.batch_norm_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.broadcast_to">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">broadcast_to</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#broadcast_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.broadcast_to" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.concat">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">concat</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_x</span></em>, <em class="sig-param"><span class="n">input_y</span></em>, <em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">axis</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#concat"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.concat" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.concat_gradient">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">concat_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">output_gradient</span></em>, <em class="sig-param"><span class="n">input_gradient</span></em>, <em class="sig-param"><span class="n">axis</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">id</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#concat_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.concat_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.conv2d">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">conv2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_x</span></em>, <em class="sig-param"><span class="n">input_f</span></em>, <em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#conv2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.conv2d" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.conv2d_gradient_of_data">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">conv2d_gradient_of_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_f</span></em>, <em class="sig-param"><span class="n">gradient_y</span></em>, <em class="sig-param"><span class="n">gradient_x</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#conv2d_gradient_of_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.conv2d_gradient_of_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.conv2d_gradient_of_filter">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">conv2d_gradient_of_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input_x</span></em>, <em class="sig-param"><span class="n">gradient_y</span></em>, <em class="sig-param"><span class="n">gradient_f</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#conv2d_gradient_of_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.conv2d_gradient_of_filter" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.dropout">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">dropout</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">dropout</span></em>, <em class="sig-param"><span class="n">out_arr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#dropout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.dropout" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.dropout_gradient">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">dropout_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_gradient_y</span></em>, <em class="sig-param"><span class="n">dropout</span></em>, <em class="sig-param"><span class="n">out_gradient_x</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#dropout_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.dropout_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.embedding_lookup">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">embedding_lookup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_mat</span></em>, <em class="sig-param"><span class="n">ids</span></em>, <em class="sig-param"><span class="n">out_mat</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#embedding_lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.embedding_lookup" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.matrix_elementwise_add">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">matrix_elementwise_add</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#matrix_elementwise_add"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.matrix_elementwise_add" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.matrix_elementwise_add_by_const">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">matrix_elementwise_add_by_const</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#matrix_elementwise_add_by_const"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.matrix_elementwise_add_by_const" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.matrix_elementwise_divide">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">matrix_elementwise_divide</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#matrix_elementwise_divide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.matrix_elementwise_divide" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.matrix_elementwise_divide_by_const">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">matrix_elementwise_divide_by_const</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#matrix_elementwise_divide_by_const"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.matrix_elementwise_divide_by_const" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.matrix_elementwise_multiply">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">matrix_elementwise_multiply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#matrix_elementwise_multiply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.matrix_elementwise_multiply" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.matrix_elementwise_multiply_by_const">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">matrix_elementwise_multiply_by_const</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span></em>, <em class="sig-param"><span class="n">val</span></em>, <em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#matrix_elementwise_multiply_by_const"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.matrix_elementwise_multiply_by_const" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.matrix_multiply">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">matrix_multiply</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">transposeA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">transposeB</span></em>, <em class="sig-param"><span class="n">matC</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#matrix_multiply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.matrix_multiply" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.max_pool">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">max_pool</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">H</span></em>, <em class="sig-param"><span class="n">W</span></em>, <em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#max_pool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.max_pool" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.max_pool_gradient">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">max_pool_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">input_grad</span></em>, <em class="sig-param"><span class="n">H</span></em>, <em class="sig-param"><span class="n">W</span></em>, <em class="sig-param"><span class="n">output</span></em>, <em class="sig-param"><span class="n">padding</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">stride</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#max_pool_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.max_pool_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.momentum_update">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">momentum_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">velocity</span></em>, <em class="sig-param"><span class="n">lr</span></em>, <em class="sig-param"><span class="n">momentum</span></em>, <em class="sig-param"><span class="n">nesterov</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#momentum_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.momentum_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.normal_init">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">normal_init</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">stddev</span></em>, <em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#normal_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.normal_init" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.opposite">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">opposite</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#opposite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.opposite" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.pad">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">pad</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">paddings</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'CONSTANT'</span></em>, <em class="sig-param"><span class="n">constant_values</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#pad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.pad" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.pad_gradient">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">pad_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_grad_arr</span></em>, <em class="sig-param"><span class="n">in_grad_arr</span></em>, <em class="sig-param"><span class="n">paddings</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'CONSTANT'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#pad_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.pad_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.reduce_sum_axis_zero">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">reduce_sum_axis_zero</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#reduce_sum_axis_zero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.reduce_sum_axis_zero" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.relu">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">relu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#relu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.relu" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.relu_gradient">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">relu_gradient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">in_grad</span></em>, <em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#relu_gradient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.relu_gradient" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.reshape">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">reshape</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#reshape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.reshape" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.rsqrt">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">rsqrt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#rsqrt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.rsqrt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.sgd_update">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">sgd_update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad</span></em>, <em class="sig-param"><span class="n">lr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#sgd_update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.sgd_update" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.sgd_update_sparse">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">sgd_update_sparse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">grad_ind</span></em>, <em class="sig-param"><span class="n">grad_value</span></em>, <em class="sig-param"><span class="n">lr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#sgd_update_sparse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.sgd_update_sparse" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.sigmoid">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">sigmoid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#sigmoid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.sigmoid" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.softmax">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">softmax</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span></em>, <em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#softmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.softmax" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.softmax_crossentropy">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">softmax_crossentropy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matA</span></em>, <em class="sig-param"><span class="n">matB</span></em>, <em class="sig-param"><span class="n">output</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#softmax_crossentropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.softmax_crossentropy" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.sqrt">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">sqrt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#sqrt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.sqrt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.tanh">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">tanh</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#tanh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.tanh" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.transpose">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">transpose</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_arr</span></em>, <em class="sig-param"><span class="n">out_arr</span></em>, <em class="sig-param"><span class="n">perm</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#transpose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.transpose" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.truncated_normal_init">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">truncated_normal_init</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">mean</span></em>, <em class="sig-param"><span class="n">stddev</span></em>, <em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#truncated_normal_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.truncated_normal_init" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="hetu.cpu_links.dnnl_op.uniform_init">
-<code class="sig-prename descclassname">hetu.cpu_links.dnnl_op.</code><code class="sig-name descname">uniform_init</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">param</span></em>, <em class="sig-param"><span class="n">lb</span></em>, <em class="sig-param"><span class="n">ub</span></em>, <em class="sig-param"><span class="n">seed</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hetu/cpu_links/dnnl_op.html#uniform_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hetu.cpu_links.dnnl_op.uniform_init" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</section>
-<section id="module-hetu.cpu_links">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-hetu.cpu_links" title="Permalink to this headline">¶</a></h2>
-</section>
-</section>
+</div>
+<div class="section" id="hetu-cpu-links-dnnl-op-module">
+<h2>hetu.cpu_links.dnnl_op module<a class="headerlink" href="#hetu-cpu-links-dnnl-op-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
 
 
            </div>
@@ -406,7 +182,7 @@
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2021, AlfredWangyj.
+        &#169; Copyright 2021, Peking University.
 
     </p>
   </div>
