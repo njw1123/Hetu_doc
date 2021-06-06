@@ -51,6 +51,18 @@ Welcome to Hetu's documentation!
 
    plan
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Tutorials
+
+   Tutorials/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: HetuML
+
+   HetuML/index
+
 Indices and tables
 ==================
 
