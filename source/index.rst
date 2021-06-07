@@ -33,23 +33,21 @@ Welcome to Hetu's documentation!
 
 本项目由国家重点研发计划支持，相关成果已经发表了多篇CCF-A类高水平学术论文，目前项目已经开源在：https://github.com/PKU-DAIR/Hetu。
 
+.. toctree::
+   :titlesonly:
+   :caption: Overview
+
+   Overview/design
+   Overview/performance
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :titlesonly:
+   :caption: Features
 
-.. toctree::
-   :glob:
-   :maxdepth: 1
-   :caption: Introduction
-
-   self
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Development plan
-
-   plan
+   Features/content1
+   Features/content2
+   Features/content3
+   Features/content4
 
 .. toctree::
    :maxdepth: 2
@@ -63,9 +61,8 @@ Welcome to Hetu's documentation!
 
    HetuML/index
 
-Indices and tables
-==================
+.. toctree::
+   :maxdepth: 1
+   :caption: Development plan
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   plan
