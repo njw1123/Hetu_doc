@@ -7,14 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Welcome to Hetu’s documentation! &mdash; Hetu 1.0.0 documentation</title>
+  <title>Welcome to Hetu! &mdash; Hetu 1.0.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/customized.css" type="text/css" />
 
   
   
@@ -51,7 +50,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search"  style="background: white" >
           
 
           
@@ -100,11 +99,41 @@
 </ul>
 <p class="caption"><span class="caption-text">Tutorials</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Tutorials/index.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorials/index.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Tutorials/Startup/contents.html">安装和入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Tutorials/Startup/contents.html#hetu">从源码编译安装Hetu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorials/Startup/contents.html#id2">克隆仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorials/Startup/contents.html#id3">环境准备</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorials/Startup/contents.html#id4">安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorials/Startup/contents.html#id5">十分钟快速上手Hetu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorials/Startup/contents.html#onnx">模型和ONNX协议间的导入导出</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Tutorials/Startup/contents.html#id6"><strong>一、 简介</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Tutorials/Startup/contents.html#id7"><strong>二、 模型导出为ONNX协议</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Tutorials/Startup/contents.html#onnxhetu"><strong>三、</strong> ONNX协议导入Hetu框架</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">HetuML</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="HetuML/index.html">AutoML examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="HetuML/index.html">AutoML examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="HetuML/LR/contents.html">LR</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="HetuML/LR/contents.html#id1">定义超参数空间</a></li>
+<li class="toctree-l3"><a class="reference internal" href="HetuML/LR/contents.html#id2">定义目标函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="HetuML/LR/contents.html#id3">执行优化</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="HetuML/GBDT/contents.html">GBDT</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="HetuML/GBDT/contents.html#id1">定义超参数空间</a></li>
+<li class="toctree-l3"><a class="reference internal" href="HetuML/GBDT/contents.html#id2">定义目标函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="HetuML/GBDT/contents.html#id3">执行优化</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Development plan</span></p>
 <ul>
@@ -157,7 +186,7 @@
     
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
         
-      <li>Welcome to Hetu’s documentation!</li>
+      <li>Welcome to Hetu!</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -176,8 +205,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-hetu-s-documentation">
-<h1>Welcome to Hetu’s documentation!<a class="headerlink" href="#welcome-to-hetu-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="welcome-to-hetu">
+<h1>Welcome to Hetu!<a class="headerlink" href="#welcome-to-hetu" title="Permalink to this headline">¶</a></h1>
 <img alt="_images/overview.png" src="_images/overview.png" />
 <p><strong>河图(Hetu)</strong> 是一个兼顾创新性和可用性的分布式深度学习系统，由北京大学崔斌教授团队研发，这也是首个由国内高校自主研发的分布式深度学习系统。该系统与现有相关基线系统完全解耦，并具有多项先进特性：</p>
 <ul class="simple">

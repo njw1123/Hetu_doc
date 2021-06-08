@@ -70,6 +70,24 @@ exclude_patterns = []
 html_theme = 'sphinx_rtd_theme'
 autosummary_generate = True
 
+# Theme options are theme-specific and customize the look and feel of a theme
+# further.  For a list of options available for each theme, see the
+# documentation.
+#
+html_theme_options = {
+    'style_nav_header_background': 'white',
+    'display_version': True,
+    'logo_only': True,
+    'collapse_navigation': False,
+}
+
+html_context = {
+    'css_files': [
+        # 'https://fonts.googleapis.com/css?family=Roboto',
+        '_static/css/customized.css'
+    ],
+}
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
