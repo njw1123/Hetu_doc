@@ -1,4 +1,4 @@
-硬件感知的自动分布式训练
+Automatic Distributed Training
 =====================
 
 - 支持多种分布式并行策略
