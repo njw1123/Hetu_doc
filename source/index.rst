@@ -8,8 +8,7 @@ Welcome to Hetu!
 
 .. image:: figure/framework.png
 
-
-**Hetu** is a high-performance distributed deep learning system, developed by the team of Professor Bin Cui from Peking University. The system is completely decoupled from the existing DL systems. It takes account of both high availability in industry and innovation in academia, which has a number of advanced characteristics:
+**Hetu** is a high-performance distributed deep learning system, developed by the team of Professor `Bin Cui <http://net.pku.edu.cn/~cuibin/index.html>`_ from Peking University (past work targets distributed ML systems, including `Angel <https://github.com/Tencent/Angel-ML>`_). The system is completely decoupled from the existing DL systems. It takes account of both high availability in industry and innovation in academia, which has a number of advanced characteristics:
 
 + **Applicability**. DL model definition with standard dataflow graph; many basic CPU and GPU operators; efficient implementation of more than plenty of DL models and at least popular 10 ML algorithms.
 
@@ -22,6 +21,8 @@ Welcome to Hetu!
 + **Agility**. Automatically ML pipeline: feature engineering, model selection, hyperparameter search.
 
 This project is supported by the National Key Research and Development Program of China, and some related results have been published on high-level CCF-A conferences. The project is arranged to be open sourced recently at: https://github.com/PKU-DAIR/Hetu.
+
+We welcome everyone interested in machine learning or distributed systems to contribute code, create issues or pull requests. Please refer to Contribution Guide and :doc:`plan` for more details.
 
 ..
   **河图(Hetu)** 是一个兼顾创新性和可用性的分布式深度学习系统，由北京大学崔斌教授团队研发，这也是首个由国内高校自主研发的分布式深度学习系统。该系统与现有相关基线系统完全解耦，并具有多项先进特性：
@@ -49,6 +50,7 @@ This project is supported by the National Key Research and Development Program o
    Features/content2
    Features/content3
    Features/content4
+   Features/content5
 
 .. toctree::
    :maxdepth: 2
@@ -67,3 +69,10 @@ This project is supported by the National Key Research and Development Program o
    :caption: Development plan
 
    plan
+
+.. raw:: html
+
+    <hr>
+    <center>
+    <a href="https://clustrmaps.com/site/1bht7" title="Visit tracker"><img src="http://www.clustrmaps.com/map_v2.png?d=BqVzNBdYJy_03utYYwMcMbn1WKzYXz50vkEX1AL0ox8&cl=ffffff&w=300&t=tt"></a>
+    </center>
