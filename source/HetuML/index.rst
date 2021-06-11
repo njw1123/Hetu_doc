@@ -1,10 +1,12 @@
-AutoML examples
+ML Documents
 =================================
-本模块演示如何使⽤Hetu自动化机器学习模块对HetuML系统中的机器学习模型进行自动化调参。
+HetuML is a high-performance and scalable distributed machine learning package, which can be used to solve large-scale machine learning problems with large-scale sparse data. 
+We will detail on how to levarage HetuML for your machine learning problems in this module. 
 
 .. toctree::
    :maxdepth: 2
-   :caption: AutoML examples
+   :caption: Getting Started
 
-   LR/contents
-   GBDT/contents
+   MLTutorials/index
+   AutoML/index
+
