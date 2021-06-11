@@ -1,10 +1,10 @@
 Tutorials
 =================================
-本模块演示如何使⽤Hetu。
+This is a Tutorial for HetuML module. 
 
 .. toctree::
    :maxdepth: 2
    :caption: Getting Started
 
-   install/install
-   start/start
+   install/contents_en
+   start/contents_en
