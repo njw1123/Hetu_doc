@@ -6,5 +6,6 @@ Tutorials
    :maxdepth: 2
    :caption: Getting Started
 
-   install/install
-   start/start
+   install/contents_en
+   start/contents_en
+   onxx/contents_en
