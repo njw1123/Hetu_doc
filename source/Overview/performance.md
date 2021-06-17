@@ -1,12 +1,12 @@
 Performance
 ============
 
-##Experimental setup
+## Experimental setup
 
 We benchmark Hetu with TensorFlow on the dataset of CIFAR10 across ResNet.
 
 
-##Peformance comparison
+## Peformance comparison
 
 The performance comparison is summarized in the figure below.
 
