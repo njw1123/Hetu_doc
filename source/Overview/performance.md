@@ -26,4 +26,6 @@ The performance comparison is summarized in the figure below.
 - Batch size comparison
 	- Swap/Recompute
 
+![](batchsize.png)
+
 - AutoML search comparison
