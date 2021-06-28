@@ -39,8 +39,8 @@ from GNN.graph import metis_reorder
 
 dir_name = 'your_dir'
 adj = sp.load_npz(dir_name+"adj.npz").tocoo()
-features = np.load(dir_name+"features .npy")
-labels = np.load(dir_name+"labels .npy")
+features = np.load(dir_name+"features.npy")
+labels = np.load(dir_name+"labels.npy")
 adj, features, labels = metis_reorder(adj, features, labels)
 ```
 
@@ -119,8 +119,8 @@ from GNN.graph import split_graph
 
 dir_name = 'your_dir'
 adj = sp.load_npz(dir_name+"adj.npz").tocoo()
-features = np.load(dir_name+"features .npy")
-labels = np.load(dir_name+"labels .npy")
+features = np.load(dir_name+"features.npy")
+labels = np.load(dir_name+"labels.npy")
 adj, features, labels = metis_reorder(adj, features, labels)
 block_size = 32
 theta = 0.05
