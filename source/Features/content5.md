@@ -31,7 +31,7 @@ Here is a simple Python demo to show how to train GNN model.
 
 ### Load dataset.
 
-Firstly, you need to load dataset from your file folder.If you want, you can reorder the graph to accelerate computing.
+First, you need to load dataset from your file folder.If you want, you can reorder the graph to accelerate computing.
 ```python
 import numpy as np
 import scipy.sparse as sp
@@ -149,17 +149,17 @@ W1 = initializers.xavier_uniform(shape=(num_features, hidden_size), name="W1", t
 W2 = initializers.xavier_uniform(shape=(hidden_size, num_classes), name="W2", trainable=True, ctx=ctx)    
 y_ = ad.Variable(name="y_")    
    
-z1=ad.matmul_op(H,W1,ctx=ctx)  
-z2_dense=ad.bsmm_op(z1,W,layout,block_size,True,ctx)
-z2_sparse=ad.spmm_op(A, z1,ctx=ctx) 
-z2=ad.add_op(z2_dense, z2_sparse)
-z3=ad.relu_op(z2,ctx=ctx)       
-z4_dense=ad.bsmm_op(z3,W,layout,block_size,True,ctx)   
-z4_sparse=ad.spmm_op(A, z3,ctx=ctx)
-z4=ad.add_op(z4_dense, z4_sparse)        
-y=ad.matmul_op(z4,W2,ctx=ctx)    
-yy=ad.slice_op(y, (0,0), (node_count,num_classes), ctx)
-loss= ad.softmaxcrossentropy_op(yy, y_,ctx=ctx)   
+z1 = ad.matmul_op(H,W1,ctx=ctx)  
+z2_dense = ad.bsmm_op(z1,W,layout,block_size,True,ctx)
+z2_sparse = ad.spmm_op(A, z1,ctx=ctx) 
+z2 = ad.add_op(z2_dense, z2_sparse)
+z3 = ad.relu_op(z2,ctx=ctx)       
+z4_dense = ad.bsmm_op(z3,W,layout,block_size,True,ctx)   
+z4_sparse = ad.spmm_op(A, z3,ctx=ctx)
+z4 = ad.add_op(z4_dense, z4_sparse)        
+y = ad.matmul_op(z4,W2,ctx=ctx)    
+yy = ad.slice_op(y, (0,0), (node_count,num_classes), ctx)
+loss = ad.softmaxcrossentropy_op(yy, y_,ctx=ctx)   
 opt = optimizer.AdamOptimizer()
 train_op = opt.minimize(loss)
 ```
