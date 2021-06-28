@@ -110,7 +110,7 @@ If you want to use the hybrid mode, here is the simple Python demo.
 
 ### Load dataset.
 
-To use the hybird mode, you need to split the graph to get the block-sparse part and coo part of the adjacency matrix.Also, you can set the block size and density threshold.
+To use the hybird mode, you need to split the graph to get the block-sparse part and coo part of the adjacency matrix. Also, you can set the block size and density threshold.
 ```python
 import numpy as np
 import scipy.sparse as sp
