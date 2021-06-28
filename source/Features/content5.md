@@ -6,19 +6,14 @@ Graph Neural Networks (GNNs) are powerful and flexible neural networks that use 
 
 We compare Hetu to Deep Graph Library(DGL)  and PyTorch Geometric (PyG) and selected 9 datasets, including 5 smaller datasets: PubMed, Cora, citeser, coauthor_ phy, Blogcatalog, four large datasets: Reddit, Proteins, ArXiv, Amazon 0601. The GCN network with 64 hidden layer nodes and 4 hidden layers is used for training. We use a four layers GCN as the model, and the number of hidden layer nodes is 64. The results are as follows.
 
-+---------------------------------------------------------------------------------------------+
-|                  | Pubmed       | Cora         | Citeseer     | Coauthor_phy | Blogcatalog  |
-+------------------+--------------+--------------+--------------+--------------+--------------+
-| DGL              | 0.0118s      | 0.0118s      | 0.0118s      | 0.0228s      | 0.0128s      |
-+------------------+--------------+--------------+--------------+--------------+--------------+
-| PYG              | 0.0053s      | 0.0057s      | 0.0054s      | 0.0195s      | 0.0078s      |
-+------------------+--------------+--------------+--------------+--------------+--------------+
-| Hetu             | 0.0016s      | 0.0010s      | 0.0011s      | 0.0059s      | 0.0022s      |
-+------------------+--------------+--------------+--------------+--------------+--------------+
-| Hetu(reorder)    | 0.0016s      | 0.0009s      | 0.0011s      | 0.0056s      | 0.0023s      |
-+------------------+--------------+--------------+--------------+--------------+--------------+
-| Hetu(hybrid)     | 0.0024s      | 0.0011s      | 0.0012s      | 0.0062s      | 0.0022s      |
-+------------------+--------------+--------------+--------------+--------------+--------------+
+|                | Pubmed  | Cora    | Citeseer | Coauthor_phy | Blogcatalog |
+|----------------|---------|---------|----------|--------------|-------------|
+| DGL            | 0.0118s | 0.0118s | 0.0118s  | 0.0228s      | 0.0128s     |
+| PYG            | 0.0053s | 0.0057s | 0.0054s  | 0.0195s      | 0.0078s     |
+| Hetu           | 0.0016s | 0.0010s | 0.0011s  | 0.0059s      | 0.0022s     |
+| Hetu(reorder)  | 0.0016s | 0.0009s | 0.0011s  | 0.0056s      | 0.0023s     |
+| Hetu(hybrid)   | 0.0024s | 0.0011s | 0.0012s  | 0.0062s      | 0.0022s     |
+
 
 It can be seen from the table that for the small graph, the calculation speed of Hetu is faster than the other two graph neural network frameworks, and only using the optimized spmm can get better training speed, but there is no advantage in the hybrid mode.
 
