@@ -27,6 +27,83 @@ It can be seen from the table that for the small graph, the calculation speed of
 
 For dense large graph, the hybrid model can speed up the training. If the nodes in the graph are sparse, the optimal training speed can be obtained by partition the graph.
 
+Here is a simple Python demo to show how to train GNN model.
 
+### Load dataset.
+
+Firstly, you need to load dataset from your file folder.If you want, you can reorder the graph to accelerate computing.
+```python
+import numpy as np
+import scipy.sparse as sp
+from GNN.graph import metis_reorder
+
+dir_name = 'your_dir'
+adj = sp.load_npz(dir_name+"adj.npz").tocoo()
+features = np.load(dir_name+"features .npy")
+labels = np.load(dir_name+"labels .npy")
+adj, features, labels = metis_reorder(adj, features, labels)
+```
+
+### Set model
+
+Then, you can get the parameters of graph and define variables  you need. After that, you can make your own gcn model.
+
+```python
+from hetu import initializers
+from hetu import optimizer
+from hetu import gpu_ops as ad
+
+node_count = adj.shape[0]
+num_features = features.shape[1]
+num_classes = np.max(labels)+1
+hidden_size = 64
+ 
+ctx = ndarray.gpu(0)
+A = ad.Variable(name="A", trainable=False)
+H = ad.Variable(name="H")
+W1 = initializers.xavier_uniform(shape=(num_features, hidden_size), name="W1", trainable=True, ctx=ctx)
+W2 = initializers.xavier_uniform(shape=(hidden_size, num_classes), name="W2", trainable=True, ctx=ctx)
+y_ = ad.Variable(name="y_")       
+ 
+z1 = ad.matmul_op(H,W1,ctx=ctx)  
+z2 = ad.spmm_op(A, z1,ctx=ctx) 
+z3 = ad.relu_op(z2,ctx=ctx)       
+z4 = ad.matmul_op(z3,W2,ctx=ctx)       
+y = ad.spmm_op(A, z4,ctx=ctx)  
+loss = ad.softmaxcrossentropy_op(y, y_,ctx=ctx)   
+opt = optimizer.AdamOptimizer()
+train_op = opt.minimize(loss)
+```
+
+### Train
+
+Finally, you can set the executor and train your models.
+
+```python
+from hetu import ndarray
+
+executor = ad.Executor([y,loss,train_op], ctx=ctx)
+def convert_to_one_hot(vals, max_val = 0):
+    #Helper method to convert label array to one-hot array
+    if max_val == 0:
+      max_val = vals.max() + 1
+    one_hot_vals = np.zeros((vals.size, max_val))
+    one_hot_vals[np.arange(vals.size), vals] = 1
+    return one_hot_vals   
+
+feed_dict = {
+  H: ndarray.array(features, ctx=ctx),
+  y_ : ndarray.array(convert_to_one_hot(labels, max_val=num_classes), ctx=ctx),
+  A: ndarray.sparse_array(adj.data,(adj.row,adj.col),shape=(adj.shape),ctx=ctx)
+}
+    
+epoch_num = 100
+for i in range(epoch_num):
+    results = executor.run(feed_dict = feed_dict)  
+    y_predict = results[0].asnumpy().argmax(axis=1)
+    loss = results[1].asnumpy().mean()
+    acc = float(np.sum(y_predict==labels)/labels.shape[0])
+    print("Epoch :%d , loss:%.4f , acc:%.4f "%(i,loss,acc))
+```
 
 
