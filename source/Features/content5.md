@@ -49,29 +49,28 @@ adj, features, labels = metis_reorder(adj, features, labels)
 Then, you can get the parameters of graph and define variables  you need. After that, you can make your own gcn model.
 
 ```python
-from hetu import initializers
-from hetu import optimizer
-from hetu import gpu_ops as ad
+import hetu as ht
+from hetu import init
 
 node_count = adj.shape[0]
 num_features = features.shape[1]
 num_classes = np.max(labels)+1
 hidden_size = 64
- 
-ctx = ndarray.gpu(0)
-A = ad.Variable(name="A", trainable=False)
-H = ad.Variable(name="H")
-W1 = initializers.xavier_uniform(shape=(num_features, hidden_size), name="W1", trainable=True, ctx=ctx)
-W2 = initializers.xavier_uniform(shape=(hidden_size, num_classes), name="W2", trainable=True, ctx=ctx)
-y_ = ad.Variable(name="y_")       
- 
-z1 = ad.matmul_op(H,W1,ctx=ctx)  
-z2 = ad.spmm_op(A, z1,ctx=ctx) 
-z3 = ad.relu_op(z2,ctx=ctx)       
-z4 = ad.matmul_op(z3,W2,ctx=ctx)       
-y = ad.spmm_op(A, z4,ctx=ctx)  
-loss = ad.softmaxcrossentropy_op(y, y_,ctx=ctx)   
-opt = optimizer.AdamOptimizer()
+  
+ctx = ht.gpu(0)
+A = ht.Variable(name="A", trainable=False)
+H = ht.Variable(name="H")
+W1 = init.xavier_uniform(shape=(num_features, hidden_size), name="W1", trainable=True, ctx=ctx)
+W2 = init.xavier_uniform(shape=(hidden_size, num_classes), name="W2", trainable=True, ctx=ctx)
+y_ = ht.Variable(name="y_")       
+  
+z1 = ht.matmul_op(H,W1,ctx=ctx)  
+z2 = ht.spmm_op(A, z1,ctx=ctx) 
+z3 = ht.relu_op(z2,ctx=ctx)       
+z4 = ht.matmul_op(z3,W2,ctx=ctx)       
+y = ht.spmm_op(A, z4,ctx=ctx)  
+loss = ht.softmaxcrossentropy_op(y, y_,ctx=ctx)   
+opt = ht.optim.AdamOptimizer()
 train_op = opt.minimize(loss)
 ```
 
@@ -80,9 +79,8 @@ train_op = opt.minimize(loss)
 Finally, you can set the executor and train your models.
 
 ```python
-from hetu import ndarray
+executor = ht.Executor([y,loss,train_op], ctx=ctx)
 
-executor = ad.Executor([y,loss,train_op], ctx=ctx)
 def convert_to_one_hot(vals, max_val = 0):
     #Helper method to convert label array to one-hot array
     if max_val == 0:
@@ -92,11 +90,11 @@ def convert_to_one_hot(vals, max_val = 0):
     return one_hot_vals   
 
 feed_dict = {
-  H: ndarray.array(features, ctx=ctx),
-  y_ : ndarray.array(convert_to_one_hot(labels, max_val=num_classes), ctx=ctx),
-  A: ndarray.sparse_array(adj.data,(adj.row,adj.col),shape=(adj.shape),ctx=ctx)
+  H: ht.array(features, ctx=ctx),
+  y_ : ht.array(convert_to_one_hot(labels, max_val=num_classes), ctx=ctx),
+  A: ht.sparse_array(adj.data,(adj.row,adj.col),shape=(adj.shape),ctx=ctx)
 }
-    
+ 
 epoch_num = 100
 for i in range(epoch_num):
     results = executor.run(feed_dict = feed_dict)  
@@ -104,6 +102,17 @@ for i in range(epoch_num):
     loss = results[1].asnumpy().mean()
     acc = float(np.sum(y_predict==labels)/labels.shape[0])
     print("Epoch :%d , loss:%.4f , acc:%.4f "%(i,loss,acc))
+```
+
+The print results are as follows：
+
+```python
+Epoch :0 , loss:1.9458 , acc:0.1529
+Epoch :1 , loss:1.9311 , acc:0.5041
+Epoch :2 , loss:1.9134 , acc:0.5288
+Epoch :3 , loss:1.8916 , acc:0.5262
+Epoch :4 , loss:1.8668 , acc:0.5192
+Epoch :5 , loss:1.8395 , acc:0.5188
 ```
 
 If you want to use the hybrid mode, here is the simple Python demo.
@@ -132,35 +141,34 @@ layout, dense_matrix, sparse_coo, features = split_graph(adj, features, block_si
 The two parts of the sparse matrix are multiplied separately. After multiplication, add them to get the full result.
 
 ```python
-from hetu import initializers
-from hetu import optimizer
-from hetu import gpu_ops as ad
+import hetu as ht
+from hetu import init
 
 node_count = labels.shape[0]
 num_features = features.shape[1]   
 num_classes = np.max(labels)+1
 hidden_size = 64
    
-ctx = ndarray.gpu(0)
-A = ad.Variable(name="A",trainable=False)
-H = ad.Variable(name="H")
-W = ad.Variable(name="W")
-W1 = initializers.xavier_uniform(shape=(num_features, hidden_size), name="W1", trainable=True, ctx=ctx)
-W2 = initializers.xavier_uniform(shape=(hidden_size, num_classes), name="W2", trainable=True, ctx=ctx)    
-y_ = ad.Variable(name="y_")    
+ctx = ht.gpu(0)
+A = ht.Variable(name="A",trainable=False)
+H = ht.Variable(name="H")
+W = ht.Variable(name="W")
+W1 = init.xavier_uniform(shape=(num_features, hidden_size), name="W1", trainable=True, ctx=ctx)
+W2 = init.xavier_uniform(shape=(hidden_size, num_classes), name="W2", trainable=True, ctx=ctx)    
+y_ = ht.Variable(name="y_")    
    
-z1 = ad.matmul_op(H,W1,ctx=ctx)  
-z2_dense = ad.bsmm_op(z1,W,layout,block_size,True,ctx)
-z2_sparse = ad.spmm_op(A, z1,ctx=ctx) 
-z2 = ad.add_op(z2_dense, z2_sparse)
-z3 = ad.relu_op(z2,ctx=ctx)       
-z4_dense = ad.bsmm_op(z3,W,layout,block_size,True,ctx)   
-z4_sparse = ad.spmm_op(A, z3,ctx=ctx)
-z4 = ad.add_op(z4_dense, z4_sparse)        
-y = ad.matmul_op(z4,W2,ctx=ctx)    
-yy = ad.slice_op(y, (0,0), (node_count,num_classes), ctx)
-loss = ad.softmaxcrossentropy_op(yy, y_,ctx=ctx)   
-opt = optimizer.AdamOptimizer()
+z1 = ht.matmul_op(H,W1,ctx=ctx)  
+z2_dense = ht.bsmm_op(z1,W,layout,block_size,True,ctx)
+z2_sparse = ht.spmm_op(A, z1,ctx=ctx) 
+z2 = ht.add_op(z2_dense, z2_sparse)
+z3 = ht.relu_op(z2,ctx=ctx)       
+z4_dense = ht.bsmm_op(z3,W,layout,block_size,True,ctx)   
+z4_sparse = ht.spmm_op(A, z3,ctx=ctx)
+z4 = ht.add_op(z4_dense, z4_sparse)        
+y = ht.matmul_op(z4,W2,ctx=ctx)    
+yy = ht.slice_op(y, (0,0), (node_count,num_classes), ctx)
+loss = ht.softmaxcrossentropy_op(yy, y_,ctx=ctx)   
+opt = ht.optim.AdamOptimizer()
 train_op = opt.minimize(loss)
 ```
 
@@ -169,14 +177,21 @@ train_op = opt.minimize(loss)
 You need to send both the sparse part of the adjacency matrix and the block-sparse part into the feed dictionary.
 
 ```python
-from hetu import ndarray
+executor = ht.Executor([yy,loss,train_op], ctx=ctx)
 
-executor = ad.Executor([yy,loss,train_op], ctx=ctx)
+def convert_to_one_hot(vals, max_val = 0):
+    #Helper method to convert label array to one-hot array
+    if max_val == 0:
+      max_val = vals.max() + 1
+    one_hot_vals = np.zeros((vals.size, max_val))
+    one_hot_vals[np.arange(vals.size), vals] = 1
+    return one_hot_vals   
+    
 feed_dict = {
-    H: ndarray.array(features, ctx=ctx),
-    W : ndarray.array(dense_matrix, ctx=ctx),
-    y_ : ndarray.array(convert_to_one_hot(labels, max_val=num_classes), ctx=ctx),
-    A: ndarray.sparse_array(sparse_coo.data,(sparse_coo.row,sparse_coo.col),shape=(sparse_coo.shape),ctx=ctx),
+    H: ht.array(features, ctx=ctx),
+    W : ht.array(dense_matrix, ctx=ctx),
+    y_ : ht.array(convert_to_one_hot(labels, max_val=num_classes), ctx=ctx),
+    A: ht.sparse_array(sparse_coo.data,(sparse_coo.row,sparse_coo.col),shape=(sparse_coo.shape),ctx=ctx),
 }
 
 epoch_num = 100
@@ -187,3 +202,16 @@ for i in range(epoch_num):
     acc = float(np.sum(y_predict==labels)/labels.shape[0])
     print("Epoch :%d , loss:%.4f , acc:%.4f "%(i,loss,acc))
 ```
+
+The print results are as follows：
+
+```python
+Epoch :0 , loss:1.9468 , acc:0.0964
+Epoch :1 , loss:1.9327 , acc:0.5074
+Epoch :2 , loss:1.9174 , acc:0.5214
+Epoch :3 , loss:1.8989 , acc:0.5535
+Epoch :4 , loss:1.8780 , acc:0.5742
+Epoch :5 , loss:1.8551 , acc:0.5916
+```
+
+
