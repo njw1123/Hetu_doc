@@ -27,7 +27,7 @@ It can be seen from the table that for the small graph, the calculation speed of
 | Hetu(reorder)	 | 0.1389s | 0.0843s  | 0.0174s | 0.0196s    |
 | Hetu(hybrid)	  | 0.1000s | 0.0575s  | 0.0208s | 0.0262s    |
 
-For dense large graph, the hybrid mode can speed up the training. If the nodes in the graph are sparse, the optimal training speed can be obtained by partition the graph.
+For dense large graph, the hybrid mode can speed up the training. If the nodes in the graph are sparse, the optimal training speed can be obtained by reorder the graph.
 
 Here is a simple Python demo to show how to train GNN model.
 
