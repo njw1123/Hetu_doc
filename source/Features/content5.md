@@ -214,4 +214,7 @@ Epoch :4 , loss:1.8780 , acc:0.5742
 Epoch :5 , loss:1.8551 , acc:0.5916
 ```
 
+Our paper is under-reviewing and we will release the full details as soon as possible.
+
+
 
