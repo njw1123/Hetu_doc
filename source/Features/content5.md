@@ -107,12 +107,12 @@ for i in range(epoch_num):
 The print results are as follows：
 
 ```python
-Epoch :0 , loss:1.9458 , acc:0.1529
-Epoch :1 , loss:1.9311 , acc:0.5041
-Epoch :2 , loss:1.9134 , acc:0.5288
-Epoch :3 , loss:1.8916 , acc:0.5262
-Epoch :4 , loss:1.8668 , acc:0.5192
-Epoch :5 , loss:1.8395 , acc:0.5188
+Epoch :0 , loss:1.9455 , acc:0.1850
+Epoch :1 , loss:1.9300 , acc:0.4332
+Epoch :2 , loss:1.9120 , acc:0.4417
+Epoch :3 , loss:1.8901 , acc:0.4579
+Epoch :4 , loss:1.8653 , acc:0.4679
+Epoch :5 , loss:1.8379 , acc:0.4742
 ```
 
 If you want to use the hybrid mode, here is the simple Python demo.
