@@ -171,6 +171,7 @@ You need to send both the sparse part of the adjacency matrix and the block-spar
 ```python
 from hetu import ndarray
 
+executor = ad.Executor([yy,loss,train_op], ctx=ctx)
 feed_dict = {
     H: ndarray.array(features, ctx=ctx),
     W : ndarray.array(dense_matrix, ctx=ctx),
