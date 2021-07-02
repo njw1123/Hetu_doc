@@ -1,6 +1,6 @@
 Tutorials
 =================================
-本模块演示如何使⽤Hetu。
+This module displays how to use Hetu.
 
 .. toctree::
    :maxdepth: 2
