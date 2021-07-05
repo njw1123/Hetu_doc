@@ -6,7 +6,7 @@ Graph Neural Networks (GNNs) are powerful and flexible neural networks that use 
 
 In addition, for sparse matrix multiplication(SPMM), Hetu uses shared memory to accelerate the calculation, which means threads in the same block can share the value of sparse matrix. Also, we provide a hybrid mode, which takes advantage of block sparsity of graphs. Through the reorder of Metis, the graph will be partitioned into blocks. For dense blocks, we use dense matrix to store and block-parse algorithm for calculation. For sparse blocks, CSR format is used to store the subgraph and we choose sparse matrix multiplication to calculate the product.
 
-We compare Hetu to Deep Graph Library(DGL)  and PyTorch Geometric (PyG), meanwhile, we selected 9 datasets, including 5 smaller datasets: PubMed, Cora, Citeseer, Coauthor_phy, Blogcatalog, 4 large datasets: Reddit, Proteins, Arxiv, Amazon0601. The GCN network with 64 hidden layer nodes and 4 hidden layers is used for training. The results are as follows.reeeeeeeeeed.
+We compare Hetu to Deep Graph Library(DGL)  and PyTorch Geometric (PyG), meanwhile, we selected 9 datasets, including 5 smaller datasets: PubMed, Cora, Citeseer, Coauthor_phy, Blogcatalog, 4 large datasets: Reddit, Proteins, Arxiv, Amazon0601. The GCN network with 64 hidden layer nodes and 4 hidden layers is used for training. The results are as follows.
 
 |                | Pubmed  | Cora    | Citeseer | Coauthor_phy | Blogcatalog |
 |----------------|---------|---------|----------|--------------|-------------|
@@ -14,7 +14,7 @@ We compare Hetu to Deep Graph Library(DGL)  and PyTorch Geometric (PyG), meanwhi
 | PYG            | 0.0053s | 0.0057s | 0.0054s  | 0.0195s      | 0.0078s     |
 | Hetu           | <font color='red'>0.0016s</font> | 0.0010s | <font color='red'>0.0011s</font>  | 0.0059s      | <font color='red'>0.0022s</font>     |
 | Hetu(reorder)  | <font color='red'>0.0016s</font> | <font color='red'>0.0009s</font> | <font color='red'>0.0011s</font>  | <font color='red'>0.0056s</font>      | 0.0023s     |
-| Hetu(hybrid)   | 0.0024s | 0.0011s | 0.0012s  | 0.0062s      | 0.0022s     |
+| Hetu(hybrid)   | 0.0024s | 0.0011s | 0.0012s  | 0.0062s      | <font color='red'>0.0022s</font>     |
 
 
 It can be seen from the table that for the small graph, the calculation speed of Hetu is faster than the other two graph neural network frameworks, and only using the optimized spmm can get better training speed, but there is no advantage in the hybrid mode.
@@ -37,7 +37,7 @@ First, you need to load dataset from your file folder.If you want, you can reord
 ```python
 import numpy as np
 import scipy.sparse as sp
-from GNN.graph import metis_reorder
+from graphmix.partition import metis_reorder
 
 dir_name = 'your_dir'
 adj = sp.load_npz(dir_name+"adj.npz").tocoo()
@@ -61,17 +61,18 @@ hidden_size = 64
   
 ctx = ht.gpu(0)
 A = ht.Variable(name="A", trainable=False)
+AT = ht.Variable(name="AT", trainable=False)
 H = ht.Variable(name="H")
 W1 = init.xavier_uniform(shape=(num_features, hidden_size), name="W1", trainable=True, ctx=ctx)
 W2 = init.xavier_uniform(shape=(hidden_size, num_classes), name="W2", trainable=True, ctx=ctx)
-y_ = ht.Variable(name="y_")       
+y_ = ht.Variable(name="y_")        
   
-z1 = ht.matmul_op(H,W1,ctx=ctx)  
-z2 = ht.spmm_op(A, z1,ctx=ctx) 
-z3 = ht.relu_op(z2,ctx=ctx)       
-z4 = ht.matmul_op(z3,W2,ctx=ctx)       
-y = ht.spmm_op(A, z4,ctx=ctx)  
-loss = ht.softmaxcrossentropy_op(y, y_,ctx=ctx)   
+z1 = ht.matmul_op(H, W1)  
+z2 = ht.spmm_op(A, AT, z1, True) 
+z3 = ht.relu_op(z2)       
+z4 = ht.matmul_op(z3, W2)       
+y = ht.spmm_op(A, AT, z4, True)  
+loss = ht.softmaxcrossentropy_op(y, y_)   
 opt = ht.optim.AdamOptimizer()
 train_op = opt.minimize(loss)
 ```
@@ -94,7 +95,8 @@ def convert_to_one_hot(vals, max_val = 0):
 feed_dict = {
   H: ht.array(features, ctx=ctx),
   y_ : ht.array(convert_to_one_hot(labels, max_val=num_classes), ctx=ctx),
-  A: ht.sparse_array(adj.data,(adj.row,adj.col),shape=(adj.shape),ctx=ctx)
+  A: ht.sparse_array(adj.data,(adj.row,adj.col),shape=(adj.shape),ctx=ctx),
+  AT: ht.sparse_array(adj.data,(adj.col,adj.row),shape=(adj.shape),ctx=ctx),
 }
  
 epoch_num = 100
@@ -125,8 +127,8 @@ To use the hybird mode, you need to split the graph to get the block-sparse part
 ```python
 import numpy as np
 import scipy.sparse as sp
-from GNN.graph import metis_reorder
-from GNN.graph import split_graph
+from graphmix.partition import metis_reorder
+from graphmix.partition import split_graph
 
 dir_name = 'your_dir'
 adj = sp.load_npz(dir_name+"adj.npz").tocoo()
@@ -153,23 +155,24 @@ hidden_size = 64
    
 ctx = ht.gpu(0)
 A = ht.Variable(name="A",trainable=False)
+AT = ht.Variable(name="AT",trainable=False)
 H = ht.Variable(name="H")
 W = ht.Variable(name="W")
 W1 = init.xavier_uniform(shape=(num_features, hidden_size), name="W1", trainable=True, ctx=ctx)
 W2 = init.xavier_uniform(shape=(hidden_size, num_classes), name="W2", trainable=True, ctx=ctx)    
 y_ = ht.Variable(name="y_")    
    
-z1 = ht.matmul_op(H,W1,ctx=ctx)  
+z1 = ht.matmul_op(H,W1)  
 z2_dense = ht.bsmm_op(z1,W,layout,block_size,True,ctx)
-z2_sparse = ht.spmm_op(A, z1,ctx=ctx) 
+z2_sparse = ht.spmm_op(A, AT, z1) 
 z2 = ht.add_op(z2_dense, z2_sparse)
-z3 = ht.relu_op(z2,ctx=ctx)       
+z3 = ht.relu_op(z2)       
 z4_dense = ht.bsmm_op(z3,W,layout,block_size,True,ctx)   
-z4_sparse = ht.spmm_op(A, z3,ctx=ctx)
+z4_sparse = ht.spmm_op(A, AT, z3)
 z4 = ht.add_op(z4_dense, z4_sparse)        
-y = ht.matmul_op(z4,W2,ctx=ctx)    
-yy = ht.slice_op(y, (0,0), (node_count,num_classes), ctx)
-loss = ht.softmaxcrossentropy_op(yy, y_,ctx=ctx)   
+y = ht.matmul_op(z4,W2)    
+yy = ht.slice_op(y, (0,0), (node_count,num_classes))
+loss = ht.softmaxcrossentropy_op(yy, y_)   
 opt = ht.optim.AdamOptimizer()
 train_op = opt.minimize(loss)
 ```
@@ -194,6 +197,7 @@ feed_dict = {
     W : ht.array(dense_matrix, ctx=ctx),
     y_ : ht.array(convert_to_one_hot(labels, max_val=num_classes), ctx=ctx),
     A: ht.sparse_array(sparse_coo.data,(sparse_coo.row,sparse_coo.col),shape=(sparse_coo.shape),ctx=ctx),
+    AT: ht.sparse_array(sparse_coo.data,(sparse_coo.col,sparse_coo.row),shape=(sparse_coo.shape),ctx=ctx),
 }
 
 epoch_num = 100
