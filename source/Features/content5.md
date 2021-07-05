@@ -12,8 +12,8 @@ We compare Hetu to Deep Graph Library(DGL)  and PyTorch Geometric (PyG), meanwhi
 |----------------|---------|---------|----------|--------------|-------------|
 | DGL            | 0.0118s | 0.0118s | 0.0118s  | 0.0228s      | 0.0128s     |
 | PYG            | 0.0053s | 0.0057s | 0.0054s  | 0.0195s      | 0.0078s     |
-| Hetu           | <font color='red'>0.0016s</font> | 0.0010s | 0.0011s  | 0.0059s      | 0.0022s     |
-| Hetu(reorder)  | 0.0016s | 0.0009s | 0.0011s  | 0.0056s      | 0.0023s     |
+| Hetu           | <font color='red'>0.0016s</font> | 0.0010s | <font color='red'>0.0011s</font>  | 0.0059s      | <font color='red'>0.0022s</font>     |
+| Hetu(reorder)  | <font color='red'>0.0016s</font> | <font color='red'>0.0009s</font> | <font color='red'>0.0011s</font>  | <font color='red'>0.0056s</font>      | 0.0023s     |
 | Hetu(hybrid)   | 0.0024s | 0.0011s | 0.0012s  | 0.0062s      | 0.0022s     |
 
 
