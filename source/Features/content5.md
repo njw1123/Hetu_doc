@@ -6,7 +6,7 @@ Graph Neural Networks (GNNs) are powerful and flexible neural networks that use 
 
 In addition, for sparse matrix multiplication(SPMM), Hetu uses shared memory to accelerate the calculation, which means threads in the same block can share the value of sparse matrix. Also, we provide a hybrid mode, which takes advantage of block sparsity of graphs. Through the reorder of METIS, the graph will be partitioned into blocks. For dense blocks, we use dense matrix to store and block-parse algorithm for calculation. For sparse blocks, CSR format is used to store the subgraph and we choose sparse matrix multiplication to calculate the product.
 
-We compare Hetu to Deep Graph Library(DGL)  and PyTorch Geometric (PyG), meanwhile, we selected 9 datasets, including 5 smaller datasets: PubMed, Cora, Citeseer, Coauthor_phy, Blogcatalog, 4 large datasets: Reddit, Proteins, Arxiv, Amazon0601. The GCN network with 64 hidden layer nodes and 4 hidden layers is used for training. The results are as follows.
+We compare Hetu to Deep Graph Library(DGL)  and PyTorch Geometric (PyG), meanwhile, we selected 9 datasets, including 5 small datasets: PubMed, Cora, Citeseer, Coauthor_phy, Blogcatalog, 4 large datasets: Reddit, Proteins, Arxiv, Amazon0601. The GCN network with 64 hidden layer nodes and 4 hidden layers is used for training. The results are as follows.
 
 |                | Pubmed  | Cora    | Citeseer | Coauthor_phy | Blogcatalog |
 |----------------|---------|---------|----------|--------------|-------------|
