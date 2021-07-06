@@ -4,7 +4,15 @@ This is a quick start tutorial showing snippets for you to quicky try out HetuML
 
 Please ensure you have finished the installation process before we start.  
 
-In general, a machine learning task includes the following steps: 1) dataset loading; 2)model building; 3) model training; 4) model validation. 
+In general, a machine learning task includes the following steps: 
+
+​	1) dataset loading; 
+
+​	2) model building; 
+
+​	3) model training; 
+
+​	4) model validation. 
 
 ### Import HetuML Libraries
 
@@ -43,8 +51,6 @@ valid_data = (X_valid, y_valid)
 
 ### Model building
 
-通过调用HetuML的api，可以方便的使用HetuML的模型进行训练与测试，我们以单机版的逻辑回归为例。详细模型可以被用户设置的超参可以在用户手册中查询。
-
 HetuML supports easy-to-use Python APIs for ML models training and testing. We take Logistic Regression in the standalone setting as an example. 
 
 First, we write functions for model training and validation: 
@@ -82,8 +88,6 @@ test_fit(lr, train_data, valid_data)
 test_predict(loaded, valid_data)
 test_evaluate(loaded, valid_data)
 ```
-
-
 
 ### Result Output
 
