@@ -67,7 +67,7 @@ np.testing.assert_allclose(ath[0].asnumpy(),pre,rtol=1e-5)
 
 This section takes the ONNX format of a CNN model transformation for TensorFlow as an example to show how to import the ONNX format into the Hetu framework.
 
-### **Convert Tensorflow Model to ONNX Format**
+### Convert Tensorflow Model to ONNX Format
 
 Build TensorFlow model and convert to the ONNX format using TF2ONNX.
 

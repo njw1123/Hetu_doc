@@ -14,18 +14,31 @@ The performance comparison is summarized in the figure below.
 
 	- Tensorflow/PyTorch/Horovod
 
+![](benchmark1.png)
+![](benchmark2.png)
+
 - Embedding model comparison
 	- Parallax/TensorFlow/Horovod/HugeCTR
+
+![](benchmark5.png)
 
 - GNN comparison
 	- DGL/PYG
 
-- Pretrain model comparison
-	- Pipedream/Gpipe/Megatron-LM
+![](benchmark6.png)
+![](benchmark7.png)
 
 - Batch size comparison
 	- Swap/Recompute
 
-![](batchsize.png)
+![](benchmark3.png)
+![](benchmark4.png)
 
 - AutoML search comparison
+
+- Pretrain model comparison
+	- Pipedream/Gpipe/Megatron-LM
+
+<div class="warning">
+<em>Coming soon</em>
+</div>
