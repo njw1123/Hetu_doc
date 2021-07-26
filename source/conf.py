@@ -70,6 +70,12 @@ exclude_patterns = []
 html_theme = 'sphinx_rtd_theme'
 autosummary_generate = True
 
+# Register the theme as an extension to generate a sitemap.xml
+extensions.append("sphinx_rtd_theme")
+# logo
+html_logo = 'figure/logo.png'
+html_favicon = 'figure/favicon.ico'
+
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.

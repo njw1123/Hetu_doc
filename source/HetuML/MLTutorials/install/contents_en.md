@@ -13,11 +13,14 @@
   ### Enviroment Requirements
 
   - CMake >= 3.11
-    - If you haven't install CMake meet this requirement,  you could select the corresponding version and download CMake from its Website at: https://cmake.org/download/. 
+
+    downloads:  [https://cmake.org/download/](https://cmake.org/download/)
   - Protobuf >= 3.0.0
-    - If you haven't install Protobuf meet this requirement,  you could select the corresponding version and download Protobuf from its Website at: https://github.com/protocolbuffers/protobuf/releases. 
+
+    downloads: [https://github.com/protocolbuffers/protobuf/releases](https://github.com/protocolbuffers/protobuf/releases)
   - OpenMP
-    - If you haven't install OpenMP meet this requirement,  you could select the corresponding version and download OpenMP from its Website at: https://www.open-mpi.org/software/ompi/. 
+
+    downloads: [https://www.open-mpi.org/software/ompi/](https://www.open-mpi.org/software/ompi/)
 
   ### Build from Source Code
 
