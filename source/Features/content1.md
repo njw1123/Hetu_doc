@@ -16,6 +16,7 @@ Automatic Distributed Training
 - Supporting mulitple parallel training schemas
 	- Data parallelism
 	- Model parallelism
+		- Parameter parallelism
 		- Operator parallelism
 		- Pipeline parallelism
 		- Subgraph parallelism

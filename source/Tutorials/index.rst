@@ -8,4 +8,5 @@ This module displays how to use Hetu.
 
    install/contents_en
    start/contents_en
+   usage/contents_en
    onxx/contents_en
