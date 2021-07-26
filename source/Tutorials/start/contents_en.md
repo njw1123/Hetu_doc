@@ -277,7 +277,7 @@ for minibatch_index in range(n_test_batches):
     correct_prediction = np.equal(np.argmax(y_val, 1), np.argmax(test_y_predicted, 1)).astype(np.float)
     correct_predictions.extend(correct_prediction)
 accuracy = np.mean(correct_predictions)
-print("\tTest accuracy = %f" % accuracy)
+print("Test accuracy = %f" % accuracy)
 ```
 
 #### **Output**
@@ -287,5 +287,5 @@ For the above CNN model testing, after the completion of the testing, you will g
 ```
 Building model...
 Building CNN model...
-        Test accuracy = 0.966546
+Test accuracy = 0.966546
 ```
