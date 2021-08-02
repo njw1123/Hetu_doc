@@ -57,11 +57,6 @@ We welcome everyone interested in machine learning or distributed systems to con
    :caption: Tutorials
 
    Tutorials/index
-
-.. toctree::
-   :maxdepth: 2
-   :caption: HetuML
-
    HetuML/index
 
 .. toctree::

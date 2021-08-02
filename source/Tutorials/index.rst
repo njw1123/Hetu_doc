@@ -1,4 +1,4 @@
-Tutorials
+Hetu Tutorials
 =================================
 This module displays how to use Hetu.
 
@@ -8,5 +8,6 @@ This module displays how to use Hetu.
 
    install/contents_en
    start/contents_en
+   model/contents_en
    usage/contents_en
    onxx/contents_en
