@@ -35,6 +35,13 @@ We welcome everyone interested in machine learning or distributed systems to con
 
   本项目由国家重点研发计划支持，相关成果已经发表了多篇CCF-A类高水平学术论文，目前项目已经开源在：https://github.com/PKU-DAIR/Hetu。
 
+News
+~~~~~~~~~~~~~~~
+- coming soon
+- 2021.07.31 We provided a symposium on ACM TURC 2021 to introduce Hetu: `link <https://www.acmturc.com/2021/en/SIGMOD_China.html>`_.
+- 2021.07.28 We launched a contest with openGCC for Hetu development: `link <https://www.educoder.net/competitions/index/gcc_2021_projects_type1>`_.
+- 2021.07.18 We released Hetu on GitHub: https://github.com/PKU-DAIR/Hetu.
+
 .. toctree::
    :titlesonly:
    :caption: Overview

@@ -1,10 +1,11 @@
 Performance
 ============
 
+<!---
 ## Experimental setup
 
 We benchmark Hetu with TensorFlow on the dataset of CIFAR10 across ResNet.
-
+--->
 
 ## Peformance comparison
 
@@ -40,5 +41,5 @@ The performance comparison is summarized in the figure below.
 	- Pipedream/Gpipe/Megatron-LM
 
 <div class="warning">
-<em>Coming soon</em>
+<em>More benchmark results and details are coming soon.</em>
 </div>
