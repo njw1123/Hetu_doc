@@ -36,7 +36,7 @@ def conv_bn_relu_pool(x, in_channel, out_channel, name, with_relu=True, with_poo
     return x
 
 def fc(x, shape, name, with_relu=True):
-    #Definition of fully connected layers .
+    #Definition of fully connected layers.
     weight = init.random_normal(shape=shape, stddev=0.1, name=name+'_weight')
     bias = init.random_normal(shape=shape[-1:], stddev=0.1, name=name+'_bias')
     x = ht.matmul_op(x, weight)
@@ -126,8 +126,7 @@ def layer_norm(input_tensor, feature_size, eps=1e-8):
     return ht.layer_normalization_op(input_tensor, scale, bias, eps=eps)
 
 
-def dense(input_tensor, fan_in, fan_out, activation=None, kernel_initializer=init.xavier_normal, bias_initializer=init.zeros
-):
+def dense(input_tensor, fan_in, fan_out, activation=None, kernel_initializer=init.xavier_normal, bias_initializer=init.zeros):
     #Definition of dense layers.
     weights = kernel_initializer(name='dense_weights', shape=(fan_in, fan_out))
     bias = bias_initializer(name='dense_bias', shape=(fan_out,))
@@ -376,6 +375,7 @@ class Transformer(object):
 #### **Model Usage**
 You can run Transformer with the following command:
 ```bash
+cd examples/nlp/
 python train_hetu_transformer.py
 ```
 To change the hyperparameters, please modify `hparams.py` file.
@@ -526,8 +526,8 @@ You can run embedding models with the following command:
 ```bash
 cd examples/rec/
 python run_hetu.py    # run locally
-bash ps_ncf.sh            # run in ps setting (locally)
-bash hybrid_ncf.sh     # run in hybrid setting (locally)
+bash ps_ncf.sh        # run in ps setting (locally)
+bash hybrid_ncf.sh    # run in hybrid setting (locally)
 ```
 
 More examples are coming soon!
