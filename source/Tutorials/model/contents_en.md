@@ -1,15 +1,15 @@
 ## Model zoo
 
-Hetu provides various popular deep learning models implementations:CNN,Transformer,GNN,Embedding.
+Hetu provides various popular deep learning models implementations: CNN, Transformer, GNN, Embedding.
 
 
 ### CNN
 
 We provide following models with specific datasets. You can find the models in examples/cnn/models.
 ```
-CIFAR100: VGG, ResNet
-CIFAR10: MLP, VGG, ResNet
 MNIST: AlexNet, CNN(3-layer), LeNet, LogisticRegression, LSTM, RNN
+CIFAR10: MLP, VGG, ResNet
+CIFAR100: VGG, ResNet
 ```
 
 #### **Model Definition**
@@ -20,6 +20,7 @@ import hetu as ht
 from hetu import init
 
 def conv_bn_relu_pool(x, in_channel, out_channel, name, with_relu=True, with_pool=False):
+    #Definition of convolution, batch normalization, relu, max pooling layers.
     weight = init.random_normal(
         shape=(out_channel, in_channel, 3, 3), stddev=0.1, name=name+'_weight')
     bn_scale = init.random_normal(
@@ -35,6 +36,7 @@ def conv_bn_relu_pool(x, in_channel, out_channel, name, with_relu=True, with_poo
     return x
 
 def fc(x, shape, name, with_relu=True):
+    #Definition of fully connected layers .
     weight = init.random_normal(shape=shape, stddev=0.1, name=name+'_weight')
     bias = init.random_normal(shape=shape[-1:], stddev=0.1, name=name+'_bias')
     x = ht.matmul_op(x, weight)
@@ -86,7 +88,7 @@ bash scripts/hetu_16gpu.sh mlp CIFAR10  # mlp with CIFAR10 in hetu with 8-GPU (2
 ```
 To train in PS setting, you need to launch scheduler and server first. 
 
-We can change the setting in scripts. See `mnist_mlp.sh` below.
+You can change the setting in scripts. See `mnist_mlp.sh` below.
 ```bash
 #!/bin/bash
 
@@ -117,24 +119,16 @@ from hetu import init
 import numpy as np
 
 
-def layer_norm(
-    input_tensor,
-    feature_size,
-    eps=1e-8
-):
+def layer_norm(input_tensor, feature_size, eps=1e-8):
+    #Definition of layer normalization .
     scale = init.ones(name='layer_norm_scale', shape=(feature_size, ))
     bias = init.zeros(name='layer_norm_biad', shape=(feature_size, ))
     return ht.layer_normalization_op(input_tensor, scale, bias, eps=eps)
 
 
-def dense(
-    input_tensor,
-    fan_in,
-    fan_out,
-    activation=None,
-    kernel_initializer=init.xavier_normal,
-    bias_initializer=init.zeros
+def dense(input_tensor, fan_in, fan_out, activation=None, kernel_initializer=init.xavier_normal, bias_initializer=init.zeros
 ):
+    #Definition of dense layers.
     weights = kernel_initializer(name='dense_weights', shape=(fan_in, fan_out))
     bias = bias_initializer(name='dense_bias', shape=(fan_out,))
     outputs = ht.matmul_op(input_tensor, weights)
@@ -144,10 +138,8 @@ def dense(
     return outputs
 
 
-def dropout(
-    input_tensor,
-    dropout_prob
-):
+def dropout(input_tensor, dropout_prob):
+    #Definition of dropout layers.
     if dropout_prob is None or dropout_prob == 0.0:
         return input_tensor
     output = ht.dropout_op(input_tensor, 1.0 - dropout_prob)
@@ -155,6 +147,7 @@ def dropout(
 
 
 def get_token_embeddings(vocab_size, num_units, initializer=init.xavier_normal, zero_pad=True):
+    #token embeddings initialize.
     if zero_pad:
         embedding_part = initializer(
             name='embedding_table', shape=(vocab_size-1, num_units))
@@ -167,13 +160,8 @@ def get_token_embeddings(vocab_size, num_units, initializer=init.xavier_normal, 
     return embeddings
 
 
-def multihead_attention(
-        queries, keys, values,
-        config,
-        query_act=None, key_act=None, value_act=None,
-        attention_mask=None,
-        causality=False):
-
+def multihead_attention(queries, keys, values, config, query_act=None, key_act=None, value_act=None, attention_mask=None, causality=False):
+    #Definition of attention layers.
     def transpose_for_scores(input_tensor):
         output_tensor = ht.array_reshape_op(
             input_tensor, [config.batch_size, -1, config.num_heads, config.d_model // config.num_heads])
@@ -272,12 +260,7 @@ def label_smoothing(inputs, V, epsilon=0.1):
     return ((1-epsilon) * inputs) + (epsilon / V)
 
 
-def positional_encoding(
-    inputs,
-    inputs_shape,
-    maxlen,
-    masking=True
-):
+def positional_encoding(inputs, inputs_shape, maxlen, masking=True):
     N, T, E = tuple(inputs_shape)
     position_enc = np.array([
         [pos / np.power(10000, (i & -2)/E) for i in range(E)]
@@ -298,6 +281,15 @@ def positional_encoding(
 
 
 class Transformer(object):
+    '''
+    Transformer model.
+
+    Parameters:
+        xs: Variable(hetu.gpu_ops.Node.Node)
+        ys: Variable(hetu.gpu_ops.Node.Node)
+    Return:
+        loss: Variable(hetu.gpu_ops.Node.Node)
+    '''
     def __init__(self, hp):
         self.hp = hp
         self.embeddings = get_token_embeddings(
@@ -398,8 +390,8 @@ We provide a simple 2-layer GCN model, the specific implementation is as follows
 import hetu as ht
 from hetu import init
 
-
 class GCN(object):
+    #Definition of GCN layers.
     def __init__(self, in_features, out_features, norm_adj, activation=None, dropout=0,
                  name="GCN", custom_init=None):
         if custom_init is not None:
@@ -432,7 +424,7 @@ class GCN(object):
         return x
  
  def convert_to_one_hot(vals, max_val=0):
-    """Helper method to convert label array to one-hot array."""
+    #Helper method to convert label array to one-hot array.
     if max_val == 0:
         max_val = vals.max() + 1
     one_hot_vals = np.zeros((vals.size, max_val))
@@ -441,6 +433,7 @@ class GCN(object):
 
 
 def sparse_model(int_feature, hidden_layer_size, embedding_idx_max, embedding_width, num_classes, lr):
+    #Definition of 2-layer GCN model.
     y_ = ht.GNNDataLoaderOp(lambda g: ht.array(convert_to_one_hot(
         g.i_feat[:, -2], max_val=num_classes), ctx=ht.cpu()))
     mask_ = ht.Variable(name="mask_")
@@ -468,14 +461,13 @@ def sparse_model(int_feature, hidden_layer_size, embedding_idx_max, embedding_wi
 ```
 
 #### **Model Usage**
-You can run Transformer with the following command:
+You can run GNN model with the following command:
 ```bash
-python3 run_single.py -p ~/yourDataPath/Reddit [--dense]
+python run_single.py -p ~/yourDataPath/Reddit [--sparse]
 ```
 
-
 ### Embedding
-We provide 2 recommendation models:CTR and NCF.
+We provide 2 recommendation models: CTR and NCF.
 
 #### **Model Definition**
 Taking NCF as an example, the specific model is defined as follows:
@@ -485,6 +477,7 @@ from hetu import init
 import numpy as np
 
 def neural_mf(user_input, item_input, y_, num_users, num_items):
+    #Definition of NCF model.
     embed_dim = 8
     layers = [64, 32, 16, 8]
     learning_rate = 0.01
@@ -532,23 +525,10 @@ def neural_mf(user_input, item_input, y_, num_users, num_items):
 You can run embedding models with the following command:
 ```bash
 cd examples/rec/
-# run locally
-python run_hetu.py
-# run in ps setting (locally)
-bash ps_ncf.sh
-# run in hybrid setting (locally)
-bash hybrid_ncf.sh
-
-# run tensorflow locally
-python run_tf.py
-# run tensorflow in parallax
-python {absolute_path_to}/run_parallax.py
-# run tensorflow in ps setting
-python ../ctr/tf_launch_server.py --config {config} --id {rank}
-python run_tfworker.py --rank {rank} --config {config}
-# or
-python ../ctr/tf_launch_server.py --config ../ctr/settings/tf_local_s1_w8.json --id 0
-bash tf_8workers.sh
+python run_hetu.py    # run locally
+bash ps_ncf.sh            # run in ps setting (locally)
+bash hybrid_ncf.sh     # run in hybrid setting (locally)
 ```
 
 More examples are coming soon!
+
