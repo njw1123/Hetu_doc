@@ -5,7 +5,7 @@ Hetu provides various popular deep learning models implementations: CNN, Transfo
 
 ### CNN
 
-We provide following models with specific datasets. You can find the models in examples/cnn/models.
+We provide following models with specific datasets.
 ```
 MNIST: AlexNet, CNN(3-layer), LeNet, LogisticRegression, LSTM, RNN
 CIFAR10: MLP, VGG, ResNet
