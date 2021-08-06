@@ -463,7 +463,11 @@ def sparse_model(int_feature, hidden_layer_size, embedding_idx_max, embedding_wi
 #### **Model Usage**
 You can run GNN model with the following command:
 ```bash
-python run_single.py -p ~/yourDataPath/Reddit [--sparse]
+cd /examples/gnn/
+python run_single.py -p ~/yourDataPath/Reddit [--sparse]                                                     # run locally
+python run_dist.py [configfile] -p ~/yourDataPath/Reddit [--sparse]                                          # run in ps setting (locally)
+python run_dist_hybrid.py [configfile] -p ~/yourDataPath/Reddit --server                                     # run in hybrid setting (multi device)
+mpirun -np 4 --allow-run-as-root python3 run_dist_hybrid.py [configfile] -p ~/yourDataPath/Reddit [--sparse] # run in hybrid setting (locally)
 ```
 
 ### Embedding
