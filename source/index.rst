@@ -51,6 +51,7 @@ We welcome everyone interested in machine learning or distributed systems to con
 
 News
 ~~~~~~~~~~~~~~~
+- 2021.08.06 :red:`[NEW]` We anounced the cooperation with Tencent for Angel 4.0 and Hetu: `link <https://mp.weixin.qq.com/s/03GabpMzwCi7MLvDbCGloQ>`_.
 - 2021.07.31 :red:`[NEW]` We provided a symposium on ACM TURC 2021 to introduce Hetu: `link <https://www.acmturc.com/2021/en/SIGMOD_China.html>`_.
 - 2021.07.28 :red:`[NEW]` We launched a contest with openGCC for Hetu development: `link <https://www.educoder.net/competitions/index/gcc_2021_projects_type1>`_.
 - 2021.07.18 :red:`[NEW]` We released Hetu on GitHub: https://github.com/PKU-DAIR/Hetu.
