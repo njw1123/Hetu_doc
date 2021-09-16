@@ -13,5 +13,5 @@ We propose a new system framework that signiffcantly improves the scalability of
 Evaluations show that it achieves up to 80% embedding communication reductions and up to 20x performance speedup over the state-of-the-art baselines.
 
 <div class="warning">
-<em>Our paper is under-reviewing and we will release the full details as soon as possible.</em>
+<em>Our paper has been accepted by VLDB 2022 and we will release the full details as soon as possible.</em>
 </div>
