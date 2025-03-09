@@ -1,13 +1,15 @@
-# File: .readthedocs.yaml
-
 version: 2
 
-# Build from the docs/ directory with Sphinx
-sphinx:
-  configuration: source/conf.py
+# 添加 build 部分
+build:
+  os: ubuntu-22.04  # 指定操作系统
+  tools:
+    python: "3.10"    # 指定 Python 版本（需与下方 python.version 一致）
 
-# Explicitly set the version of Python and its requirements
+sphinx:
+  configuration: en/source/conf.py  # 确认路径是否正确
+
 python:
-  version: 3.7
+  version: 3.10  # 更新到支持的版本
   install:
-    - requirements: source/requirements.txt
+    - requirements: en/source/requirements.txt
