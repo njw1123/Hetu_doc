@@ -4,12 +4,11 @@ version: 2
 build:
   os: ubuntu-22.04  # 指定操作系统
   tools:
-    python: "3.10"    # 指定 Python 版本（需与下方 python.version 一致）
+    python: "3.10"    # 指定 Python 版本
 
 sphinx:
   configuration: en/source/conf.py  # 确认路径是否正确
 
 python:
-  version: 3.10  # 更新到支持的版本
   install:
     - requirements: en/source/requirements.txt
