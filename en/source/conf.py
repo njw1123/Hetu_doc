@@ -12,16 +12,22 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../python'))
-#sys.path.insert(0, os.path.abspath('../../python/hetu'))
-
-
 from recommonmark.parser import CommonMarkParser
+sys.path.insert(0, os.path.abspath('../../python'))
+# sys.path.insert(0, os.path.abspath('../'))
+#sys.path.insert(0, os.path.abspath('../../python/hetu'))
+# 指向项目根目录（根据实际结构调整）
+
+# 验证路径
+print("Current Python path:", sys.path)
+
+
 source_parsers = {
     '.md': CommonMarkParser,
 }
 source_suffix = ['.rst', '.md']
-
+autodoc_default_options = {'enabled': False}
+autosummary_generate = False
 #autoclass_content = 'init'
 
 # -- Project information -----------------------------------------------------
@@ -53,6 +59,7 @@ extensions = [
     'numpydoc',
 ]
 
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -71,7 +78,7 @@ html_theme = 'sphinx_rtd_theme'
 autosummary_generate = True
 
 # Register the theme as an extension to generate a sitemap.xml
-extensions.append("sphinx_rtd_theme")
+# extensions.append("sphinx_rtd_theme")
 # logo
 html_logo = 'figure/logo.png'
 html_favicon = 'figure/favicon.ico'
@@ -79,26 +86,25 @@ html_favicon = 'figure/favicon.ico'
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#
+
 html_theme_options = {
     'style_nav_header_background': 'white',
-    'display_version': True,
     'logo_only': True,
     'collapse_navigation': False,
+    # 新增以下两个关键参数
+    'sticky_navigation': True,      # 固定侧边栏
+    'navigation_depth': 4,         # 增加导航层级
 }
 
-html_context = {
-    'css_files': [
-        # 'https://fonts.googleapis.com/css?family=Roboto',
-        '_static/css/customized.css'
-    ],
-}
+
+def setup(app):
+    app.add_css_file('css/customized.css')
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
-extensions = [
+html_static_path = ['_static'] 
+extensions.extend([
      'recommonmark',
      'sphinx_markdown_tables'
- ]
+ ])

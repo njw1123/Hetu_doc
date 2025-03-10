@@ -77,8 +77,18 @@ News
    :maxdepth: 2
    :caption: Tutorials
 
-   Tutorials/index
-   HetuML/index
+   GettingStarted/index
+   API/index
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Acceleration Techniques
+
+   AccelerationTechniques/hotspa
+   AccelerationTechniques/hydraulis
+   AccelerationTechniques/lobra
+   AccelerationTechniques/malleus
+
 
 .. toctree::
    :maxdepth: 1

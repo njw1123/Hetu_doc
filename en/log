@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/opt/homebrew/anaconda3/bin/sphinx-autobuild", line 8, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/opt/homebrew/anaconda3/lib/python3.12/site-packages/sphinx_autobuild/__main__.py", line 36, in main
+    args, build_args = _parse_args(list(argv))
+                       ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/anaconda3/lib/python3.12/site-packages/sphinx_autobuild/__main__.py", line 124, in _parse_args
+    args.sourcedir = Path(sphinx_args.sourcedir).resolve(strict=True)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/anaconda3/lib/python3.12/pathlib.py", line 1240, in resolve
+    s = self._flavour.realpath(self, strict=strict)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen posixpath>", line 427, in realpath
+  File "<frozen posixpath>", line 462, in _joinrealpath
+FileNotFoundError: [Errno 2] No such file or directory: 'en'
