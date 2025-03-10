@@ -5,3 +5,4 @@ sphinx_rtd_theme==3.0.2  # 更新到本地匹配版本
 readthedocs-sphinx-search==0.1.0  # 保持不变，若有兼容性问题可升级
 numpydoc==1.8.0  # 匹配本地 numpydoc 版本
 sphinx_markdown_tables==0.0.17  # 匹配本地 sphinx-markdown-tables 版本
+recommonmark==0.7.1
