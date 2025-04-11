@@ -84,10 +84,10 @@ News
    :maxdepth: 2
    :caption: Acceleration Techniques
 
-   AccelerationTechniques/hotspa
-   AccelerationTechniques/hydraulis
-   AccelerationTechniques/lobra
-   AccelerationTechniques/malleus
+   AccelerationTechniques/HotSPa
+   AccelerationTechniques/Hydraulis
+   AccelerationTechniques/LobRA
+   AccelerationTechniques/Malleus
 
 
 .. toctree::

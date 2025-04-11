@@ -8,9 +8,10 @@ This module displays  the API interface provided by Hetu in Python.
 
    checkpoint/contents_en
    comm_group/contents_en
-   datasets/contents_en
+   data/contents_en
    device/contents_en
    distributed_states/contents_en
+   engine/contents_en
    graph/contents_en
    init/contents_en
    mixed_precision_training/contents_en
@@ -18,8 +19,8 @@ This module displays  the API interface provided by Hetu in Python.
    NDArray/contents_en
    nn/contents_en
    optimizer/contents_en
-   ops/index
-   perf/contents_en
+   operator/index
+   peft/contents_en
    profiler/contents_en
    recompute/contents_en
    stream/contents_en
